@@ -16,10 +16,7 @@ angular.module('completeConceptStrength.athleteService', [])
   athleteService.register = function(athlete) {
   	var defer = $q.defer();
 
-    var object = {athlete : ""};
-    object.athlete = athlete;
-
-  	$http.post(endPoint + '/athlete/register', object)
+  	$http.post(endPoint + '/athlete/register', athlete)
   	.success(function(res, status) {
   		if(status == 200) {
         defer.resolve(res);

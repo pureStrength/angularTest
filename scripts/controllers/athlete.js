@@ -24,10 +24,10 @@ angular.module('completeConceptStrength.athleteCtrl', [])
       var promise = athleteService.authenticate(athlete);
       promise.then(function(res)
       {
-        $scope.baseUser = res.baseUser;
+        $scope.user = res;
         $scope.code = 200;
       }, function(status) {
-          $scope.baseUser = {};
+          $scope.user = {};
           $scope.code = status;
       })
     }
