@@ -1,0 +1,7 @@
+{  
+	"email":"user@domain.com",
+    "password":"password",
+    "lastName":"last name",
+    "firstName":"first name",
+    "userType":"athlete",
+}

@@ -1,4 +1,4 @@
 angular.module('completeConceptStrength', [
-  'completeConceptStrength.athleteCtrl',
-  'completeConceptStrength.athleteService'
+  'completeConceptStrength.userCtrl',
+  'completeConceptStrength.userService'
 ]);

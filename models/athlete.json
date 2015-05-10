@@ -1,9 +1,0 @@
-{  
-    "athlete":{  
-        "password":"password",
-        "lastName":"last name",
-        "email":"athlete@domain.com",
-        "firstName":"first name",
-        "userType":"ATHLETE",
-    }
-}

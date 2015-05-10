@@ -2,21 +2,21 @@
 
 /**
  * @ngdoc service
- * @name completeConceptStrength.athlete
+ * @name completeConceptStrength.user
  * @description
- * # athlete
+ * # user
  * Service in the completeConceptStrength.
  */
-angular.module('completeConceptStrength.athleteService', [])
-  .service('athleteService', function ($http, $q) {
+angular.module('completeConceptStrength.userService', [])
+  .service('userService', function ($http, $q) {
 
   var endPoint = "http://localhost:8080/completeConceptStrength/rest/api";
-  var athleteService = this;
+  var userService = this;
 
-  athleteService.register = function(athlete) {
+  userService.register = function(user) {
   	var defer = $q.defer();
 
-  	$http.post(endPoint + '/athlete/register', athlete)
+  	$http.post(endPoint + '/user/register?require_verification=false', user)
   	.success(function(res, status) {
   		if(status == 200) {
         defer.resolve(res);
@@ -31,13 +31,13 @@ angular.module('completeConceptStrength.athleteService', [])
   	return defer.promise;
   }
 
-  athleteService.authenticate = function(athlete) {
+  userService.authenticate = function(user) {
     var defer = $q.defer();
 
-    $http.get(endPoint + '/athlete/authenticate', {
+    $http.get(endPoint + '/user/authenticate', {
       params: {
-        "email": athlete.email, 
-        "password": athlete.password
+        "email": user.email, 
+        "password": user.password
       }
     })
     .success(function(res, status) {
@@ -54,6 +54,6 @@ angular.module('completeConceptStrength.athleteService', [])
     return defer.promise;
   }
 
-  return athleteService;
+  return userService;
 
 });
