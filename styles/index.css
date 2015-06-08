@@ -1,5 +1,20 @@
 /* CSS Document */
 
+html, body {
+    height: 100%;
+	width: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .center-block {
 	float: none;
 	display: block;
