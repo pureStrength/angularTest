@@ -1,0 +1,21 @@
+/* CSS Document */
+
+.center-block {
+	float: none;
+	display: block;
+	margin: 0 auto;
+}
+.rounded-block {
+	float: none;
+	display: block;
+	margin: 0 auto;
+	position: relative;
+	vertical-align: middle;
+	text-align:: center;
+	border: 4px solid #000;
+	border-radius: 25px;	
+}
+.block-content {
+	margin: 0 auto;
+	text-align: center;	
+}
