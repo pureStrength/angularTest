@@ -15,22 +15,17 @@
 	<link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div class="container-fluid">
-        <div class="row col-md-4 center-block rounded-block">
-            <h3 class="row block-content">Complete Concept Strength Login</h3><br/>
+    <div class="container flexible" id="gradient">
+        <div class="row col-sm-4 rounded-block">
+            <h1 class="row">Complete Concept Strength Login</h1><br/>
     
-            <form name="loginForm" class="row block-content" ng-app="completeConceptStrength" ng-controller="userCtrl">
-                <input type="text" placeholder="Email" name="email" ng-model="user.email"/><br/><br/>
-                <input type="text" placeholder="Password" name="password" ng-model="user.password"/><br/><br/>
-				<label><input type="checkbox"> Remember Me!</label><br/>
-                <input type="button" ng-click="authenticate(user)" value="Login"/><br/>
-				<br/>
-                Login Response: {{code}}<br/>
-                First Name: {{user.firstName}} <br/>
-                Last Name: {{user.lastName}} <br/>
+            <form name="loginForm" ng-app="completeConceptStrength" ng-controller="userCtrl">
+                <input type="text"  placeholder="Email" name="email" ng-model="user.email"/><br/><br/>
+                <input type="password" placeholder="Password" name="password" ng-model="user.password"/><br/>
+                <label><input type="checkbox"> Remember Me!</label><br/>
+                <input type="button" class="btn btn-primary" ng-click="authenticate(user)" value="Login"/><br/><br/>
             </form> 
         </div>
     </div>
-
 </body>
 </html>
