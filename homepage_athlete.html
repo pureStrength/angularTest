@@ -16,13 +16,13 @@
     <link href="styles/homepage.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="container-fluid" id="gradient">
+    <div class="container-fluid" id="gradient" ng-app="completeConceptStrength" ng-controller="userCtrl">
         <div class="row top-bar">
-            <form name="notificationsForm" class="col-xs-4" ng-app="completeConceptStrength" ng-controller="userCtrl">
+            <form name="notificationsForm" class="col-xs-4">
                 <input type="button" class="btn btn-primary" ng-click="notifications()" value="Notifications"/>
             </form>
             <h1 class="col-xs-4">Welcome</h1>
-            <form name="logoutForm" ng-app="completeConceptStrength" ng-controller="userCtrl">
+            <form name="logoutForm" class="col-xs-4">
                 <input type="button" class="btn btn-primary" ng-click="logout()" value="Logout"/>
             </form>
         </div>

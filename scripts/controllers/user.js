@@ -12,43 +12,59 @@ angular.module('completeConceptStrength.userCtrl', [])
 
   	$scope.register = function(user) {
 
-  	  var promise = userService.register(user);
-      promise.then(function(res)
-      {
-		if(res == "true") {
-			console.log("Registration successful");
-			$scope.error = "";
-			location.href = "login.html";
-		} else {
+		var promise = userService.register(user);
+		promise.then(function(res) {
+			if(res == "true") {
+				console.log("Registration successful");
+				$scope.error = "";
+				location.href = "login.html";
+			} else {
+				console.log("Error registering user");
+				$scope.error = "Error registering user";	
+			}
+		
+		}, function(error) {
 			console.log("Error registering user");
-			$scope.error = "Error registering user";	
-		}
-        
-      }, function(error) {
-		  	console.log("Error registering user");
 			console.log("Response: " + error);
 			$scope.error = "Error registering user";
-	  })
+		})
   	}
 
     $scope.authenticate = function(user) {
+		
+		// Check parameters
+		if(!user) {
+			console.log("Undefined User");
+			$scope.error = "Please enter email and password";
+			return;
+		}
+		if(!user.email || !user.email.length) {
+			console.log("Undefined email");
+			$scope.error = "Please enter a valid email";
+			return;	
+		}
+		if(!user.password || !user.password.length) {
+			console.log("Undefined password");
+			$scope.error = "Please enter your password";
+			return;	
+		}
 
-      var promise = userService.authenticate(user);
-      promise.then(function(res)
-      {
+		// Make web request
+		var promise = userService.authenticate(user);
+		promise.then(function(res) {
 			console.log("Login successful");
-        	$scope.error = "";
+			$scope.error = "";
 			
 			if(res.userType == "ATHLETE") {
 				location.href = "homepage_athlete.html"	
 			} else if(res.userType == "COACH") {
 				location.href = "homepage_trainer.html"
 			}
-      }, function(error) {
-            console.log("Error logging in user");
+		}, function(error) {
+			console.log("Error logging in user");
 			console.log("Response: " + error);
 			$scope.error = "Username or password is incorrect";
-      })
+		})
     }
 	
 	$scope.logout = function() {
