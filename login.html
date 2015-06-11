@@ -24,7 +24,10 @@
                 <input type="password" placeholder="Password" name="password" ng-model="user.password"/><br/>
                 <label><input type="checkbox"> Remember Me!</label><br/>
                 <input type="button" class="btn btn-primary" ng-click="authenticate(user)" value="Login"/><br/><br/>
+                <p class="error">{{error}}</p>
             </form> 
+            
+            <b><a href="register.html">No Account? Register Now!</a><br/></b>
         </div>
     </div>
 </body>

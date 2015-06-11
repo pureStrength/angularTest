@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>CompleteConceptStrength Trainer Homepage</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="bower_components/angular/angular.js"></script>
+ 	<script src="bower_components/angular-route/angular-route.js"></script>
+ 	<script src="scripts/main.js"></script>
+ 	<script src="scripts/services/user.js"></script>
+	<script src="scripts/controllers/user.js"></script>
+
+	<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="styles/index.css" rel="stylesheet" type="text/css">
+    <link href="styles/homepage.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container-fluid" id="gradient">
+        <div class="row top-bar">
+            <form name="notificationsForm" class="col-xs-4" ng-app="completeConceptStrength" ng-controller="userCtrl">
+                <input type="button" class="btn btn-primary" ng-click="notifications()" value="Notifications"/>
+            </form>
+            <h1 class="col-xs-4">Welcome</h1>
+            <form name="logoutForm" ng-app="completeConceptStrength" ng-controller="userCtrl">
+                <input type="button" class="btn btn-primary" ng-click="logout()" value="Logout"/>
+            </form>
+        </div>
+        
+        <div class="row col-sm-12 main-block">
+        	<div class="col-sm-3"> 
+            	Athletes
+            </div>
+            <div class="col-sm-3"> 
+            	Workouts
+            </div>
+            <div class="col-sm-3"> 
+            	Connect
+            </div>
+            <div class="col-sm-3"> 
+            	Settings
+            </div>
+        </div>
+    </div>
+</body>
+</html>

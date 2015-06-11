@@ -1,41 +1,17 @@
 /* CSS Document */
 
-html, body {
-    height: 100%;
-	width: 100%;
-	text-align: center;
-}
-
-html {
-    display: table;
-    margin: auto;
-}
-
-.rounded-block {
+.main-block {
 	margin: auto;
 	display: block;
 	position: relative;
 	text-align: center;
 	border: 2px solid #000;
-	border-radius: 20px;	
+	border-radius: 10px;	
 	background: rgb(207, 207, 207);
 	background: rgba(207, 207, 207, .7);
 }
-.flexible {
-    display: -webkit-box;    
-    display: -moz-box;        
-    display: -ms-flexbox;  
-    display: -webkit-flex;  
-    display: flex;        
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-}
-.error {
-	color: red;
-	font-weight: bold;
+.top-bar form {
+	padding-top: 24px;	
 }
 
 ::-webkit-input-placeholder { font-style: italic; }
