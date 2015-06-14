@@ -7,30 +7,71 @@
  * # userCtrl
  * Controller of the completeConceptStrength
  */
-angular.module('completeConceptStrength.userCtrl', [])
-  .controller('userCtrl', function ($scope, userService) {
+angular.module('indexModule', ['userService'])
+  .controller('indexCtrl', function ($scope, userService) {
+	  
+	$scope.registerLoad = function() {
+		$scope.userType = "ATHLETE";	
+	}
 
-  	$scope.register = function(user) {
+  	$scope.register = function(user, userType) {
+		
+		// Check parameters
+		if(!user) {
+			console.log("Undefined User");
+			$scope.error = "Please fill out the required fields";
+			return;
+		}
+		if(!user.firstName || !user.firstName.length || 
+		   !user.lastName  || !user.lastName.length  || 
+		   !user.email     || !user.email.length)    {
+			console.log("Missing firstName field");
+			console.log(user);
+			$scope.error = "Please fill out the required fields";
+			return;	
+		}
+
+		// Password requirements
+		if(!user.password || !user.password.length) {
+			console.log("Password does not meet requirements)");
+			$scope.error = "Password does not meet requirements";
+			return;	
+		}
+		
+		// User type radio button
+		if(!userType || !userType.length) {
+			console.log("Missing userType");
+			$scope.error = "Please select a user type";
+			return;
+		}
+		
+		// Set the user type
+		user.userType = userType;
 
 		var promise = userService.register(user);
 		promise.then(function(res) {
 			if(res == "true") {
+				// Log success
 				console.log("Registration successful");
 				$scope.error = "";
+
+				// Continue to the login page
 				location.href = "login.html";
 			} else {
+				// Log error
 				console.log("Error registering user");
 				$scope.error = "Error registering user";	
 			}
 		
 		}, function(error) {
+			// Log error
 			console.log("Error registering user");
 			console.log("Response: " + error);
 			$scope.error = "Error registering user";
 		})
   	}
 
-    $scope.authenticate = function(user) {
+    $scope.login = function(user) {
 		
 		// Check parameters
 		if(!user) {
@@ -54,22 +95,24 @@ angular.module('completeConceptStrength.userCtrl', [])
 		promise.then(function(res) {
 			console.log("Login successful");
 			$scope.error = "";
+
+			// Store the user
+			store.set('user', res);
 			
+			// Continue to user homepage
 			if(res.userType == "ATHLETE") {
 				location.href = "homepage_athlete.html"	
 			} else if(res.userType == "COACH") {
 				location.href = "homepage_trainer.html"
 			}
+
 		}, function(error) {
+			// Log error
 			console.log("Error logging in user");
 			console.log("Response: " + error);
 			$scope.error = "Username or password is incorrect";
 		})
     }
-	
-	$scope.logout = function() {
-		console.log("Logging out");
-		location.href = "login.html";
-	}
 
-  });
+});
+  
