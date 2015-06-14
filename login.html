@@ -8,6 +8,7 @@
 	<script src="bower_components/angular/angular.min.js"></script>
  	<script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/store.js/store.min.js"></script>
+    <script src="scripts/app.js"></script>
  	<script src="scripts/services/user.js"></script>
 	<script src="scripts/controllers/index.js"></script>
 
@@ -25,7 +26,7 @@
                 <input type="password" placeholder="Password" name="password" ng-model="user.password" required/><br/>
                 <label><input type="checkbox"> Remember Me!</label><br/>
                 <input type="submit" class="btn btn-primary" ng-click="login(user)" value="Login"/><br/><br/>
-                <div ng-show="error.length" class="alert alert-danger alert-dismissable fade in">
+                <div ng-show="error.length" class="alert alert-danger alert-dismissable">
                 	<button type="button" class="close" ng-click="error = null">&times;</button>
                     {{error}}
                 </div>

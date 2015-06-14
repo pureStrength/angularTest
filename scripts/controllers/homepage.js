@@ -38,6 +38,22 @@ angular.module('homepageModule', ['userService'])
 			console.log("Error getting logged in user");
 			console.log("Response: " + error);
 		})
+
+		// Get the notifications for the user
+		$scope.notifications = 0;
+
+		// Initialize the calendar type
+		$scope.calendarView = "Grid View";
+	}
+
+	$scope.swapView = function() {
+
+		if($scope.calendarView == "Grid View") {
+			$scope.calendarView = "List View";
+		} else {
+			$scope.calendarView = "Grid View";
+		}
+
 	}
 	
 	$scope.logout = function() {
