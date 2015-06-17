@@ -37,6 +37,9 @@ html {
 	color: red;
 	font-weight: bold;
 }
+input:invalid {
+    box-shadow: none;
+}
 
 ::-webkit-input-placeholder { font-style: italic; }
 ::-ms-input-placeholder { font-style: italic; }
