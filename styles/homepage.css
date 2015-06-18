@@ -11,6 +11,16 @@
 	background: rgb(207, 207, 207);
 	background: rgba(207, 207, 207, .7);
 }
+.table-connect {
+	text-align: left;	
+}
+.last-row {
+	text-align: right;	
+}
+.btn-connect {
+	height: 100px;
+	width: 300px;	
+}
 .top-bar form {
 	padding-top: 24px;	
 }
