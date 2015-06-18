@@ -26,8 +26,8 @@
 				<input type="text" placeholder="Email" name="email" ng-model="user.email" required/><br/><br/>
 				<input type="password" placeholder="Password" name="password" ng-model="user.password" required/><br/><br/>
 				<input type="text" placeholder="Organization (optional)" name="organization" ng-model="user.organization"/><br/>
-				<input type="radio" name="athlete" ng-model="userType" value="ATHLETE">Athlete<br/>
-    			<input type="radio" name="trainer" ng-model="userType" value="COACH">Trainer<br/>
+				<input type="radio" name="athlete" ng-model="userType" value="ATHLETE"> Athlete<br/>
+    			<input type="radio" name="trainer" ng-model="userType" value="COACH"> Trainer<br/>
 				<input type="submit" class="btn btn-primary" ng-click="register(user, userType)" value="Register"/><br/><br/>
                 <div ng-show="error.length" class="alert alert-danger alert-dismissable">
                 	<button type="button" class="close" ng-click="error = null">&times;</button>
