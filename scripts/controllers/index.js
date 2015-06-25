@@ -12,6 +12,7 @@ angular.module('indexModule', ['userService'])
 	  
 	$scope.registerLoad = function() {
 		$scope.userType = "ATHLETE";	
+		$scope.showModal = false;
 	}
 
   	$scope.register = function(user, userType) {
@@ -54,9 +55,18 @@ angular.module('indexModule', ['userService'])
 				// Log success
 				console.log("Registration successful");
 				$scope.error = "";
+				
+				// Popup modal to display status to the user
+				if(requireVerification == true) {
+					$scope.modalHeader = "Registration almost complete!";
+					$scope.modalBody = "Please check your email for instructions " +
+						"to complete your registration";
+				} else {
+					$scope.modalHeader = "Registration complete!";
+					$scope.modalBody = "You may now login to your account";
+				}
 
-				// Continue to the login page
-				location.href = "login.html";
+				$scope.showModal = true;
 			} else {
 				// Log error
 				console.log("Error registering user");
@@ -114,5 +124,9 @@ angular.module('indexModule', ['userService'])
 		})
     }
 
+	$scope.closeModal = function(){
+        // Continue to the login page
+		location.href = "login.html";
+    };
 });
   
