@@ -17,14 +17,22 @@
 	<link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
 <body ng-app="indexModule" ng-controller="indexCtrl">
-    <div class="container flexible" id="gradient">
+    <div class="container flexible">
         <div class="row col-sm-4 rounded-block">
             <h1 class="row">Complete Concept Strength Login</h1><br/>
     
             <form name="loginForm" role="form">
-                <input type="text" placeholder="Email" name="email" ng-model="user.email" required/><br/><br/>
-                <input type="password" placeholder="Password" name="password" ng-model="user.password" required/><br/>
-                <label><input type="checkbox"> Remember Me!</label><br/>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<input class="form-control" type="text"  placeholder="Email" name="email" ng-model="user.email" required/>
+                </div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+					<input class="form-control" type="password" placeholder="Password" name="password" ng-model="user.password" required/>
+                </div>
+				<br>
+				<label><input type="checkbox"> Remember Me!</label><br/>
                 <input type="submit" class="btn btn-primary" ng-click="login(user)" value="Login"/><br/><br/>
                 <div ng-show="error.length" class="alert alert-danger alert-dismissable">
                 	<button type="button" class="close" ng-click="error = null">&times;</button>

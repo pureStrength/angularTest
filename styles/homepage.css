@@ -3,7 +3,7 @@
 .main-block {
 	margin: auto;
 	padding: 10px;
-	display: block;
+	display: table;
 	position: relative;
 	text-align: center;
 	border: 2px solid #000;

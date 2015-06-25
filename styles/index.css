@@ -1,16 +1,5 @@
 /* CSS Document */
 
-html, body {
-    height: 100%;
-	width: 100%;
-	text-align: center;
-}
-
-html {
-    display: table;
-    margin: auto;
-}
-
 .rounded-block {
 	margin: auto;
 	display: block;
