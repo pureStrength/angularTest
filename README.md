@@ -1,12 +1,14 @@
 # CompleteConceptStrength WebApp #
 
-How to build:
-	Install node: https://nodejs.org/
-	Install bower (globally): npm install -g bower
-	Install local dependencies: npm install
-	Install bower dependencies: boswer install
+<dl>
+	<dt>How to build:</dt>
+	<dd>Install node: https://nodejs.org/</dd>
+	<dd>Install bower (globally): npm install -g bower</dd>
+	<dd>Install local dependencies: npm install</dd>
+	<dd>Install bower dependencies: boswer install</dd>
 
-How to deploy:
-	Place the root folder of this project into the war webapp folder
-	or
-	Configure the war to point to the root directory of this project
+	<dt>How to deploy:</dt>
+	<dd>Place the root folder of this project into the war webapp folder</dd>
+	<dd>or</dd>
+	<dd>Configure the war to point to the root directory of this project</dd>
+</dl>
