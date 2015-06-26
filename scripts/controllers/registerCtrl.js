@@ -7,12 +7,11 @@
  * # userCtrl
  * Controller of the completeConceptStrength
  */
-angular.module('indexModule', ['userService'])
-  .controller('indexCtrl', function ($scope, userService) {
+angular.module('indexModule', ['userService', 'angularModalService'])
+  .controller('registerCtrl', function ($scope, userService, ModalService) {
 	  
 	$scope.registerLoad = function() {
 		$scope.userType = "ATHLETE";	
-		$scope.showModal = false;
 	}
 
   	$scope.register = function(user, userType) {
@@ -55,18 +54,9 @@ angular.module('indexModule', ['userService'])
 				// Log success
 				console.log("Registration successful");
 				$scope.error = "";
-				
-				// Popup modal to display status to the user
-				if(requireVerification == true) {
-					$scope.modalHeader = "Registration almost complete!";
-					$scope.modalBody = "Please check your email for instructions " +
-						"to complete your registration";
-				} else {
-					$scope.modalHeader = "Registration complete!";
-					$scope.modalBody = "You may now login to your account";
-				}
 
-				$scope.showModal = true;
+				// Display the success modal
+				$scope.showModal();
 			} else {
 				// Log error
 				console.log("Error registering user");
@@ -80,49 +70,27 @@ angular.module('indexModule', ['userService'])
 			$scope.error = "Error registering user";
 		})
   	}
-
-    $scope.login = function(user) {
-		
-		// Check parameters
-		if(!user) {
-			console.log("Undefined User");
-			$scope.error = "Please enter email and password";
-			return;
-		}
-		if(!user.email || !user.email.length) {
-			console.log("Undefined email");
-			$scope.error = "Please enter a valid email";
-			return;	
-		}
-		if(!user.password || !user.password.length) {
-			console.log("Undefined password");
-			$scope.error = "Please enter your password";
-			return;	
-		}
-
-		// Make web request
-		var promise = userService.authenticate(user);
-		promise.then(function(res) {
-			console.log("Login successful");
-			$scope.error = "";
-
-			// Store the user
-			store.set('user', res);
-			
-			// Continue to user homepage
-			if(res.userType == "ATHLETE") {
-				location.href = "homepage_athlete.html"	
-			} else if(res.userType == "COACH") {
-				location.href = "homepage_trainer.html"
+	
+	$scope.showModal = function() {
+        ModalService.showModal({
+            templateUrl: 'modal.html',
+            controller: "indexCtrl"
+        }).then(function(modal) {
+            
+			// Display correct message
+			if(requireVerification == true) {
+				$scope.modalHeader = "Registration almost complete!";
+				$scope.modalBody = "Please check your email for instructions " +
+					"to complete your registration";
+			} else {
+				$scope.modalHeader = "Registration complete!";
+				$scope.modalBody = "You may now login to your account";
 			}
-
-		}, function(error) {
-			// Log error
-			console.log("Error logging in user");
-			console.log("Response: " + error);
-			$scope.error = "Username or password is incorrect";
-		})
-    }
+            
+            modal.element.append($("#successModal"));
+            $("#successModal").modal();
+        });
+    };
 
 	$scope.closeModal = function(){
         // Continue to the login page

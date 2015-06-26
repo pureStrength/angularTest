@@ -7,15 +7,16 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<script src="bower_components/angular/angular.min.js"></script>
  	<script src="bower_components/angular-route/angular-route.min.js"></script>
+	<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
  	<script src="scripts/app.js"></script>
- 	<script src="scripts/services/user.js"></script>
-	<script src="scripts/controllers/index.js"></script>
+ 	<script src="scripts/services/userService.js"></script>
+	<script src="scripts/controllers/registerCtrl.js"></script>
 
 	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="styles/main.css" rel="stylesheet" type="text/css">
 	<link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
-<body ng-app="indexModule" ng-controller="indexCtrl" ng-init="registerLoad()">
+<body ng-app="indexModule" ng-controller="registerCtrl" ng-init="registerLoad()">
 	<div class="container flexible">
         <div class="row col-sm-4 rounded-block">
             <h1 class="row">Complete Concept Strength Registration</h1><br/>
@@ -38,23 +39,24 @@
             <b><a href="login.html">Login page</a><br></b> 
         </div>
 		
-		<div ng-show="showModal" class="modal fade" role="dialog">
+		<!-- Success modal (pop-up) -->
+		<script type="text/ng-template" id="modal.html"></script>
+		<div class="modal fade" id="successModal" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">{{modalHeader}}</h4>
+						<h3 class="modal-title">{{modalHeader}}</h3>
 					</div>
 					<div class="modal-body">
 						<p>{{modalBody}}</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" ng-click="closeModal()">Close</button>
+						<button type="button" class="btn btn-success" ng-click="closeModal()" data-dismiss="modal">Continue</button>
 					</div>
 				</div>
 			</div>
 		</div>
       
-    </div>
     </div>
 </body>
 </html> 

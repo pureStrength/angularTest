@@ -29,6 +29,9 @@
 input:invalid {
     box-shadow: none;
 }
+.modal-content, .modal-footer {
+    text-align: center;
+}
 
 ::-webkit-input-placeholder { font-style: italic; }
 ::-ms-input-placeholder { font-style: italic; }
