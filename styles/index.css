@@ -29,6 +29,26 @@
 input:invalid {
     box-shadow: none;
 }
+.modal-content, .modal-footer {
+    text-align: center;
+}
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    width:inherit;
+    height:inherit;
+    margin: 0 auto;
+    pointer-events: all;
+}
 
 ::-webkit-input-placeholder { font-style: italic; }
 ::-ms-input-placeholder { font-style: italic; }

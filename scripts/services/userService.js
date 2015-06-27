@@ -2,10 +2,9 @@
 
 /**
  * @ngdoc service
- * @name completeConceptStrength.user
- * @description
- * # user
- * Service in the completeConceptStrength.
+ * @name completeConceptStrength.userService
+ * @description Service for the user path
+ * # userService
  */
 angular.module('userService', [])
   .service('userService', function ($http, $q) {
@@ -15,7 +14,7 @@ angular.module('userService', [])
 	userService.register = function(user) {
 		var defer = $q.defer();
 		
-		$http.post(endPoint + 'user/register?require_verification=false', user)
+		$http.post(endPoint + 'user/register?require_verification=' + requireVerification, user)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
