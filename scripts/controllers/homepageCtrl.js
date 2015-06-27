@@ -3,9 +3,8 @@
 /**
  * @ngdoc function
  * @name completeConceptStrength.controller:homepageCtrl
- * @description
+ * @description Controller of the homepage
  * # homepageCtrl
- * Controller of the homepage
  */
 angular.module('homepageModule', ['userService'])
   .controller('homepageCtrl', function ($scope, userService) {

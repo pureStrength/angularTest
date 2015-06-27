@@ -2,12 +2,11 @@
 
 /**
  * @ngdoc function
- * @name completeConceptStrength.controller:userCtrl
- * @description
- * # userCtrl
- * Controller of the completeConceptStrength
+ * @name completeConceptStrength.controller:registerCtrl
+ * @description Controller of the registration
+ * # registerCtrl
  */
-angular.module('indexModule', ['userService', 'angularModalService'])
+angular.module('registerModule', ['userService', 'angularModalService'])
   .controller('registerCtrl', function ($scope, userService, ModalService) {
 	  
 	$scope.registerLoad = function() {
@@ -33,7 +32,7 @@ angular.module('indexModule', ['userService', 'angularModalService'])
 
 		// Password requirements
 		if(!user.password || !user.password.length) {
-			console.log("Password does not meet requirements)");
+			console.log("Password does not meet requirements");
 			$scope.error = "Password does not meet requirements";
 			return;	
 		}
@@ -72,9 +71,10 @@ angular.module('indexModule', ['userService', 'angularModalService'])
   	}
 	
 	$scope.showModal = function() {
+
         ModalService.showModal({
             templateUrl: 'modal.html',
-            controller: "indexCtrl"
+            controller: "registerCtrl"
         }).then(function(modal) {
             
 			// Display correct message
@@ -88,7 +88,10 @@ angular.module('indexModule', ['userService', 'angularModalService'])
 			}
             
             modal.element.append($("#successModal"));
-            $("#successModal").modal();
+            $("#successModal").modal({
+			    backdrop: 'static',
+			    keyboard: false 
+			});
         });
     };
 

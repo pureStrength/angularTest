@@ -2,12 +2,11 @@
 
 /**
  * @ngdoc function
- * @name completeConceptStrength.controller:userCtrl
- * @description
- * # userCtrl
- * Controller of the completeConceptStrength
+ * @name completeConceptStrength.controller:loginCtrl
+ * @description Controller of the login
+ * # loginCtrl
  */
-angular.module('indexModule', ['userService'])
+angular.module('loginModule', ['userService'])
   .controller('loginCtrl', function ($scope, userService) {
 
     $scope.login = function(user) {

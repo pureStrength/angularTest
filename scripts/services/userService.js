@@ -2,10 +2,9 @@
 
 /**
  * @ngdoc service
- * @name completeConceptStrength.user
- * @description
- * # user
- * Service in the completeConceptStrength.
+ * @name completeConceptStrength.userService
+ * @description Service for the user path
+ * # userService
  */
 angular.module('userService', [])
   .service('userService', function ($http, $q) {
