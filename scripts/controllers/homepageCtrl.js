@@ -6,8 +6,8 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService'])
-  .controller('homepageCtrl', function ($scope, userService) {
+angular.module('homepageModule', ['userService', 'userConnectionService'])
+  .controller('homepageCtrl', function ($scope, userService, userConnectionService) {
 
 	$scope.loadHomepage = function() {
 		// Reload the user to update information
@@ -63,6 +63,43 @@ angular.module('homepageModule', ['userService'])
 		
 		// Go back to the login page
 		location.href = "login.html";
+	}
+	
+	$scope.removeConnection = function() {
+		console.log("Remove Connection");
+		//Dummy
+		
+	}
+	
+	$scope.existConnection = function()  {
+		
+		// Reload the user to update information
+		var user = store.get('user');
+		
+		if(user == null) {
+			console.log("No user logged in");
+			return;
+		}
+		
+		var promise = userConnectionService.findExisting(user.id);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Recieved Existing Connections");
+
+				// Set existing connections
+				$scope.connections = res;
+			} else {
+				// Log error
+				console.log("Error recieving existing connections");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error recieving existing connections");
+			console.log("Response: " + error);
+		})
+	
 	}
 	
   });
