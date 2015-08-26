@@ -86,7 +86,9 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 			if(res != null) {
 				// Log success
 				console.log("Recieved Existing Connections");
-
+				
+				console.log(res);
+				
 				// Set existing connections
 				$scope.connections = res;
 			} else {
