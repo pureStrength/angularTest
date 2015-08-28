@@ -45,7 +45,7 @@
                     <input type="button" class="btn btn-primary" ng-click="swapView()" value="{{calendarView}}" />
                 </div>
                 <div id="connect" class="tab-pane fade">
-					<br> </br>
+					<br>
 					<ul class="nav nav-pills nav-justified">
 					<li class="active"><a data-toggle="tab" href="#existing">Existing</a></li>
 					<li><a data-toggle="tab" href="#find">Find</a></li>
@@ -65,13 +65,17 @@
 							<tbody>
 							  <tr ng-repeat="person in connections">
 								<td class="col-sm-1"> 
-									<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="widthh: 100px; height: 100px;">
+									<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
 								</td>
 								<td>{{person.user.firstName}} {{person.user.lastName}}<br>{{person.user.organization}}</td>
 								<td class="last-row">            
-									<form name="connectionForm">
-										<input type="button" class="btn btn-primary btn-lg btn-connect" ng-click="removeConnection()" value="Remove"/>
-									</form>
+									<div class="btn-group-vertical">
+										<input type="button" class="btn btn-primary btn-connect" ng-click="removeConnection()" value="{{person.userConnectionStatus.positiveAction}}"/>
+										<div style="line-height:75%;">
+										    <br>
+										</div>
+										<input type="button" class="btn btn-primary btn-connect" ng-click="removeConnection()" value="{{person.userConnectionStatus.negativeAction}}"/>
+									</div>
 								</td>
 							  </tr>
 							</tbody>

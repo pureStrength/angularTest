@@ -17,9 +17,12 @@
 .last-row {
 	text-align: right;	
 }
+.btn-group-vertical input {
+	border-radius: 10px !important;
+}
 .btn-connect {
-	height: 100px;
-	width: 300px;	
+	height: 45px;
+	width: 200px !important;	
 }
 .top-bar form {
 	padding-top: 24px;	
