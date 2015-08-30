@@ -70,8 +70,40 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 		//Dummy
 		
 	}
+
+	$scope.loadPendingConnections = function()  {
+		
+		// Reload the user to update information
+		var user = store.get('user');
+		
+		if(user == null) {
+			console.log("No user logged in");
+			return;
+		}
+		
+		var promise = userConnectionService.findPending(user.id);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Recieved Pending Connections");
+				
+				console.log(res);
+				
+				// Set pending connections
+				$scope.connections = res;
+			} else {
+				// Log error
+				console.log("Error recieving pending connections");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error recieving pending connections");
+			console.log("Response: " + error);
+		})
+	}
 	
-	$scope.existConnection = function()  {
+	$scope.loadExistingConnections = function()  {
 		
 		// Reload the user to update information
 		var user = store.get('user');
@@ -101,7 +133,6 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 			console.log("Error recieving existing connections");
 			console.log("Response: " + error);
 		})
-	
 	}
 	
   });
