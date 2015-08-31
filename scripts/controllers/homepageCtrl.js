@@ -71,6 +71,18 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 		
 	}
 
+	$scope.positiveActionConnection = function() {
+		console.log("Positive Action Connection");
+		//Dummy
+		
+	}
+
+	$scope.negativeActionConnection = function() {
+		console.log("Negative Action Connection");
+		//Dummy
+		
+	}
+
 	$scope.loadPendingConnections = function()  {
 		
 		// Reload the user to update information

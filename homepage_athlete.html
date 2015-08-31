@@ -65,11 +65,12 @@
 								<td>{{person.user.firstName}} {{person.user.lastName}}<br>{{person.user.organization}}</td>
 								<td class="last-row">            
 									<div class="btn-group-vertical">
-										<input type="button" class="btn btn-primary btn-connect" ng-click="removeConnection()" value="{{person.userConnectionStatus.positiveAction}}"/>
+										<input type="button" class="btn btn-primary btn-connect" ng-click="positiveActionConnection()" value="{{person.userConnectionStatus.positiveAction}}"/>
 										<div style="line-height:75%;">
 										    <br>
 										</div>
 										<input type="button" class="btn btn-primary btn-connect" ng-click="removeConnection()" value="{{person.userConnectionStatus.negativeAction}}"/>
+										<input type="button" class="btn btn-primary btn-connect" ng-click="negativeActionConnection()" value="{{person.userConnectionStatus.negativeAction}}"/>
 									</div>
 								</td>
 							  </tr>
@@ -89,11 +90,11 @@
 								<td>{{person.user.firstName}} {{person.user.lastName}}<br>{{person.user.organization}}</td>
 								<td class="last-row">            
 									<div class="btn-group-vertical">
-										<input type="button" class="btn btn-primary btn-connect" ng-click="removeConnection()" value="{{person.userConnectionStatus.positiveAction}}"/>
+										<input type="button" class="btn btn-primary btn-connect" ng-click="positiveActionConnection()" value="{{person.userConnectionStatus.positiveAction}}"/>
 										<div style="line-height:75%;">
 										    <br>
 										</div>
-										<input type="button" class="btn btn-primary btn-connect" ng-click="removeConnection()" value="{{person.userConnectionStatus.negativeAction}}"/>
+										<input type="button" class="btn btn-primary btn-connect" ng-click="negativeActionConnection()" value="{{person.userConnectionStatus.negativeAction}}"/>
 									</div>
 								</td>
 							  </tr>
