@@ -83,6 +83,11 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 		
 	}
 
+	$scope.loadAllConnections = function() {
+		$scope.loadPendingConnections();
+		$scope.loadExistingConnections();
+	}
+
 	$scope.loadPendingConnections = function()  {
 		
 		// Reload the user to update information
@@ -102,7 +107,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 				console.log(res);
 				
 				// Set pending connections
-				$scope.connections = res;
+				$scope.pendingConnections = res;
 			} else {
 				// Log error
 				console.log("Error recieving pending connections");	
@@ -134,7 +139,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 				console.log(res);
 				
 				// Set existing connections
-				$scope.connections = res;
+				$scope.existingConnections = res;
 			} else {
 				// Log error
 				console.log("Error recieving existing connections");	

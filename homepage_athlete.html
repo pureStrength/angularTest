@@ -35,7 +35,7 @@
         <div class="main-block">
             <ul class="nav nav-pills nav-justified">
                 <li class="active"><a data-toggle="tab" href="#prescription">Prescription</a></li>
-                <li><a data-toggle="tab" href="#connect" ng-click="loadPendingConnections()">Connect</a></li>
+                <li><a data-toggle="tab" href="#connect" ng-click="loadAllConnections()">Connect</a></li>
                 <li><a data-toggle="tab" href="#settings">Settings</a></li>
             </ul>
             
@@ -45,73 +45,55 @@
                     <input type="button" class="btn btn-primary" ng-click="swapView()" value="{{calendarView}}" />
                 </div>
                 <div id="connect" class="tab-pane fade">
-					<br>
-					<ul class="nav nav-pills nav-justified">
-					<li class="active"><a data-toggle="tab" href="#pending" ng-click="loadPendingConnections()">Pending</a></li>
-					<li><a data-toggle="tab" href="#existing" ng-click="loadExistingConnections()">Existing</a></li>
-					<li><a data-toggle="tab" href="#find">Find</a></li>
-					</ul>
-					<div class="tab-content">
-					<div id="pending" class="tab-pane fade in active">
-						<h2>Pending</h2>
-						<br>
-						
-						<table class="table table-connect">
-							<tbody>
-							  <tr ng-repeat="person in connections">
-								<td class="col-sm-1"> 
-									<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
-								</td>
-								<td>{{person.user.firstName}} {{person.user.lastName}}<br>{{person.user.organization}}</td>
-								<td class="last-row">            
-									<div class="btn-group-vertical">
-										<input type="button" class="btn btn-primary btn-connect" ng-click="positiveActionConnection()" value="{{person.userConnectionStatus.positiveAction}}"/>
-										<div style="line-height:75%;">
-										    <br>
-										</div>
-										<input type="button" class="btn btn-primary btn-connect" ng-click="negativeActionConnection()" value="{{person.userConnectionStatus.negativeAction}}"/>
-									</div>
-								</td>
-							  </tr>
-							</tbody>
-						  </table>
-					</div>
-					<div id="existing" class="tab-pane fade">
-						<h2>Existing</h2>
-						<br>
-						
-						<table class="table table-connect">
-							<tbody>
-							  <tr ng-repeat="person in connections">
-								<td class="col-sm-1"> 
-									<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
-								</td>
-								<td>{{person.user.firstName}} {{person.user.lastName}}<br>{{person.user.organization}}</td>
-								<td class="last-row">            
-									<div class="btn-group-vertical">
-										<input type="button" class="btn btn-primary btn-connect" ng-click="positiveActionConnection()" value="{{person.userConnectionStatus.positiveAction}}"/>
-										<div style="line-height:75%;">
-										    <br>
-										</div>
-										<input type="button" class="btn btn-primary btn-connect" ng-click="negativeActionConnection()" value="{{person.userConnectionStatus.negativeAction}}"/>
-									</div>
-								</td>
-							  </tr>
-							</tbody>
-						  </table>
-					</div>
-					
-					<div id="find" class="tab-pane fade">
-						<h2>Find</h2>
-						<div class="input-group col-sm-2">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+					<h2 class="left-aligned">Find Connections</h2>
+					<div class="input-group col-sm-4">
+                        <input type="text" class="form-control" placeholder="Search users by name, email or organization" name="srch-term" id="srch-term">
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
                     </div>
-					</div>
-					
-					</div>
+
+					<h2 class="left-aligned">Pending</h2>
+					<table class="table table-connect">
+						<tbody>
+						  <tr ng-repeat="connection in pendingConnections">
+							<td class="col-sm-1"> 
+								<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+							</td>
+							<td>{{connection.user.firstName}} {{connection.user.lastName}}<br>{{connection.user.organization}}</td>
+							<td class="last-row">            
+								<div class="btn-group-vertical">
+									<input type="button" class="btn btn-primary btn-connect" ng-click="positiveActionConnection()" value="{{connection.userConnectionStatus.positiveAction}}"/>
+									<div style="line-height:75%;">
+									    <br>
+									</div>
+									<input type="button" class="btn btn-primary btn-connect" ng-click="negativeActionConnection()" value="{{connection.userConnectionStatus.negativeAction}}"/>
+								</div>
+							</td>
+						  </tr>
+						</tbody>
+					</table>
+
+					<h2 class="left-aligned">Existing</h2>
+					<table class="table table-connect">
+						<tbody>
+						  <tr ng-repeat="connection in existingConnections">
+							<td class="col-sm-1"> 
+								<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+							</td>
+							<td>{{connection.user.firstName}} {{connection.user.lastName}}<br>{{connection.user.organization}}</td>
+							<td class="last-row">            
+								<div class="btn-group-vertical">
+									<input type="button" class="btn btn-primary btn-connect" ng-click="positiveActionConnection()" value="{{connection.userConnectionStatus.positiveAction}}"/>
+									<div style="line-height:75%;">
+									    <br>
+									</div>
+									<input type="button" class="btn btn-primary btn-connect" ng-click="negativeActionConnection()" value="{{connection.userConnectionStatus.negativeAction}}"/>
+								</div>
+							</td>
+						  </tr>
+						</tbody>
+				    </table>
                 </div>
                 <div id="settings" class="tab-pane fade">
                     <h2>Settings</h2>
