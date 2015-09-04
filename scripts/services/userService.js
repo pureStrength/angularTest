@@ -10,11 +10,12 @@ angular.module('userService', [])
   .service('userService', function ($http, $q) {
 
 	var userService = this;
+	var userEndPoint = endPoint + 'user';
 	
 	userService.register = function(user) {
 		var defer = $q.defer();
 		
-		$http.post(endPoint + 'user/register?require_verification=' + requireVerification, user)
+		$http.post(userEndPoint + '/register?require_verification=' + requireVerification, user)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
@@ -31,7 +32,7 @@ angular.module('userService', [])
 	userService.authenticate = function(user) {
 		var defer = $q.defer();
 		
-		$http.get(endPoint + 'user/authenticate', {
+		$http.get(userEndPoint + '/authenticate', {
 			params: {
 				"email": user.email, 
 				"password": user.password
@@ -52,7 +53,7 @@ angular.module('userService', [])
 	userService.get = function(userId) {
 		var defer = $q.defer();
 		
-		$http.get(endPoint + 'user/' + userId)
+		$http.get(userEndPoint + '/' + userId)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);

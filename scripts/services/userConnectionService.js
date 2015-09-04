@@ -10,12 +10,13 @@ angular.module('userConnectionService', [])
   .service('userConnectionService', function ($http, $q) {
 
 	var userConnectionService = this;
+	var userConnectionEndPoint = endPoint + 'userConnection';
 	
 	// Web service to find all existing connections for a user
 	userConnectionService.findExisting = function(userId) {
 		var defer = $q.defer();
 		
-		$http.get(endPoint + 'userConnection/existingConnectionsByUser/' + userId)
+		$http.get(userConnectionEndPoint + '/existingConnectionsByUser/' + userId)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
@@ -33,7 +34,7 @@ angular.module('userConnectionService', [])
 	userConnectionService.findPending = function(userId) {
 		var defer = $q.defer();
 		
-		$http.get(endPoint + 'userConnection/pendingConnectionsByUser/' + userId)
+		$http.get(userConnectionEndPoint + '/pendingConnectionsByUser/' + userId)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
