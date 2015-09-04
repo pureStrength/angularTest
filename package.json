@@ -4,9 +4,10 @@
   "description": "CompleteConceptStrength WebApp",
   "main": "scripts/main.js",
   "dependencies": {
-    "bower": "~1.3.12"
+    "bower": "~1.5.2"
   },
-  "devDependencies": {
-    "grunt-contrib-sass": "~0.8.1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pureStrength/angularTest"
   }
 }
