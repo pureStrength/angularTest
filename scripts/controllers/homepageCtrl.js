@@ -54,6 +54,10 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 		}
 
 	}
+
+	$scope.searchConnections = function(searchText) {
+		console.log("In search connections")
+	}
 	
 	$scope.logout = function() {
 		console.log("Logging out");
