@@ -66,6 +66,26 @@ angular.module('userService', [])
 		
 		return defer.promise;
 	}
+
+	userService.getByAnyField = function(searchText) {
+		var defer = $q.defer();
+		
+		$http.get(userEndPoint + '/byAnyField', {
+			params: {
+				"search_text": searchText
+			}
+		}).success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
 	
 	return userService;
 

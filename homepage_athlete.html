@@ -56,8 +56,29 @@
                     </form>
                     <br>
 
-                    <div ng-show="results">
+                    <div ng-hide="hideResults()">
                     	<h2 class="left-aligned">Results</h2>
+                    	<table class="table table-connect">
+							<tbody>
+							  <tr ng-repeat="result in results">
+								<td class="col-sm-1"> 
+									<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+								</td>
+								<td>{{result.firstName}} {{result.lastName}}
+								<br>{{result.email}}
+								<br>{{result.organization}}</td>
+								<td class="last-row">            
+									<div class="btn-group-vertical">
+										<input type="button" class="btn btn-primary btn-connect" ng-click="positiveActionConnection()" value="{{connection.userConnectionStatus.positiveAction}}"/>
+										<div style="line-height:75%;">
+										    <br>
+										</div>
+										<input type="button" class="btn btn-primary btn-connect" ng-click="negativeActionConnection()" value="{{connection.userConnectionStatus.negativeAction}}"/>
+									</div>
+								</td>
+							  </tr>
+							</tbody>
+						</table>
                     </div>
 
                     <div ng-hide="searchText.length">

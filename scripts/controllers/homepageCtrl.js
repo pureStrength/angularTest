@@ -10,6 +10,9 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
   .controller('homepageCtrl', function ($scope, userService, userConnectionService) {
 
 	$scope.loadHomepage = function() {
+		// Initial null set
+		$scope.searchText = "";
+
 		// Reload the user to update information
 		var user = store.get('user');
 		
@@ -56,7 +59,48 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 	}
 
 	$scope.searchConnections = function(searchText) {
-		console.log("In search connections")
+		console.log("In search connections");
+
+		var promise = userService.getByAnyField(searchText);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Recieved Results");
+				
+				console.log(res);
+				
+				// Set pending connections
+				$scope.results = res;
+			} else {
+				// Log error
+				console.log("Error recieving results");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error recieving results");
+			console.log("Response: " + error);
+		})
+
+	}
+
+	$scope.hideResults = function() {
+		console.log("Try to Clear");
+
+
+		if(!$scope.searchText.length){
+			$scope.results = null;
+
+			console.log("In here");
+
+			return true;
+		}  
+
+		else 
+			return false;
+
+
+
 	}
 	
 	$scope.logout = function() {
