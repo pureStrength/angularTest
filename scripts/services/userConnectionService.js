@@ -47,6 +47,26 @@ angular.module('userConnectionService', [])
 		
 		return defer.promise;
 	}
+
+	userConnectionService.searchByUser = function(userId, searchText) {
+		var defer = $q.defer();
+		
+		$http.get(userConnectionEndPoint + '/searchByUser/' + userId, {
+			params: {
+				"search_text": searchText
+			}
+		}).success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
 	
 	return userConnectionService;
 

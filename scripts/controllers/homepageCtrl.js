@@ -12,6 +12,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 	$scope.loadHomepage = function() {
 		// Initial null set
 		$scope.searchText = "";
+		$scope.lastSearch = "";
 
 		// Reload the user to update information
 		var user = store.get('user');
@@ -61,62 +62,53 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 	$scope.searchConnections = function(searchText) {
 		console.log("In search connections");
 
-		var promise = userService.getByAnyField(searchText);
+		// Get the logged in user
+		var user = store.get('user');
+		
+		if(user == null) {
+			console.log("No user logged in");
+			return;
+		}
+
+		var promise = userConnectionService.searchByUser(user.id, searchText);
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success
-				console.log("Recieved Results");
+				console.log("Recieved user search results");
 				
 				console.log(res);
 				
 				// Set pending connections
-				$scope.results = res;
+				$scope.userSearchResults = res;
 			} else {
 				// Log error
-				console.log("Error recieving results");	
+				console.log("Error recieving user search results");	
 			}
 		
 		}, function(error) {
 			// Log error
-			console.log("Error recieving results");
+			console.log("Error recieving user search results");
 			console.log("Response: " + error);
 		})
 
 	}
 
-	$scope.hideResults = function() {
-		console.log("Try to Clear");
+	$scope.hideUserSearchResults = function() {
 
+		if($scope.searchText.length != 0) {
 
-		if(!$scope.searchText.length){
-			$scope.results = null;
+			// Perform a search
+			if($scope.searchText != $scope.lastSearch) {
+				$scope.searchConnections($scope.searchText);
+				$scope.lastSearch = $scope.searchText;
+			}
 
-			console.log("In here");
-
-			return true;
-		}  
-
-		else 
 			return false;
+		} else {
+			$scope.userSearchResults = null;
+			return true;
+		}
 
-
-
-	}
-	
-	$scope.logout = function() {
-		console.log("Logging out");
-		
-		// Detach all locally stored objects
-		store.clear();
-		
-		// Go back to the login page
-		location.href = "login.html";
-	}
-	
-	$scope.removeConnection = function() {
-		console.log("Remove Connection");
-		//Dummy
-		
 	}
 
 	$scope.positiveActionConnection = function() {
@@ -138,7 +130,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 
 	$scope.loadPendingConnections = function()  {
 		
-		// Reload the user to update information
+		// Get the logged in user
 		var user = store.get('user');
 		
 		if(user == null) {
@@ -170,7 +162,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 	
 	$scope.loadExistingConnections = function()  {
 		
-		// Reload the user to update information
+		// Get the logged in user
 		var user = store.get('user');
 		
 		if(user == null) {
@@ -198,6 +190,16 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 			console.log("Error recieving existing connections");
 			console.log("Response: " + error);
 		})
+	}
+
+	$scope.logout = function() {
+		console.log("Logging out");
+		
+		// Detach all locally stored objects
+		store.clear();
+		
+		// Go back to the login page
+		location.href = "login.html";
 	}
 	
   });
