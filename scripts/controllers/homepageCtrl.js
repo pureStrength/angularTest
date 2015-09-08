@@ -28,6 +28,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 				// Log success
 				console.log("Updated stored user");
 				store.set('user', res);
+				$scope.user = res;
 
 				// Set the username
 				$scope.username = res.firstName + ' ' + res.lastName;
@@ -62,15 +63,12 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 	$scope.searchConnections = function(searchText) {
 		console.log("In search connections");
 
-		// Get the logged in user
-		var user = store.get('user');
-		
-		if(user == null) {
+		if($scope.user == null) {
 			console.log("No user logged in");
 			return;
 		}
 
-		var promise = userConnectionService.searchByUser(user.id, searchText);
+		var promise = userConnectionService.searchByUser($scope.user.id, searchText);
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success
@@ -93,7 +91,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 
 	}
 
-	$scope.hideUserSearchResults = function() {
+	$scope.showUserSearchResults = function() {
 
 		if($scope.searchText.length != 0) {
 
@@ -103,24 +101,65 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 				$scope.lastSearch = $scope.searchText;
 			}
 
-			return false;
+			return true;
 		} else {
 			$scope.userSearchResults = null;
-			return true;
+			return false;
 		}
 
 	}
 
-	$scope.positiveActionConnection = function() {
-		console.log("Positive Action Connection");
-		//Dummy
-		
-	}
+	// Perform the connection action when the selection button is clicked
+	$scope.connectionAction = function(connection, actionType) {
+		console.log("Connection Action: " + actionType);
+		console.log("Connection user id: " + connection.user.id);
 
-	$scope.negativeActionConnection = function() {
-		console.log("Negative Action Connection");
-		//Dummy
+		// Get the status from the connection and actionType
+		var status;
+		if(actionType == "positive") {
+			status = connection.userConnectionStatus.positiveAction;
+		} else if(actionType == "negative") {
+			status = connection.userConnectionStatus.negativeAction;
+		} else {
+			console.log("Recieved non-valid actionType: " + actionType);
+			return;
+		}
+		console.log("Connection status: " + status);
+
+		// Navigate to the user's profile if that was the selection
+		if(status == "View Profile") {
+			// Navigate to the user's profile
+			console.log("Navigating to the user's profile");
+			return;
+		} 
+
+		// Make the appropriate request depending on which status was selected
+		var promise;
+		if(status == "Accept Request") {
+			promise = userConnectionService.ConnectionAcceptRequest($scope.user.id, connection.user.id);
+		}
+
+		// Perform the promised service request
+		promise.then(function(res) {
+			if(res != null) {
+
+				if(res == "true") {
+					console.log("Successfully performed connection action");
+				} else {
+					console.log("Unsuccessfully performed connection action");
+				}
+				
+				// TODO: User modal to make user aware that the request was sent
+			} else {
+				// Log error
+				console.log("Error performing connection action");	
+			}
 		
+		}, function(error) {
+			// Log error
+			console.log("Error performing connection action");
+			console.log("Response: " + error);
+		})
 	}
 
 	$scope.loadAllConnections = function() {
@@ -130,15 +169,12 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 
 	$scope.loadPendingConnections = function()  {
 		
-		// Get the logged in user
-		var user = store.get('user');
-		
-		if(user == null) {
+		if($scope.user == null) {
 			console.log("No user logged in");
 			return;
 		}
 		
-		var promise = userConnectionService.findPending(user.id);
+		var promise = userConnectionService.findPending($scope.user.id);
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success
@@ -162,15 +198,12 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 	
 	$scope.loadExistingConnections = function()  {
 		
-		// Get the logged in user
-		var user = store.get('user');
-		
-		if(user == null) {
+		if($scope.user == null) {
 			console.log("No user logged in");
 			return;
 		}
 		
-		var promise = userConnectionService.findExisting(user.id);
+		var promise = userConnectionService.findExisting($scope.user.id);
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success

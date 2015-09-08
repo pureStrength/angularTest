@@ -67,6 +67,25 @@ angular.module('userConnectionService', [])
 		
 		return defer.promise;
 	}
+
+	userConnectionService.ConnectionAcceptRequest = function(initiatorId, receiverId) {
+		var defer = $q.defer();
+		
+		$http.put(userConnectionEndPoint + '/acceptConnection' + 
+			'?initiator_id=' + initiatorId +
+			"&receiver_id=" + receiverId)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
 	
 	return userConnectionService;
 
