@@ -5,10 +5,12 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, user-scalable=no">
-    <script src="bower_components/jquery-ajax-only/jquery-ajax-only.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+ 	<script src="bower_components/jquery-ajax-only/jquery-ajax-only.js"></script>
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/angular/angular.min.js"></script>
  	<script src="bower_components/angular-route/angular-route.min.js"></script>
+	<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/store.js/store.min.js"></script>
     <script src="scripts/app.js"></script>
 	<script src="scripts/services/userService.js"></script>
@@ -82,51 +84,74 @@
                     </div>
 
                     <div ng-hide="searchText.length">
-						<h2 class="left-aligned">Pending</h2>
-						<table class="table table-connect">
-							<tbody>
-							  <tr ng-repeat="connection in pendingConnections">
-								<td class="col-sm-1"> 
-									<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
-								</td>
-								<td>{{connection.user.firstName}} {{connection.user.lastName}}
-								<br>{{connection.user.email}}
-								<br>{{connection.user.organization}}</td>
-								<td class="last-row">            
-									<div class="btn-group-vertical">
-										<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'positive')" value="{{connection.userConnectionStatus.positiveAction}}"/>
-										<div style="line-height:75%;">
-										    <br>
+                    	<div ng-show="pendingConnections.length > 0">
+							<h2 class="left-aligned">Pending</h2>
+							<table class="table table-connect">
+								<tbody>
+								  <tr ng-repeat="connection in pendingConnections">
+									<td class="col-sm-1"> 
+										<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+									</td>
+									<td>{{connection.user.firstName}} {{connection.user.lastName}}
+									<br>{{connection.user.email}}
+									<br>{{connection.user.organization}}</td>
+									<td class="last-row">            
+										<div class="btn-group-vertical">
+											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'positive')" value="{{connection.userConnectionStatus.positiveAction}}"/>
+											<div style="line-height:75%;">
+											    <br>
+											</div>
+											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'negative')" value="{{connection.userConnectionStatus.negativeAction}}"/>
 										</div>
-										<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'negative')" value="{{connection.userConnectionStatus.negativeAction}}"/>
-									</div>
-								</td>
-							  </tr>
-							</tbody>
-						</table>
+									</td>
+								  </tr>
+								</tbody>
+							</table>
+						</div>
 
-						<h2 class="left-aligned">Existing</h2>
-						<table class="table table-connect">
-							<tbody>
-							  <tr ng-repeat="connection in existingConnections">
-								<td class="col-sm-1"> 
-									<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
-								</td>
-								<td>{{connection.user.firstName}} {{connection.user.lastName}}
-								<br>{{connection.user.email}}
-								<br>{{connection.user.organization}}</td>
-								<td class="last-row">            
-									<div class="btn-group-vertical">
-										<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'positive')" value="{{connection.userConnectionStatus.positiveAction}}"/>
-										<div style="line-height:75%;">
-										    <br>
+						<div ng-show="existingConnections.length > 0">
+							<h2 class="left-aligned">Existing</h2>
+							<table class="table table-connect">
+								<tbody>
+								  <tr ng-repeat="connection in existingConnections">
+									<td class="col-sm-1"> 
+										<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+									</td>
+									<td>{{connection.user.firstName}} {{connection.user.lastName}}
+									<br>{{connection.user.email}}
+									<br>{{connection.user.organization}}</td>
+									<td class="last-row">            
+										<div class="btn-group-vertical">
+											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'positive')" value="{{connection.userConnectionStatus.positiveAction}}"/>
+											<div style="line-height:75%;">
+											    <br>
+											</div>
+											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'negative')" value="{{connection.userConnectionStatus.negativeAction}}"/>
 										</div>
-										<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'negative')" value="{{connection.userConnectionStatus.negativeAction}}"/>
+									</td>
+								  </tr>
+								</tbody>
+						    </table>
+						</div>
+					</div>
+
+					<!-- Success connection modal (pop-up) -->
+					<script type="text/ng-template" id="modal.html"></script>
+					<div class="modal fade" id="successConnectionModal" role="dialog">
+						<div class="vertical-alignment-helper">
+				    		<div class="modal-dialog vertical-align-center">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-success" ng-click="closeConnectionModal()" data-dismiss="modal">Okay!</button>
+										</div>
 									</div>
-								</td>
-							  </tr>
-							</tbody>
-					    </table>
+								</div>
+							</div>
+						</div>
 					</div>
                 </div>
                 <div id="settings" class="tab-pane fade">

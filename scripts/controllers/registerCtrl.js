@@ -95,7 +95,7 @@ angular.module('registerModule', ['userService', 'angularModalService'])
         });
     };
 
-	$scope.closeModal = function(){
+	$scope.closeModal = function() {
         // Continue to the login page
 		location.href = "login.html";
     };

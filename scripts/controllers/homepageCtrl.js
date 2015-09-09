@@ -6,8 +6,8 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService'])
-  .controller('homepageCtrl', function ($scope, userService, userConnectionService) {
+angular.module('homepageModule', ['userService', 'userConnectionService', 'angularModalService'])
+  .controller('homepageCtrl', function ($scope, userService, userConnectionService, ModalService) {
 
 	$scope.loadHomepage = function() {
 		// Initial null set
@@ -104,6 +104,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 			return true;
 		} else {
 			$scope.userSearchResults = null;
+			$scope.lastSearch = '';
 			return false;
 		}
 
@@ -127,7 +128,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 		console.log("Connection status: " + status);
 
 		// Navigate to the user's profile if that was the selection
-		if(status == "View Profile") {
+		if(status == "View Profile" || status == "Request Sent") {
 			// Navigate to the user's profile
 			console.log("Navigating to the user's profile");
 			return;
@@ -135,20 +136,25 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 
 		// Make the appropriate request depending on which status was selected
 		var promise;
+		var actionTaken;
 		if(status == "Accept Request") {
 			promise = userConnectionService.ConnectionAcceptRequest($scope.user.id, connection.user.id);
-		}
-
-		else if(status == "Deny Request") {
+			actionTaken = "Request Accepted";
+		} else if(status == "Deny Request") {
 			promise = userConnectionService.ConnectionDenyRequest($scope.user.id, connection.user.id);
-		}
-
-		else if(status == "Send Request") {
+			actionTaken = "Request Denied";
+		} else if(status == "Cancel Request") {
+			promise = userConnectionService.ConnectionDenyRequest($scope.user.id, connection.user.id);
+			actionTaken = "Request Cancelled";
+		} else if(status == "Send Request") {
 			promise = userConnectionService.ConnectionSendRequest($scope.user.id, connection.user.id);
-		}
-
-		else if(status == "Remove Connection") {
+			actionTaken = "Request Sent";
+		} else if(status == "Remove Connection") {
 			promise = userConnectionService.ConnectionRemoveRequest($scope.user.id, connection.user.id);
+			actionTaken = "Connection Removed";
+		} else {
+			console.log("Status undefined: " + status);
+			return;
 		}
 
 		// Perform the promised service request
@@ -161,7 +167,8 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 					console.log("Unsuccessfully performed connection action");
 				}
 				
-				// TODO: User modal to make user aware that the request was sent
+				// Display the success modal
+				$scope.showConnectionModal(actionTaken);
 			} else {
 				// Log error
 				console.log("Error performing connection action");	
@@ -174,12 +181,39 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 		})
 	}
 
+	$scope.showConnectionModal = function(actionTaken) {
+
+        ModalService.showModal({
+            templateUrl: 'modal.html',
+            controller: "homepageCtrl"
+        }).then(function(modal) {
+            
+			// Display correct message
+			$scope.modalHeader = actionTaken;
+            
+            modal.element.append($("#successConnectionModal"));
+            $("#successConnectionModal").modal({
+			    backdrop: 'static',
+			    keyboard: false 
+			});
+        });
+    };
+
+	$scope.closeConnectionModal = function() {
+        // Refresh the tables
+        $scope.loadAllConnections();
+        $scope.lastSearch = "";
+        $scope.searchConnections($scope.searchText);
+    };
+
 	$scope.loadAllConnections = function() {
 		$scope.loadPendingConnections();
 		$scope.loadExistingConnections();
 	}
 
 	$scope.loadPendingConnections = function()  {
+
+		console.log("Loading Pending Connections");
 		
 		if($scope.user == null) {
 			console.log("No user logged in");
@@ -207,7 +241,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 			console.log("Response: " + error);
 		})
 	}
-	
+
 	$scope.loadExistingConnections = function()  {
 		
 		if($scope.user == null) {
