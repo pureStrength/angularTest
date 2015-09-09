@@ -86,6 +86,64 @@ angular.module('userConnectionService', [])
 		
 		return defer.promise;
 	}
+
+
+	userConnectionService.ConnectionDenyRequest = function(initiatorId, receiverId) {
+		var defer = $q.defer();
+		
+		$http.put(userConnectionEndPoint + '/denyConnection' + 
+			'?initiator_id=' + initiatorId +
+			"&receiver_id=" + receiverId)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
+
+	userConnectionService.ConnectionSendRequest = function(initiatorId, receiverId) {
+		var defer = $q.defer();
+		
+		$http.put(userConnectionEndPoint + '/requestConnection' + 
+			'?initiator_id=' + initiatorId +
+			"&receiver_id=" + receiverId)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
+
+	userConnectionService.ConnectionRemoveRequest = function(initiatorId, receiverId) {
+		var defer = $q.defer();
+		
+		$http.put(userConnectionEndPoint + '/disconnectUsers' + 
+			'?initiator_id=' + initiatorId +
+			"&receiver_id=" + receiverId)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
 	
 	return userConnectionService;
 

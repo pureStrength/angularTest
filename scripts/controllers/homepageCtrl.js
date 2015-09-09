@@ -139,6 +139,18 @@ angular.module('homepageModule', ['userService', 'userConnectionService'])
 			promise = userConnectionService.ConnectionAcceptRequest($scope.user.id, connection.user.id);
 		}
 
+		else if(status == "Deny Request") {
+			promise = userConnectionService.ConnectionDenyRequest($scope.user.id, connection.user.id);
+		}
+
+		else if(status == "Send Request") {
+			promise = userConnectionService.ConnectionSendRequest($scope.user.id, connection.user.id);
+		}
+
+		else if(status == "Remove Connection") {
+			promise = userConnectionService.ConnectionRemoveRequest($scope.user.id, connection.user.id);
+		}
+
 		// Perform the promised service request
 		promise.then(function(res) {
 			if(res != null) {
