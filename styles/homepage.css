@@ -24,9 +24,34 @@
 	height: 45px;
 	width: 200px !important;	
 }
+
+.dropdownbox {
+	width: 200px !important;	
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+            background-image:none !important;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+            background-color:#91ACFF;
+}
+.dropdown-menu li:hover {
+    cursor: pointer;
+}
+
+.dropdown-menu-centered {
+  left: 50%;
+  right: auto;
+  text-align: center;
+  transform: translate(-50%, 0);
+}
+
 .top-bar form {
 	padding-top: 24px;	
 }
 .left-aligned {
 	text-align: left;
+}
+.right-aligned  {
+	text-align: right;
 }

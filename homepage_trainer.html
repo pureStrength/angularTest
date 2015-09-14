@@ -48,6 +48,78 @@
                 </div>
                 <div id="workouts" class="tab-pane fade">
                     <h2>Workouts</h2>
+                    <div ng-show="true" class="left-aligned">
+                      <button class="btn btn-primary left-aligned" type="submit" ng-click="createWorkout()">Create Workout</button>
+                    </div>
+                     
+                    <div ng-show="true">
+                            <h2 class="left-aligned">Lifts</h2>
+                            <table class="table table-connect">
+                                <tbody>
+                                  <tr ng-repeat="lift in lifts">
+                                    <td>{{lift.name}}</td>
+                                    <td>{{lift.description}}</td>
+                                    <td class="last-row">            
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                                                <span class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                                                    <li><a ng-click="editLift({{lift.id}})">Edit</a></li>
+                                                    <li><a ng-click="deleteLift({{lift.id}})">Delete</a></li>
+                                                </ul>
+                                        </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-show="true">
+                            <h2 class="left-aligned">Sets</h2>
+                            <table class="table table-connect">
+                                <tbody>
+                                  <tr ng-repeat="set in sets">
+                                    <td>{{set.name}}</td>
+                                    <td>{{set.description}}</td>
+                                    <td class="last-row">            
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                                                <span class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                                                    <li><a ng-click="editSet{{set.id}})">Edit</a></li>
+                                                    <li><a ng-click="deleteSet({{set.id}})">Delete</a></li>
+                                                </ul>
+                                        </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-show="true">
+                            <h2 class="left-aligned">Prescriptions</h2>
+                            <table class="table table-connect">
+                                <tbody>
+                                  <tr ng-repeat="prescription in prescriptions">
+                                    <td>{{prescription.name}}</td>
+                                    <td>{{prescription.description}}</td>
+                                    <td class="last-row">            
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                                                <span class="caret"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                                                    <li><a ng-click="editPrescription({{prescription.id}})">Edit</a></li>
+                                                    <li><a ng-click="deletePrescription({{prescription.id}})">Delete</a></li>
+                                                </ul>
+                                        </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
                 </div>
                 <div id="connect" class="tab-pane fade">
                     <h2 class="left-aligned">Find Connections</h2>

@@ -26,7 +26,12 @@
     <div class="container">
         <div class="row top-bar">
             <form name="notificationsForm" class="col-xs-4">
-                <button type="button" class="btn btn-primary" ng-click="notifications()">Notifications <span class="badge">{{notifications}}</span></button>
+            	<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" ng-click="notifications()">Notifications <span class="badge">{{notifications}}</span></button>
+					<ul class="dropdown-menu dropdown-menu-centered" >
+						<li><a ng-click="notifications()">Notification1</a></li>
+					</ul>
+				</div>
             </form>
             <h1 class="col-xs-4">Welcome {{username}}</h1>
             <form name="logoutForm" class="col-xs-4">
@@ -70,12 +75,13 @@
 								<br>{{connection.user.email}}
 								<br>{{connection.user.organization}}</td>
 								<td class="last-row">            
-									<div class="btn-group-vertical">
-										<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'positive')" value="{{connection.userConnectionStatus.positiveAction}}"/>
-										<div style="line-height:75%;">
-										    <br>
-										</div>
-										<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'negative')" value="{{connection.userConnectionStatus.negativeAction}}"/>
+									<div class="dropdown">
+										<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu dropdown-menu-right dropdownbox">
+												<li><a ng-click="connectionAction(connection, 'positive')">{{connection.userConnectionStatus.positiveAction}}</a></li>
+												<li><a ng-click="connectionAction(connection, 'negative')">{{connection.userConnectionStatus.negativeAction}}</a></li>
+											</ul>
 									</div>
 								</td>
 							  </tr>
@@ -96,12 +102,13 @@
 									<br>{{connection.user.email}}
 									<br>{{connection.user.organization}}</td>
 									<td class="last-row">            
-										<div class="btn-group-vertical">
-											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'positive')" value="{{connection.userConnectionStatus.positiveAction}}"/>
-											<div style="line-height:75%;">
-											    <br>
-											</div>
-											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'negative')" value="{{connection.userConnectionStatus.negativeAction}}"/>
+										<div class="dropdown">
+											<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+												<span class="caret"></span></button>
+												<ul class="dropdown-menu dropdown-menu-right dropdownbox">
+												    <li><a ng-click="connectionAction(connection, 'positive')">{{connection.userConnectionStatus.positiveAction}}</a></li>
+												    <li><a ng-click="connectionAction(connection, 'negative')">{{connection.userConnectionStatus.negativeAction}}</a></li>
+												</ul>
 										</div>
 									</td>
 								  </tr>
@@ -121,12 +128,13 @@
 									<br>{{connection.user.email}}
 									<br>{{connection.user.organization}}</td>
 									<td class="last-row">            
-										<div class="btn-group-vertical">
-											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'positive')" value="{{connection.userConnectionStatus.positiveAction}}"/>
-											<div style="line-height:75%;">
-											    <br>
-											</div>
-											<input type="button" class="btn btn-primary btn-connect" ng-click="connectionAction(connection, 'negative')" value="{{connection.userConnectionStatus.negativeAction}}"/>
+										<div class="dropdown">
+											<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+												<span class="caret"></span></button>
+												<ul class="dropdown-menu dropdown-menu-right dropdownbox">
+												    <li><a ng-click="connectionAction(connection, 'positive')">{{connection.userConnectionStatus.positiveAction}}</a></li>
+												    <li><a ng-click="connectionAction(connection, 'negative')">{{connection.userConnectionStatus.negativeAction}}</a></li>
+												</ul>
 										</div>
 									</td>
 								  </tr>
