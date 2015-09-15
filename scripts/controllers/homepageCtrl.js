@@ -111,49 +111,37 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'angul
 	}
 
 	// Perform the connection action when the selection button is clicked
-	$scope.connectionAction = function(connection, actionType) {
-		console.log("Connection Action: " + actionType);
+	$scope.connectionAction = function(connection, action) {
+		console.log("Connection Action: " + action);
 		console.log("Connection user id: " + connection.user.id);
 
-		// Get the status from the connection and actionType
-		var status;
-		if(actionType == "positive") {
-			status = connection.userConnectionStatus.positiveAction;
-		} else if(actionType == "negative") {
-			status = connection.userConnectionStatus.negativeAction;
-		} else {
-			console.log("Recieved non-valid actionType: " + actionType);
-			return;
-		}
-		console.log("Connection status: " + status);
-
 		// Navigate to the user's profile if that was the selection
-		if(status == "View Profile" || status == "Request Sent") {
+		if(action == "View Profile") {
 			// Navigate to the user's profile
 			console.log("Navigating to the user's profile");
 			return;
 		} 
 
-		// Make the appropriate request depending on which status was selected
+		// Make the appropriate request depending on which action was selected
 		var promise;
 		var actionTaken;
-		if(status == "Accept Request") {
+		if(action == "Accept Request") {
 			promise = userConnectionService.ConnectionAcceptRequest($scope.user.id, connection.user.id);
 			actionTaken = "Request Accepted";
-		} else if(status == "Deny Request") {
+		} else if(action == "Deny Request") {
 			promise = userConnectionService.ConnectionDenyRequest($scope.user.id, connection.user.id);
 			actionTaken = "Request Denied";
-		} else if(status == "Cancel Request") {
+		} else if(action == "Cancel Request") {
 			promise = userConnectionService.ConnectionDenyRequest($scope.user.id, connection.user.id);
 			actionTaken = "Request Cancelled";
-		} else if(status == "Send Request") {
+		} else if(action == "Send Request") {
 			promise = userConnectionService.ConnectionSendRequest($scope.user.id, connection.user.id);
 			actionTaken = "Request Sent";
-		} else if(status == "Remove Connection") {
+		} else if(action == "Remove Connection") {
 			promise = userConnectionService.ConnectionRemoveRequest($scope.user.id, connection.user.id);
 			actionTaken = "Connection Removed";
 		} else {
-			console.log("Status undefined: " + status);
+			console.log("Action undefined: " + action);
 			return;
 		}
 

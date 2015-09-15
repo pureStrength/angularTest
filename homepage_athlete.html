@@ -76,12 +76,11 @@
 								<br>{{connection.user.organization}}</td>
 								<td class="last-row">            
 									<div class="dropdown">
-										<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-											<span class="caret"></span></button>
-											<ul class="dropdown-menu dropdown-menu-right dropdownbox">
-												<li><a ng-click="connectionAction(connection, 'positive')">{{connection.userConnectionStatus.positiveAction}}</a></li>
-												<li><a ng-click="connectionAction(connection, 'negative')">{{connection.userConnectionStatus.negativeAction}}</a></li>
-											</ul>
+										<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">{{connection.userConnectionStatus.status}}
+										<span class="caret"></span></button>
+										<ul class="dropdown-menu dropdown-menu-right dropdownbox">
+											<li ng-repeat="action in connection.userConnectionStatus.actions"><a ng-click="connectionAction(connection, action)">{{action}}</a></li>
+										</ul>
 									</div>
 								</td>
 							  </tr>
@@ -103,12 +102,11 @@
 									<br>{{connection.user.organization}}</td>
 									<td class="last-row">            
 										<div class="dropdown">
-											<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-												<span class="caret"></span></button>
-												<ul class="dropdown-menu dropdown-menu-right dropdownbox">
-												    <li><a ng-click="connectionAction(connection, 'positive')">{{connection.userConnectionStatus.positiveAction}}</a></li>
-												    <li><a ng-click="connectionAction(connection, 'negative')">{{connection.userConnectionStatus.negativeAction}}</a></li>
-												</ul>
+											<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">{{connection.userConnectionStatus.status}}
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu dropdown-menu-right dropdownbox">
+												<li ng-repeat="action in connection.userConnectionStatus.actions"><a ng-click="connectionAction(connection, action)">{{action}}</a></li>
+											</ul>
 										</div>
 									</td>
 								  </tr>
@@ -129,12 +127,11 @@
 									<br>{{connection.user.organization}}</td>
 									<td class="last-row">            
 										<div class="dropdown">
-											<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-												<span class="caret"></span></button>
-												<ul class="dropdown-menu dropdown-menu-right dropdownbox">
-												    <li><a ng-click="connectionAction(connection, 'positive')">{{connection.userConnectionStatus.positiveAction}}</a></li>
-												    <li><a ng-click="connectionAction(connection, 'negative')">{{connection.userConnectionStatus.negativeAction}}</a></li>
-												</ul>
+											<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">{{connection.userConnectionStatus.status}}
+											<span class="caret"></span></button>
+											<ul class="dropdown-menu dropdown-menu-right dropdownbox">
+												<li ng-repeat="action in connection.userConnectionStatus.actions"><a ng-click="connectionAction(connection, action)">{{action}}</a></li>
+											</ul>
 										</div>
 									</td>
 								  </tr>
