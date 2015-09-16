@@ -9,6 +9,7 @@
 angular.module('homepageModule', ['userService', 'userConnectionService', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, userService, userConnectionService, ModalService) {
 
+
 	$scope.loadHomepage = function() {
 		// Initial null set
 		$scope.searchText = "";
