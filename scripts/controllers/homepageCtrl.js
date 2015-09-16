@@ -6,8 +6,8 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService', 'angularModalService'])
-  .controller('homepageCtrl', function ($scope, userService, userConnectionService, ModalService) {
+angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'angularModalService'])
+  .controller('homepageCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
 	$scope.loadHomepage = function() {
 		// Initial null set
@@ -255,6 +255,99 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'angul
 		}, function(error) {
 			// Log error
 			console.log("Error recieving existing connections");
+			console.log("Response: " + error);
+		})
+	}
+
+	$scope.loadWorkouts = function() {
+		$scope.loadLifts();
+		$scope.loadSets();
+		$scope.loadPrescriptions();
+	}
+
+	$scope.loadLifts = function()  {
+		
+		if($scope.user == null) {
+			console.log("No user logged in");
+			return;
+		}
+		
+		var promise = workoutService.getLifts($scope.user.id);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Recieved lifts");
+				
+				console.log(res);
+				
+				// Set existing connections
+				$scope.lifts = res;
+			} else {
+				// Log error
+				console.log("Error recieving lifts");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error recieving lifts");
+			console.log("Response: " + error);
+		})
+	}
+
+	$scope.loadSets = function()  {
+		
+		if($scope.user == null) {
+			console.log("No user logged in");
+			return;
+		}
+		
+		var promise = workoutService.getSets($scope.user.id);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Recieved sets");
+				
+				console.log(res);
+				
+				// Set existing connections
+				$scope.sets = res;
+			} else {
+				// Log error
+				console.log("Error recieving sets");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error recieving sets");
+			console.log("Response: " + error);
+		})
+	}
+
+	$scope.loadPrescriptions = function()  {
+		
+		if($scope.user == null) {
+			console.log("No user logged in");
+			return;
+		}
+		
+		var promise = workoutService.getPrescriptions($scope.user.id);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Recieved prescriptions");
+				
+				console.log(res);
+				
+				// Set existing connections
+				$scope.prescriptions = res;
+			} else {
+				// Log error
+				console.log("Error recieving prescriptions");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error recieving prescriptions");
 			console.log("Response: " + error);
 		})
 	}
