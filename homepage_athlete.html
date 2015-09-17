@@ -11,7 +11,6 @@
  	<script src="bower_components/angular-route/angular-route.min.js"></script>
 	<script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/store.js/store.min.js"></script>
     <script src="scripts/app.js"></script>
 	<script src="scripts/services/userService.js"></script>
@@ -42,18 +41,24 @@
         </div>
         
         <div class="main-block">
-        	<tabset type="pills" justified="true">
-			   <tab  heading="Prescription">
-			     <div ng-include="prescription.html"></div>
-			   </tab>
-			   <tab  heading="Connect" ng-click="loadAllConnections()">
-			     <div ng-include="user_connection_tab.html"></div>
-			   </tab>
-			   <tab  heading="Settings">
-			     <div ng-include="settings.html"></div>
-			   </tab>
-			</tabset>
-        </div>
+        	<ul class="nav nav-pills nav-justified">
+                <li class="active"><a data-toggle="tab" href="#prescription">Prescription</a></li>
+                <li><a data-toggle="tab" href="#connect" ng-click="loadAllConnections()">Connect</a></li>
+                <li><a data-toggle="tab" href="#settings">Settings</a></li>
+            </ul>
+
+            <div class="tab-content">
+            	<div id="prescription" class="tab-pane fade in active">
+                    <div ng-include="'prescription.html'"></div>
+	            </div>
+	            <div id="connect" class="tab-pane fade">
+	            	<div ng-include="'connect.html'"></div>
+	            </div>
+	            <div id="settings" class="tab-pane fade">
+	                <div ng-include="'settings.html'"></div>
+	            </div>
+	        </div>
+    	</div>
     </div>
 </body>
 </html>
