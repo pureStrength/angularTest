@@ -92,14 +92,14 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
 	}
 
-	$scope.showUserSearchResults = function() {
+	$scope.showUserSearchResults = function(searchText) {
 
-		if($scope.searchText.length != 0) {
+		if(searchText.length > 0) {
 
 			// Perform a search
-			if($scope.searchText != $scope.lastSearch) {
-				$scope.searchConnections($scope.searchText);
-				$scope.lastSearch = $scope.searchText;
+			if(searchText != $scope.lastSearch) {
+				$scope.searchConnections(searchText);
+				$scope.lastSearch = searchText;
 			}
 
 			return true;
