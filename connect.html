@@ -16,7 +16,7 @@
 		<tbody>
 		  <tr ng-repeat="connection in userSearchResults">
 			<td class="col-sm-1"> 
-				<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+				<img src="images/profile_pics/default" alt="Profile Pic" style="width: 100px; height: 100px;">
 			</td>
 			<td>{{connection.user.firstName}} {{connection.user.lastName}}
 			<br>{{connection.user.email}}
@@ -42,7 +42,7 @@
 			<tbody>
 			  <tr ng-repeat="connection in pendingConnections">
 				<td class="col-sm-1"> 
-					<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+					<img src="images/profile_pics/default.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
 				</td>
 				<td>{{connection.user.firstName}} {{connection.user.lastName}}
 				<br>{{connection.user.email}}
@@ -67,7 +67,7 @@
 			<tbody>
 			  <tr ng-repeat="connection in existingConnections">
 				<td class="col-sm-1"> 
-					<img src="images/default_profile_pic.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+					<img src="images/profile_pics/default" alt="Profile Pic" style="width: 100px; height: 100px;">
 				</td>
 				<td>{{connection.user.firstName}} {{connection.user.lastName}}
 				<br>{{connection.user.email}}
