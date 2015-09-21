@@ -55,3 +55,8 @@
 .right-aligned  {
 	text-align: right;
 }
+
+.dropdown {
+    position: relative;
+}
+

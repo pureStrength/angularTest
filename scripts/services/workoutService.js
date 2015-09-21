@@ -13,7 +13,7 @@ angular.module('workoutService', [])
 	var liftEndPoint = endPoint + 'mainLiftDefinition';
 	var setEndPoint = endPoint + 'mainLiftSet';
 	var prescriptionEndPoint = endPoint + 'prescriptionDefinition';
-	
+
 	workoutService.createLift = function(userId, lift) {
 		var defer = $q.defer();
 		

@@ -14,6 +14,8 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		// Initial null set
 		$scope.searchText = "";
 		$scope.lastSearch = "";
+		$scope.set = [1];
+		$scope.counterOfSet = 1;
 
 		// Reload the user to update information
 		var user = store.get('user');
@@ -258,6 +260,48 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			console.log("Error recieving existing connections");
 			console.log("Response: " + error);
 		})
+	}
+
+	$scope.createWorkout = function(type) {
+		$scope.creating = true;
+		$scope.creatingLift = false;
+		$scope.creatingSet = false;
+		$scope.creatingPrescription = false;
+
+		if(type == 'lift'){
+			$scope.creatingLift = true;
+		}
+
+		if(type == 'set'){
+			$scope.creatingSet = true;
+		}
+
+		if(type == 'prescription'){
+			$scope.creatingPrescription = true;
+		}
+	}
+
+	$scope.cancelCreate = function() {
+		$scope.creating = false;
+		$scope.creatingLift = false;
+		$scope.creatingSet = false;
+		$scope.creatingPrescription = false;
+	}
+
+	$scope.createLift = function(lift) {
+		
+	}
+
+	$scope.createSet = function() {
+		
+	}
+
+	$scope.createPrescription = function() {
+		
+	}
+
+	$scope.addSetRow = function() {
+		$scope.set.push(++$scope.counterOfSet);
 	}
 
 	$scope.loadWorkouts = function() {
