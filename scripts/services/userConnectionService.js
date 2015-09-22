@@ -71,7 +71,7 @@ angular.module('userConnectionService', [])
 	userConnectionService.ConnectionAcceptRequest = function(initiatorId, receiverId) {
 		var defer = $q.defer();
 		
-		$http.put(userConnectionEndPoint + '/acceptConnection' + 
+		$http.get(userConnectionEndPoint + '/acceptConnection' + 
 			'?initiator_id=' + initiatorId +
 			"&receiver_id=" + receiverId)
 		.success(function(res, status) {
@@ -91,7 +91,7 @@ angular.module('userConnectionService', [])
 	userConnectionService.ConnectionDenyRequest = function(initiatorId, receiverId) {
 		var defer = $q.defer();
 		
-		$http.put(userConnectionEndPoint + '/denyConnection' + 
+		$http.get(userConnectionEndPoint + '/denyConnection' + 
 			'?initiator_id=' + initiatorId +
 			"&receiver_id=" + receiverId)
 		.success(function(res, status) {
@@ -110,7 +110,7 @@ angular.module('userConnectionService', [])
 	userConnectionService.ConnectionSendRequest = function(initiatorId, receiverId) {
 		var defer = $q.defer();
 		
-		$http.put(userConnectionEndPoint + '/requestConnection' + 
+		$http.get(userConnectionEndPoint + '/requestConnection' + 
 			'?initiator_id=' + initiatorId +
 			"&receiver_id=" + receiverId)
 		.success(function(res, status) {
@@ -129,7 +129,7 @@ angular.module('userConnectionService', [])
 	userConnectionService.ConnectionRemoveRequest = function(initiatorId, receiverId) {
 		var defer = $q.defer();
 		
-		$http.put(userConnectionEndPoint + '/disconnectUsers' + 
+		$http.get(userConnectionEndPoint + '/disconnectUsers' + 
 			'?initiator_id=' + initiatorId +
 			"&receiver_id=" + receiverId)
 		.success(function(res, status) {
