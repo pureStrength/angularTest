@@ -14,9 +14,9 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		// Initial null set
 		$scope.searchText = "";
 		$scope.lastSearch = "";
-		$scope.set = [1];
-		$scope.counterOfSet = 1;
-
+		$scope.counterOfSet = 0;
+		$scope.set = [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
+	
 		// Reload the user to update information
 		var user = store.get('user');
 		
@@ -292,7 +292,29 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		
 	}
 
-	$scope.createSet = function() {
+	$scope.createSet = function(set) {
+
+		$.each(set, function(){
+			this.id = null;
+		});
+
+		var promise = workoutService.createSet($scope.user.id, set);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Created Set");
+				
+				console.log(res);
+			} else {
+				// Log error
+				console.log("Error Creating Set");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error Creating Set");
+			console.log("Response: " + error);
+		})
 		
 	}
 
@@ -301,7 +323,12 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 	}
 
 	$scope.addSetRow = function() {
-		$scope.set.push(++$scope.counterOfSet);
+		$scope.set.push({id: ++$scope.counterOfSet, repetitions: null, oneRepMax: null});
+	}
+
+	$scope.deleteRow = function(reps) {
+		var index = $scope.set.indexOf(reps);
+		$scope.set.splice(index, 1);
 	}
 
 	$scope.loadWorkouts = function() {

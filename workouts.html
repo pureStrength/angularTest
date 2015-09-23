@@ -23,8 +23,8 @@
 </br>
     <form name="setForm" role="form">
         <div class="dropdown">
-            <select class="selectpicker btn btn-primary">
-                <option ng-repeat="lift in lifts"><a ng-model="set.mainLift">{{lift.name}}</a></option>
+            <select class="selectpicker btn btn-primary" ng-model="set.mainLiftDefinition">
+                <option ng-repeat="lift in lifts">{{lift.name}}</option>
             </select>
         </div><br>
         <table class="table">
@@ -35,14 +35,14 @@
             </thead>
             <tbody>
                 <tr ng-repeat="reps in set">
-                    <td><input type="text" name="rowReps" class="form-control"/></td>
-                    <td><input type="text" name="rowORM" class="form-control"/></td>
-                    <td><input type="button" class="btn btn-danger" ng-click="deleteRow()" value="Delete"/></td>
+                    <td><input type="text" name="rowReps" class="form-control" ng-model="reps.assignedRepetitions"/></td>
+                    <td><input type="text" name="rowORM" class="form-control" ng-model="reps.assignedPercentOfOneRepMax"/></td>
+                    <td><input type="button" class="btn btn-danger" ng-click="deleteRow(reps)" value="Delete"/></td>
                 </tr>
             </tbody>
         </table>
         <input type="button" class="btn btn-success" value="Add" ng-click="addSetRow()"><br><br>
-        <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="lift.description"/><br>
+        <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="set.description"/><br>
         <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
         <input type="submit" class="btn btn-primary" ng-click="createSet(set)" value="Save"/><br><br>
      </form> 
