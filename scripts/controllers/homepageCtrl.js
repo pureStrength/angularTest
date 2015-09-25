@@ -11,11 +11,12 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
 
 	$scope.loadHomepage = function() {
-		// Initial null set
+		// Initial connection search fields
 		$scope.searchText = "";
 		$scope.lastSearch = "";
-		$scope.counterOfSet = 0;
-		$scope.set = [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
+
+		// Initialize custom set creation object
+		$scope.initializeCustomSet();
 	
 		// Reload the user to update information
 		var user = store.get('user');
@@ -268,15 +269,15 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		$scope.creatingSet = false;
 		$scope.creatingPrescription = false;
 
-		if(type == 'lift'){
+		if(type == 'lift') {
 			$scope.creatingLift = true;
 		}
 
-		if(type == 'set'){
+		if(type == 'set') {
 			$scope.creatingSet = true;
 		}
 
-		if(type == 'prescription'){
+		if(type == 'prescription') {
 			$scope.creatingPrescription = true;
 		}
 	}
@@ -289,13 +290,57 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 	}
 
 	$scope.createLift = function(lift) {
+
+		var promise = workoutService.createLift($scope.user.id, set);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Created Lift");
+				console.log(res);
+
+				$scope.showCreationModal("Creation Successful", true);
+			} else {
+				// Log error
+				console.log("Error Creating Lift");	
+			}
 		
+		}, function(error) {
+			// Log error
+			console.log("Error Creating Lift");
+			console.log("Response: " + error);
+		})
 	}
 
 	$scope.createSet = function(set) {
 
-		$.each(set, function(){
-			this.id = null;
+		var validInput = true;
+
+		if(set.mainLiftDefinition == undefined) {
+			$scope.showCreationModal("You must select a lift", false);
+			return;
+		}
+
+		if(set.mainLifts.length == 0) {
+			$scope.showCreationModal("You must add atleast one table row", false);
+			return;
+		}
+
+		$.each(set.mainLifts, function() {
+
+			if(this.assignedRepetitions == null ||
+			   this.assignedPercentOfOneRepMax == null) {
+				$scope.showCreationModal("You must fill in all table rows", false);
+				validInput = false;
+				return;
+			}
+		});
+
+		if(validInput == false) {
+			return;
+		}
+
+		$.each(set.mainLifts, function() {
+			delete this.id;
 		});
 
 		var promise = workoutService.createSet($scope.user.id, set);
@@ -303,8 +348,9 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			if(res != null) {
 				// Log success
 				console.log("Created Set");
-				
 				console.log(res);
+
+				$scope.showCreationModal("Creation Successful", true);
 			} else {
 				// Log error
 				console.log("Error Creating Set");	
@@ -323,12 +369,12 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 	}
 
 	$scope.addSetRow = function() {
-		$scope.set.push({id: ++$scope.counterOfSet, repetitions: null, oneRepMax: null});
+		$scope.customSet.mainLifts.push({id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null});
 	}
 
 	$scope.deleteRow = function(reps) {
-		var index = $scope.set.indexOf(reps);
-		$scope.set.splice(index, 1);
+		var index = $scope.customSet.mainLifts.indexOf(reps);
+		$scope.customSet.mainLifts.splice(index, 1);
 	}
 
 	$scope.loadWorkouts = function() {
@@ -423,6 +469,42 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			console.log("Response: " + error);
 		})
 	}
+
+	$scope.showCreationModal = function(header, success) {
+
+        ModalService.showModal({
+            templateUrl: 'creationModal.html',
+            controller: "homepageCtrl"
+        }).then(function(modal) {
+            
+			// Display correct message
+			$scope.modalHeader = header;
+			$scope.success = success;
+            
+            modal.element.append($("#creationModal"));
+            $("#creationModal").modal({
+			    backdrop: 'static',
+			    keyboard: false 
+			});
+        });
+    };
+
+	$scope.closeCreationModal = function(wasSuccessful) {
+		if(wasSuccessful) {
+			// Reinitialize custom objects
+			$scope.initializeCustomSet();
+
+			// Refresh the tables
+        	$scope.loadWorkouts();
+        	$scope.cancelCreate();
+		} 
+    };
+
+    $scope.initializeCustomSet = function() {
+    	$scope.customSet = {};
+		$scope.counterOfSet = 0;
+		$scope.customSet.mainLifts = [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
+    }
 
 	$scope.logout = function() {
 		console.log("Logging out");
