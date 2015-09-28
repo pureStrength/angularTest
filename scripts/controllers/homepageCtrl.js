@@ -6,7 +6,7 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService'])
+angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, userService) {
 
 	$scope.loadHomepage = function() {
@@ -41,6 +41,14 @@ angular.module('homepageModule', ['userService'])
 
 		// Get the notifications for the user
 		$scope.notifications = 0;
+	}
+
+	$scope.clickedConnectionsTab = function() {
+		$scope.$broadcast('usingConnectionsTab');
+	}
+
+	$scope.clickedWorkoutsTab = function() {
+		$scope.$broadcast('usingWorkoutsTab');
 	}
 
 	$scope.logout = function() {

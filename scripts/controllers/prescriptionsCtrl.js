@@ -6,7 +6,7 @@
  * @description Controller of the prescriptions tab
  * # prescriptionsCtrl
  */
-angular.module('homepageModule', ['workoutService'])
+angular.module('homepageModule')
   .controller('prescriptionsCtrl', function ($scope, workoutService) {
 
 

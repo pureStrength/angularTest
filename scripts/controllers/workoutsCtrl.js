@@ -6,7 +6,7 @@
  * @description Controller of the workouts tab
  * # workoutsCtrl
  */
-angular.module('homepageModule', ['workoutService', 'angularModalService'])
+angular.module('homepageModule')
   .controller('workoutsCtrl', function ($scope, workoutService, ModalService) {
 
 
@@ -14,6 +14,10 @@ angular.module('homepageModule', ['workoutService', 'angularModalService'])
 		// Initialize custom set creation object
 		$scope.initializeCustomSet();
 	}
+
+	$scope.$on('usingWorkoutsTab', function(event, args) {
+		$scope.loadWorkouts();
+	});
 
 	$scope.createWorkout = function(type) {
 		$scope.creating = true;

@@ -6,7 +6,7 @@
  * @description Controller of the settings tab
  * # settingsCtrl
  */
-angular.module('homepageModule', ['userService'])
+angular.module('homepageModule')
   .controller('settingsCtrl', function ($scope, userService) {
 
 

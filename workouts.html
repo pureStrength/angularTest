@@ -1,7 +1,4 @@
-<script src="scripts/services/workoutService.js"></script>
-<script src="scripts/controllers/workoutCtrl.js"></script>
-
-<div ng-controller="workoutCtrl">
+<div ng-controller="workoutsCtrl" ng-init="loadWorkoutsTab()">
     <h2>Workouts</h2>
     <div class="dropdown left-aligned" ng-hide="creating">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Create Workout <span class="caret"></span></button>

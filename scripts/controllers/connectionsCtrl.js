@@ -6,7 +6,7 @@
  * @description Controller of the connections tab
  * # connectionsCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService', 'angularModalService'])
+angular.module('homepageModule')
   .controller('connectionsCtrl', function ($scope, userService, userConnectionService, ModalService) {
 
 
@@ -15,6 +15,10 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'angul
 		$scope.searchText = "";
 		$scope.lastSearch = "";
 	}
+
+	$scope.$on('usingConnectionsTab', function(event, args) {
+		$scope.loadAllConnections();
+	});
 
 	$scope.searchConnections = function(searchText) {
 		console.log("In search connections");

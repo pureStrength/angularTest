@@ -6,7 +6,7 @@
  * @description Controller of the athlete's tab
  * # athletesCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService'])
+angular.module('homepageModule')
   .controller('athletesCtrl', function ($scope, userService, userConnectionService) {
 
 	
