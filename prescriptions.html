@@ -1,0 +1,8 @@
+<script src="scripts/services/workoutService.js"></script>
+<script src="scripts/controllers/prescriptionsCtrl.js"></script>
+
+<div ng-controller="prescriptionsCtrl" ng-init="loadPrescriptionsTab()">
+	<h2>Calendar</h2>
+	<input type="button" class="btn btn-primary" ng-click="swapView()" value="{{calendarView}}" />
+
+</div>

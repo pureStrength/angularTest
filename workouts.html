@@ -1,129 +1,134 @@
-<h2>Workouts</h2>
-<div class="dropdown left-aligned" ng-hide="creating">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Create Workout <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        <li><a ng-click="createWorkout('lift')">Lift</a></li>
-        <li><a ng-click="createWorkout('set')">Set</a></li>
-        <li><a ng-click="createWorkout('prescription')">Prescription</a></li>
-    </ul>
-</div>
+<script src="scripts/services/workoutService.js"></script>
+<script src="scripts/controllers/workoutCtrl.js"></script>
 
-<div ng-show="creatingLift" class="left-aligned col-xs-12 col-lg-7 row">
-    <br>
-    <form name="liftForm" role="form">
-        <input type="text" class="form-control" placeholder="Lift Name" ng-model="lift.name" required/><br>
-        <input type="text" class="form-control" placeholder="Category" ng-model="lift.category"/><br>
-        <textarea type="text" class="form-control" placeholder="Description" ng-model="lift.description"/><br>
-        <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
-        <input type="submit" class="btn btn-primary" ng-click="createLift(lift)" value="Save"/><br><br>
-     </form> 
-</div>
+<div ng-controller="workoutCtrl">
+    <h2>Workouts</h2>
+    <div class="dropdown left-aligned" ng-hide="creating">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Create Workout <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a ng-click="createWorkout('lift')">Lift</a></li>
+            <li><a ng-click="createWorkout('set')">Set</a></li>
+            <li><a ng-click="createWorkout('prescription')">Prescription</a></li>
+        </ul>
+    </div>
 
-<div ng-show="creatingSet" class="left-aligned col-xs-12 col-lg-7">
-    <br>
-    <form name="setForm" role="form">
-        <div class="form-inline">
-            <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts" style="margin-right: 10px;">
-                <option value="">Select a Lift</option>
-            </select>
-            <input type="text" class="form-control" placeholder="Set Name" ng-model="customSet.name" required/><br>
-        </div>
+    <div ng-show="creatingLift" class="left-aligned col-xs-12 col-lg-7 row">
         <br>
-        <table class="table">
-            <thead>
-                <th>Repetitions</th>
-                <th>% One Rep Max</th>
-                <th></th>
-            </thead>
+        <form name="liftForm" role="form">
+            <input type="text" class="form-control" placeholder="Lift Name" ng-model="lift.name" required/><br>
+            <input type="text" class="form-control" placeholder="Category" ng-model="lift.category"/><br>
+            <textarea type="text" class="form-control" placeholder="Description" ng-model="lift.description"/><br>
+            <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
+            <input type="submit" class="btn btn-primary" ng-click="createLift(lift)" value="Save"/><br><br>
+         </form> 
+    </div>
+
+    <div ng-show="creatingSet" class="left-aligned col-xs-12 col-lg-7">
+        <br>
+        <form name="setForm" role="form">
+            <div class="form-inline">
+                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts" style="margin-right: 10px;">
+                    <option value="">Select a Lift</option>
+                </select>
+                <input type="text" class="form-control" placeholder="Set Name" ng-model="customSet.name" required/><br>
+            </div>
+            <br>
+            <table class="table">
+                <thead>
+                    <th>Repetitions</th>
+                    <th>% One Rep Max</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="reps in customSet.mainLifts">
+                        <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
+                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
+                        <td><input type="button" class="btn btn-danger" ng-click="deleteRow(reps)" value="Delete"/></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" class="btn btn-success" value="Add" ng-click="addSetRow()"><br><br>
+            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customSet.description"/><br>
+            <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
+            <input type="submit" class="btn btn-primary" ng-click="createSet(customSet)" value="Save"/><br><br>
+         </form> 
+    </div>
+     
+    <div ng-hide="creating">
+        <h2 class="left-aligned">Lifts</h2>
+        <table class="table table-connect">
             <tbody>
-                <tr ng-repeat="reps in customSet.mainLifts">
-                    <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
-                    <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-                    <td><input type="button" class="btn btn-danger" ng-click="deleteRow(reps)" value="Delete"/></td>
-                </tr>
+              <tr ng-repeat="lift in lifts">
+                <td>{{lift.name}}</td>
+                <td>{{lift.description}}</td>
+                <td class="last-row">            
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                            <li><a ng-click="editLift(lift.id)">Edit</a></li>
+                            <li><a ng-click="deleteLift(lift.id)">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+              </tr>
             </tbody>
         </table>
-        <input type="button" class="btn btn-success" value="Add" ng-click="addSetRow()"><br><br>
-        <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customSet.description"/><br>
-        <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
-        <input type="submit" class="btn btn-primary" ng-click="createSet(customSet)" value="Save"/><br><br>
-     </form> 
-</div>
- 
-<div ng-hide="creating">
-    <h2 class="left-aligned">Lifts</h2>
-    <table class="table table-connect">
-        <tbody>
-          <tr ng-repeat="lift in lifts">
-            <td>{{lift.name}}</td>
-            <td>{{lift.description}}</td>
-            <td class="last-row">            
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right dropdownbox">
-                        <li><a ng-click="editLift(lift.id)">Edit</a></li>
-                        <li><a ng-click="deleteLift(lift.id)">Delete</a></li>
-                    </ul>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-    </table>
 
-    <h2 class="left-aligned">Sets</h2>
-    <table class="table table-connect">
-        <tbody>
-          <tr ng-repeat="set in sets">
-            <td>{{set.name}}</td>
-            <td>{{set.description}}</td>
-            <td class="last-row">            
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right dropdownbox">
-                        <li><a ng-click="editSet(set.id)">Edit</a></li>
-                        <li><a ng-click="deleteSet(set.id)">Delete</a></li>
-                    </ul>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-    </table>
-
-    <h2 class="left-aligned">Prescriptions</h2>
-    <table class="table table-connect">
-        <tbody>
-          <tr ng-repeat="prescription in prescriptions">
-            <td>{{prescription.name}}</td>
-            <td>{{prescription.description}}</td>
-            <td class="last-row">            
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right dropdownbox">
-                        <li><a ng-click="editPrescription(prescription.id)">Edit</a></li>
-                        <li><a ng-click="deletePrescription(prescription.id)">Delete</a></li>
-                    </ul>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-    </table>
-</div>
-
-<!-- Success worout modal (pop-up) -->
-<script type="text/ng-template" id="creationModal.html"></script>
-<div class="modal fade" id="creationModal" role="dialog">
-    <div class="vertical-alignment-helper">
-        <div class="modal-dialog vertical-align-center">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
+        <h2 class="left-aligned">Sets</h2>
+        <table class="table table-connect">
+            <tbody>
+              <tr ng-repeat="set in sets">
+                <td>{{set.name}}</td>
+                <td>{{set.description}}</td>
+                <td class="last-row">            
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                            <li><a ng-click="editSet(set.id)">Edit</a></li>
+                            <li><a ng-click="deleteSet(set.id)">Delete</a></li>
+                        </ul>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" ng-click="closeCreationModal(success)" data-dismiss="modal">Okay!</button>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+
+        <h2 class="left-aligned">Prescriptions</h2>
+        <table class="table table-connect">
+            <tbody>
+              <tr ng-repeat="prescription in prescriptions">
+                <td>{{prescription.name}}</td>
+                <td>{{prescription.description}}</td>
+                <td class="last-row">            
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                            <li><a ng-click="editPrescription(prescription.id)">Edit</a></li>
+                            <li><a ng-click="deletePrescription(prescription.id)">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Success worout modal (pop-up) -->
+    <script type="text/ng-template" id="creationModal.html"></script>
+    <div class="modal fade" id="creationModal" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" ng-click="closeCreationModal(success)" data-dismiss="modal">Okay!</button>
+                        </div>
                     </div>
                 </div>
             </div>
