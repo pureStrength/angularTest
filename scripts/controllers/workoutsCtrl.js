@@ -128,9 +128,30 @@ angular.module('homepageModule')
 		$scope.customSet.mainLifts.push({id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null});
 	}
 
-	$scope.deleteRow = function(reps) {
-		var index = $scope.customSet.mainLifts.indexOf(reps);
+	$scope.deleteSetRow = function(index) {
 		$scope.customSet.mainLifts.splice(index, 1);
+	}
+
+	$scope.addRow = function(index) {
+		$scope.customPrescription.mainLiftSets[index].mainLifts.push(
+			{id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null});
+	}
+
+	$scope.deleteRow = function(parentIndex, index) {
+		$scope.customPrescription.mainLiftSets[parentIndex].mainLifts.splice(index, 1);
+	}
+
+	$scope.addPSetRow = function() {
+		$scope.customPrescription.mainLiftSets.push({id: ++$scope.counterOfPSet, 
+			mainLifts: [{id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]});
+	}
+
+	$scope.deletePRow = function(index) {
+		$scope.customPrescription.mainLiftSets.splice(index, 1);
+	}
+
+	$scope.setSelected = function(pSet, index) {
+		$scope.customPrescription.mainLiftSets[index] = pSet;
 	}
 
 	$scope.loadWorkouts = function() {
@@ -249,6 +270,7 @@ angular.module('homepageModule')
 		if(wasSuccessful) {
 			// Reinitialize custom objects
 			$scope.initializeCustomSet();
+			$scope.initializeCustomPrescription();
 
 			// Refresh the tables
         	$scope.loadWorkouts();
@@ -265,7 +287,8 @@ angular.module('homepageModule')
     $scope.initializeCustomPrescription = function() {
     	$scope.customPrescription = {};
 		$scope.counterOfPSet = 0;
-		$scope.customPrescription.mainLiftSets = [{id: $scope.counterOfPSet}];
+		$scope.customPrescription.mainLiftSets = [{id: $scope.counterOfPSet,
+			mainLifts: [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]}];
     }
 	
   });

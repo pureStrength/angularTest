@@ -37,10 +37,10 @@
                     <th></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="reps in customSet.mainLifts">
+                    <tr ng-repeat="reps in customSet.mainLifts track by $index">
                         <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
                         <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-                        <td><input type="button" class="btn btn-danger" ng-click="deleteRow(reps)" value="Delete"/></td>
+                        <td><input type="button" class="btn btn-danger" ng-click="deleteSetRow($index)" value="Delete"/></td>
                     </tr>
                 </tbody>
             </table>
@@ -51,10 +51,10 @@
          </form> 
     </div>
 
-    <div ng-show="creatingPrescription" class="left-aligned col-xs-12 col-lg-7">
+    <div ng-show="creatingPrescription" class="left-aligned col-xs-12 col-lg-12">
         <br>
         <form role="form">
-            <input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name" required/><br>
+            <input type="text" class="form-control col-xs-6" placeholder="Prescription Name" ng-model="customPrescription.name" required/><br>
 
             <table class="table">
                  <thead>
@@ -63,47 +63,48 @@
                     <th></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="pSets in customPrescription.mainLiftSets">
+                    <tr ng-repeat="pSet in customPrescription.mainLiftSets track by $index">
                         <td>
-                            <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-options="set as set.name for set in sets" style="margin-right: 10px;">
-                                <option value="">Select a Set</option>
+                            <select class="selectpicker btn btn-primary dropdown" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)">
+                                <option value="">Predefined Sets</option>
                             </select>
                         </td>
                         <td>
                             <div class="form-inline">
-                                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts" style="margin-right: 10px;">
+                                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px;">
                                     <option value="">Select a Lift</option>
                                 </select>
-                                <input type="text" class="form-control" placeholder="Set Name" ng-model="customSet.name" required/><br>
+                                <input type="text" class="form-control" placeholder="Set Name" ng-model="pSet.name" required/><br>
                             </div>
                             <br>
-                            <table class="table">
+                            <table class="table" style="background-color: transparent;">
                                 <thead>
                                     <th>Repetitions</th>
                                     <th>% One Rep Max</th>
                                     <th></th>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="reps in customSet.mainLifts">
+                                    <tr ng-repeat="reps in pSet.mainLifts">
                                         <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
                                         <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-                                        <td><input type="button" class="btn btn-danger" ng-click="deleteRow(reps)" value="Delete"/></td>
+                                        <td><input type="button" class="btn btn-danger" ng-click="deleteRow($parent.$index, $index)" value="Delete"/></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <input type="button" class="btn btn-success" value="Add" ng-click="addSetRow()"><br><br>
-                            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customSet.description"/><br>
+                            <input type="button" class="btn btn-success" value="Add" ng-click="addRow($index)"><br><br>
+                            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="pSet.description"/><br>
                         </td>
-                        <td><input type="button" class="btn btn-danger" ng-click="deletePRow(pSets)" value="Delete Set"/></td>
+                        <td>
+                            <input type="button" class="btn btn-danger" ng-click="deletePRow($index)" value="Delete Set"/>
+                        </td>
                     </tr>
-
                 </tbody>
             </table>
             <input type="button" class="btn btn-success" value="Add Set" ng-click="addPSetRow()"><br><br>
 
             <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customPrescription.description"/><br>
             <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
-            <input type="submit" class="btn btn-primary" ng-click="createSet(customSet)" value="Save"/><br><br>
+            <input type="submit" class="btn btn-primary" ng-click="createPrescription(customPrescription)" value="Save"/><br><br>
          </form> 
     </div>
      
