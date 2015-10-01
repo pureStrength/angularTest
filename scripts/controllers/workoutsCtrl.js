@@ -13,6 +13,7 @@ angular.module('homepageModule')
 	$scope.loadWorkoutsTab = function() {
 		// Initialize custom set creation object
 		$scope.initializeCustomSet();
+		$scope.initializeCustomPrescription();
 	}
 
 	$scope.$on('usingWorkoutsTab', function(event, args) {
@@ -47,7 +48,7 @@ angular.module('homepageModule')
 
 	$scope.createLift = function(lift) {
 
-		var promise = workoutService.createLift($scope.user.id, set);
+		var promise = workoutService.createLift($scope.user.id, lift);
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success
@@ -259,6 +260,12 @@ angular.module('homepageModule')
     	$scope.customSet = {};
 		$scope.counterOfSet = 0;
 		$scope.customSet.mainLifts = [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
+    }
+
+    $scope.initializeCustomPrescription = function() {
+    	$scope.customPrescription = {};
+		$scope.counterOfPSet = 0;
+		$scope.customPrescription.mainLiftSets = [{id: $scope.counterOfPSet}];
     }
 	
   });

@@ -11,18 +11,18 @@
 
     <div ng-show="creatingLift" class="left-aligned col-xs-12 col-lg-7 row">
         <br>
-        <form name="liftForm" role="form">
-            <input type="text" class="form-control" placeholder="Lift Name" ng-model="lift.name" required/><br>
-            <input type="text" class="form-control" placeholder="Category" ng-model="lift.category"/><br>
-            <textarea type="text" class="form-control" placeholder="Description" ng-model="lift.description"/><br>
+        <form role="form">
+            <input type="text" class="form-control" placeholder="Lift Name" ng-model="customLift.name" required/><br>
+            <input type="text" class="form-control" placeholder="Category" ng-model="customLift.category"/><br>
+            <textarea type="text" class="form-control" placeholder="Description" ng-model="customLift.description"/><br>
             <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
-            <input type="submit" class="btn btn-primary" ng-click="createLift(lift)" value="Save"/><br><br>
+            <input type="submit" class="btn btn-primary" ng-click="createLift(customLift)" value="Save"/><br><br>
          </form> 
     </div>
 
     <div ng-show="creatingSet" class="left-aligned col-xs-12 col-lg-7">
         <br>
-        <form name="setForm" role="form">
+        <form role="form">
             <div class="form-inline">
                 <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts" style="margin-right: 10px;">
                     <option value="">Select a Lift</option>
@@ -46,6 +46,62 @@
             </table>
             <input type="button" class="btn btn-success" value="Add" ng-click="addSetRow()"><br><br>
             <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customSet.description"/><br>
+            <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
+            <input type="submit" class="btn btn-primary" ng-click="createSet(customSet)" value="Save"/><br><br>
+         </form> 
+    </div>
+
+    <div ng-show="creatingPrescription" class="left-aligned col-xs-12 col-lg-7">
+        <br>
+        <form role="form">
+            <input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name" required/><br>
+
+            <table class="table">
+                 <thead>
+                    <th>Sets</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pSets in customPrescription.mainLiftSets">
+                        <td>
+                            <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-options="set as set.name for set in sets" style="margin-right: 10px;">
+                                <option value="">Select a Set</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="form-inline">
+                                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts" style="margin-right: 10px;">
+                                    <option value="">Select a Lift</option>
+                                </select>
+                                <input type="text" class="form-control" placeholder="Set Name" ng-model="customSet.name" required/><br>
+                            </div>
+                            <br>
+                            <table class="table">
+                                <thead>
+                                    <th>Repetitions</th>
+                                    <th>% One Rep Max</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="reps in customSet.mainLifts">
+                                        <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
+                                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
+                                        <td><input type="button" class="btn btn-danger" ng-click="deleteRow(reps)" value="Delete"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input type="button" class="btn btn-success" value="Add" ng-click="addSetRow()"><br><br>
+                            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customSet.description"/><br>
+                        </td>
+                        <td><input type="button" class="btn btn-danger" ng-click="deletePRow(pSets)" value="Delete Set"/></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <input type="button" class="btn btn-success" value="Add Set" ng-click="addPSetRow()"><br><br>
+
+            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customPrescription.description"/><br>
             <input type="button" class="btn btn-primary" ng-click="cancelCreate()" value="Cancel"/>
             <input type="submit" class="btn btn-primary" ng-click="createSet(customSet)" value="Save"/><br><br>
          </form> 
