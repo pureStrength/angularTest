@@ -58,7 +58,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		store.clear();
 		
 		// Go back to the login page
-		location.href = "login.html";
+		location.href = "login";
 	}
 	
   });

@@ -39,9 +39,9 @@ angular.module('loginModule', ['userService'])
 			
 			// Continue to user homepage
 			if(res.userType == "ATHLETE") {
-				location.href = "homepage_athlete.html"	
+				location.href = "athleteHomepage"	
 			} else if(res.userType == "COACH") {
-				location.href = "homepage_trainer.html"
+				location.href = "trainerHomepage"
 			}
 
 		}, function(error) {

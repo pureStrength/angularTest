@@ -1,0 +1,18 @@
+<urlrewrite>
+<rule>
+	<from>login$</from>
+	<to>pages/login.html</to>
+</rule>
+<rule>
+	<from>register$</from>
+	<to>pages/register.html</to>
+</rule>
+<rule>
+	<from>athleteHomepage$</from>
+	<to>pages/homepage_athlete.html</to>
+</rule>
+<rule>
+	<from>trainerHomepage$</from>
+	<to>pages/homepage_trainer.html</to>
+</rule>
+</urlrewrite>
