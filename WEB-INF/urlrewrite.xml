@@ -1,5 +1,9 @@
 <urlrewrite>
 <rule>
+    <from>^/$</from>
+    <to>pages/login.html</to>
+</rule>
+<rule>
 	<from>login$</from>
 	<to>pages/login.html</to>
 </rule>
