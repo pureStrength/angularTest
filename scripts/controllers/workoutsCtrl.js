@@ -142,6 +142,7 @@ angular.module('homepageModule')
 	}
 
 	$scope.addPSetRow = function() {
+		
 		$scope.customPrescription.mainLiftSets.push({id: ++$scope.counterOfPSet, 
 			mainLifts: [{id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]});
 	}
@@ -151,6 +152,12 @@ angular.module('homepageModule')
 	}
 
 	$scope.setSelected = function(pSet, index) {
+		if(pSet == null){
+			pSet = {};
+			pSet.counterOfSet = 0;
+			pSet.mainLifts = [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
+		}
+
 		$scope.customPrescription.mainLiftSets[index] = pSet;
 	}
 
