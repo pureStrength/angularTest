@@ -1,13 +1,16 @@
 <urlrewrite>
 <rule>
+	<condition type="request-uri" operator="notequal">api/*</condition>
     <from>^/$</from>
     <to>pages/login.html</to>
 </rule>
 <rule>
+	<condition type="request-uri" operator="notequal">api/*</condition>
 	<from>login$</from>
 	<to>pages/login.html</to>
 </rule>
 <rule>
+	<condition type="request-uri" operator="notequal">api/*</condition>
 	<from>register$</from>
 	<to>pages/register.html</to>
 </rule>
