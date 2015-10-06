@@ -115,6 +115,30 @@ angular.module('workoutService', [])
 		
 		return defer.promise;
 	}
+
+	workoutService.editLifts = function(userId, liftId) {
+		
+	}
+
+	workoutService.removeLifts = function(userId, liftId) {
+		
+	}
+
+	workoutService.editLifts = function(userId, liftId) {
+		
+	}
+
+	workoutService.removeLifts = function(userId, liftId) {
+		
+	}
+
+	workoutService.editLifts = function(userId, liftId) {
+		
+	}
+
+	workoutService.removeLifts = function(userId, liftId) {
+		
+	}
 	
 	return workoutService;
 

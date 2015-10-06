@@ -120,7 +120,58 @@ angular.module('homepageModule')
 		
 	}
 
-	$scope.createPrescription = function() {
+	$scope.createPrescription = function(prescription) {
+
+		
+		var validInput = true;
+
+		
+		if(prescription.name == null) {
+			$scope.showCreationModal("You must give a prescription name", false);
+			return;
+		}  
+
+		if(prescription.mainLiftSets.length == 0) {
+			$scope.showCreationModal("You must add atleast one set row", false);
+			return;
+		}
+
+		$.each(prescription.mainLiftSets, function() {
+
+			if(this.mainLiftDefinition == null) {
+				validInput = false;
+				return;
+			}
+		});
+
+		if(validInput == false) {
+			return;
+		}
+
+		$.each(prescription.mainLiftSets, function() {
+			delete this.id;
+		}); 
+
+	
+
+		var promise = workoutService.createPrescription($scope.user.id, prescription);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Created Prescription");
+				console.log(res);
+
+				$scope.showCreationModal("Creation Successful", true);
+			} else {
+				// Log error
+				console.log("Error Creating Prescription");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error Creating Prescription");
+			console.log("Response: " + error);
+		})
 		
 	}
 
@@ -253,6 +304,31 @@ angular.module('homepageModule')
 			console.log("Response: " + error);
 		})
 	}
+
+	$scope.editLift = function()  {
+		
+	}
+
+	$scope.deleteLift = function()  {
+		
+	}
+
+	$scope.editSet = function()  {
+		
+	}
+
+	$scope.deleteSet = function()  {
+		
+	}
+
+	$scope.editPrescription = function()  {
+		
+	}
+
+	$scope.deletePrescription = function()  {
+		
+	}
+
 
 	$scope.showCreationModal = function(header, success) {
 
