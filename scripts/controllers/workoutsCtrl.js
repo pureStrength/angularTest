@@ -48,22 +48,51 @@ angular.module('homepageModule')
 
 	$scope.createLift = function(lift) {
 
-		var promise = workoutService.createLift($scope.user.id, lift);
+		var promise;
+
+		var edit = false;
+		var textString = '';
+
+		$.each($scope.lifts, function(){
+
+			console.log(this.id);
+
+			if(this.id == lift.id){
+				console.log(lift.id);
+				edit = true;
+			}
+
+		}); 
+
+		/*for(var item in $scope.lifts){
+			
+		} */
+
+		if(edit == true){
+			promise = workoutService.editLift(lift);
+			textString = 'Edit';
+		}
+
+		else{
+			promise = workoutService.createLift($scope.user.id, lift);
+			textString = 'Creation';
+		}
+
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success
-				console.log("Created Lift");
+				console.log(textString+" Lift");
 				console.log(res);
 
-				$scope.showCreationModal("Creation Successful", true);
+				$scope.showCreationModal(textString+" Successful", true);
 			} else {
 				// Log error
-				console.log("Error Creating Lift");	
+				console.log("Error "+textString+" Lift");	
 			}
 		
 		}, function(error) {
 			// Log error
-			console.log("Error Creating Lift");
+			console.log("Error "+textString+" Lift");
 			console.log("Response: " + error);
 		})
 	}
@@ -132,16 +161,32 @@ angular.module('homepageModule')
 		}  
 
 		if(prescription.mainLiftSets.length == 0) {
-			$scope.showCreationModal("You must add atleast one set row", false);
+			$scope.showCreationModal("You must add atleast one set", false);
 			return;
 		}
 
 		$.each(prescription.mainLiftSets, function() {
 
 			if(this.mainLiftDefinition == null) {
+				$scope.showCreationModal("You must select a main lift", false);
 				validInput = false;
 				return;
 			}
+
+			if(this.mainLifts.length == 0) {
+				$scope.showCreationModal("You must add atleast one rep in set", false);
+				validInput = false;
+				return;
+			}
+
+			$.each(this.mainLifts, function() {
+
+				if(this.assignedRepetitions == null ||
+				   this.assignedPercentOfOneRepMax == null) {
+					validInput = false;
+					return;
+				}
+			});
 		});
 
 		if(validInput == false) {
@@ -305,7 +350,10 @@ angular.module('homepageModule')
 		})
 	}
 
-	$scope.editLift = function()  {
+	$scope.editLift = function(lift)  {
+
+		$scope.createWorkout('lift');
+		$scope.customLift = lift;
 		
 	}
 
