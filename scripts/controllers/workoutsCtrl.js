@@ -44,6 +44,10 @@ angular.module('homepageModule')
 		$scope.creatingLift = false;
 		$scope.creatingSet = false;
 		$scope.creatingPrescription = false;
+
+		$scope.customLift = {};
+		$scope.initializeCustomSet();
+		$scope.initializeCustomPrescription();
 	}
 
 	$scope.createLift = function(lift) {
@@ -53,20 +57,10 @@ angular.module('homepageModule')
 		var edit = false;
 		var textString = '';
 
-		$.each($scope.lifts, function(){
-
-			console.log(this.id);
-
-			if(this.id == lift.id){
-				console.log(lift.id);
-				edit = true;
-			}
-
-		}); 
-
-		/*for(var item in $scope.lifts){
-			
-		} */
+		if( lift.id != undefined){
+			console.log(lift.id);
+			edit = true;
+		} 
 
 		if(edit == true){
 			promise = workoutService.editLift(lift);
@@ -99,15 +93,35 @@ angular.module('homepageModule')
 
 	$scope.createSet = function(set) {
 
+		var promise;
+
+		var edit = false;
+		var textString = '';
+
+		if( set.id != undefined){
+			console.log(set.id);
+			edit = true;
+		}  
+
+		//////////////////////////////////////////////////////////////////////////////////////////
+
 		var validInput = true;
 
-		if(set.mainLiftDefinition == undefined) {
+		if(set.mainLiftDefinition == undefined || set.mainLiftDefinition == null) {
 			$scope.showCreationModal("You must select a lift", false);
+			validInput = false;
 			return;
 		}
 
-		if(set.mainLifts.length == 0) {
+			if( set.name == undefined || set.name == null) {
+			$scope.showCreationModal("You must give a set name", false);
+			validInput = false;
+			return;
+		}  
+
+		if(set.mainLifts == undefined || set.mainLifts.length == 0) {
 			$scope.showCreationModal("You must add atleast one table row", false);
+			validInput = false;
 			return;
 		}
 
@@ -124,26 +138,36 @@ angular.module('homepageModule')
 			return;
 		}
 
-		$.each(set.mainLifts, function() {
-			delete this.id;
-		});
+		if(edit == true){
+			promise = workoutService.editSet(set);
+			textString = 'Edit';
+		}
 
-		var promise = workoutService.createSet($scope.user.id, set);
+		else{
+			promise = workoutService.createSet($scope.user.id, set);
+			textString = 'Creation';
+
+			$.each(set.mainLifts, function() {
+			delete this.id;
+			});
+		}
+
+
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success
-				console.log("Created Set");
+				console.log(textString+" Set");
 				console.log(res);
 
-				$scope.showCreationModal("Creation Successful", true);
+				$scope.showCreationModal(textString+" Successful", true);
 			} else {
 				// Log error
-				console.log("Error Creating Set");	
+				console.log("Error "+textString+" Set");	
 			}
 		
 		}, function(error) {
 			// Log error
-			console.log("Error Creating Set");
+			console.log("Error "+textString+" Set");
 			console.log("Response: " + error);
 		})
 		
@@ -151,30 +175,44 @@ angular.module('homepageModule')
 
 	$scope.createPrescription = function(prescription) {
 
-		
+		var promise;
+
+		var edit = false;
+		var textString = '';
+
+		if( prescription.id != undefined){
+			console.log(prescription.id);
+			edit = true;
+		}  
+
+		//////////////////////////////////////////////////////////////////////////////////////////
+
 		var validInput = true;
 
 		
 		if(prescription.name == null) {
 			$scope.showCreationModal("You must give a prescription name", false);
+			validInput = false;
 			return;
 		}  
 
 		if(prescription.mainLiftSets.length == 0) {
 			$scope.showCreationModal("You must add atleast one set", false);
+			validInput = false;
 			return;
 		}
 
 		$.each(prescription.mainLiftSets, function() {
 
-			if(this.mainLiftDefinition == null) {
-				$scope.showCreationModal("You must select a main lift", false);
+			if(this.mainLiftDefinition == undefined || this.mainLiftDefinition == null) {
+				$scope.showCreationModal("You must select a lift", false);
 				validInput = false;
 				return;
 			}
+ 
 
-			if(this.mainLifts.length == 0) {
-				$scope.showCreationModal("You must add atleast one rep in set", false);
+			if(this.mainLifts == undefined || this.mainLifts.length == 0) {
+				$scope.showCreationModal("You must add atleast one table row", false);
 				validInput = false;
 				return;
 			}
@@ -193,28 +231,37 @@ angular.module('homepageModule')
 			return;
 		}
 
-		$.each(prescription.mainLiftSets, function() {
-			delete this.id;
-		}); 
+		if(edit == true){
+			promise = workoutService.editPrescription(prescription);
+			textString = 'Edit';
+		}
+
+		else{
+			promise = workoutService.createPrescription($scope.user.id, prescription);
+			textString = 'Creation';
+
+			$.each(prescription.mainLiftSets, function() {
+				delete this.id;
+			}); 
+		}
 
 	
 
-		var promise = workoutService.createPrescription($scope.user.id, prescription);
 		promise.then(function(res) {
 			if(res != null) {
 				// Log success
-				console.log("Created Prescription");
+				console.log(textString+" Prescription");
 				console.log(res);
 
-				$scope.showCreationModal("Creation Successful", true);
+				$scope.showCreationModal(textString+" Successful", true);
 			} else {
 				// Log error
-				console.log("Error Creating Prescription");	
+				console.log("Error "+textString+" Prescription");	
 			}
 		
 		}, function(error) {
 			// Log error
-			console.log("Error Creating Prescription");
+			console.log("Error "+textString+" Prescription");
 			console.log("Response: " + error);
 		})
 		
@@ -357,24 +404,84 @@ angular.module('homepageModule')
 		
 	}
 
-	$scope.deleteLift = function()  {
+	$scope.deleteLift = function(lift)  {
+
+		var promise = workoutService.removeLift(lift);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Deleted Lift");
+				console.log(res);
+
+				$scope.showCreationModal("Delete Successful", true);
+			} else {
+				// Log error
+				console.log("Error Deleting Lift");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error Deleting Lift");
+			console.log("Response: " + error);
+		})
+	}
+
+	$scope.editSet = function(set)  {
+
+		$scope.createWorkout('set');
+		$scope.customSet = set;
 		
 	}
 
-	$scope.editSet = function()  {
+	$scope.deleteSet = function(set)  {
+
+		var promise = workoutService.removeSet(set);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Deleted Set");
+				console.log(res);
+
+				$scope.showCreationModal("Delete Successful", true);
+			} else {
+				// Log error
+				console.log("Error Deleting Set");	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error Deleting Set");
+			console.log("Response: " + error);
+		})
 		
 	}
 
-	$scope.deleteSet = function()  {
+	$scope.editPrescription = function(prescription)  {
+
+		$scope.createWorkout('prescription');
+		$scope.customPrescription = prescription;
 		
 	}
 
-	$scope.editPrescription = function()  {
-		
-	}
+	$scope.deletePrescription = function(prescription)  {
+		var promise = workoutService.removePrescription(prescription);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Deleted Prescription");
+				console.log(res);
 
-	$scope.deletePrescription = function()  {
+				$scope.showCreationModal("Delete Successful", true);
+			} else {
+				// Log error
+				console.log("Error Deleting Prescription");	
+			}
 		
+		}, function(error) {
+			// Log error
+			console.log("Error Deleting Prescription");
+			console.log("Response: " + error);
+		})
 	}
 
 
