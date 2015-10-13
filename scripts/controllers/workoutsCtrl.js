@@ -167,8 +167,6 @@ angular.module('homepageModule')
 		var edit = false;
 		var textString = '';
 
-		console.log("Prescription: " + JSON.stringify(prescription, null, 4));
-
 		if(prescription.id != undefined && prescription.id != null) {
 			edit = true;
 		}  
