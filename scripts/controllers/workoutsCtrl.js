@@ -57,17 +57,14 @@ angular.module('homepageModule')
 		var edit = false;
 		var textString = '';
 
-		if( lift.id != undefined){
-			console.log(lift.id);
+		if(lift.id != undefined && lift.id != null) {
 			edit = true;
 		} 
 
-		if(edit == true){
+		if(edit == true) {
 			promise = workoutService.editLift(lift);
 			textString = 'Edit';
-		}
-
-		else{
+		} else {
 			promise = workoutService.createLift($scope.user.id, lift);
 			textString = 'Creation';
 		}
@@ -98,12 +95,9 @@ angular.module('homepageModule')
 		var edit = false;
 		var textString = '';
 
-		if( set.id != undefined){
-			console.log(set.id);
+		if(set.id != undefined && set.id != null) {
 			edit = true;
 		}  
-
-		//////////////////////////////////////////////////////////////////////////////////////////
 
 		var validInput = true;
 
@@ -113,7 +107,7 @@ angular.module('homepageModule')
 			return;
 		}
 
-			if( set.name == undefined || set.name == null) {
+		if(set.name == undefined || set.name == null) {
 			$scope.showCreationModal("You must give a set name", false);
 			validInput = false;
 			return;
@@ -138,20 +132,13 @@ angular.module('homepageModule')
 			return;
 		}
 
-		if(edit == true){
+		if(edit == true) {
 			promise = workoutService.editSet(set);
 			textString = 'Edit';
-		}
-
-		else{
-			$.each(set.mainLifts, function() {
-			delete this.id;
-			});
-			
+		} else {
 			promise = workoutService.createSet($scope.user.id, set);
 			textString = 'Creation';
 		}
-
 
 		promise.then(function(res) {
 			if(res != null) {
@@ -180,15 +167,13 @@ angular.module('homepageModule')
 		var edit = false;
 		var textString = '';
 
-		if( prescription.id != undefined){
-			console.log(prescription.id);
+		console.log("Prescription: " + JSON.stringify(prescription, null, 4));
+
+		if(prescription.id != undefined && prescription.id != null) {
 			edit = true;
 		}  
 
-		//////////////////////////////////////////////////////////////////////////////////////////
-
 		var validInput = true;
-
 		
 		if(prescription.name == null) {
 			$scope.showCreationModal("You must give a prescription name", false);
@@ -231,22 +216,13 @@ angular.module('homepageModule')
 			return;
 		}
 
-		if(edit == true){
+		if(edit == true) {
 			promise = workoutService.editPrescription(prescription);
 			textString = 'Edit';
-		}
-
-		else{
-
-			$.each(prescription.mainLiftSets, function() {
-				delete this.id;
-			}); 
-
+		} else {
 			promise = workoutService.createPrescription($scope.user.id, prescription);
 			textString = 'Creation';
 		}
-
-	
 
 		promise.then(function(res) {
 			if(res != null) {
@@ -269,7 +245,7 @@ angular.module('homepageModule')
 	}
 
 	$scope.addSetRow = function() {
-		$scope.customSet.mainLifts.push({id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null});
+		$scope.customSet.mainLifts.push({internalId: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null});
 	}
 
 	$scope.deleteSetRow = function(index) {
@@ -278,7 +254,7 @@ angular.module('homepageModule')
 
 	$scope.addRow = function(index) {
 		$scope.customPrescription.mainLiftSets[index].mainLifts.push(
-			{id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null});
+			{internalId: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null});
 	}
 
 	$scope.deleteRow = function(parentIndex, index) {
@@ -287,8 +263,8 @@ angular.module('homepageModule')
 
 	$scope.addPSetRow = function() {
 		
-		$scope.customPrescription.mainLiftSets.push({id: ++$scope.counterOfPSet, 
-			mainLifts: [{id: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]});
+		$scope.customPrescription.mainLiftSets.push({internalId: ++$scope.counterOfPSet, 
+			mainLifts: [{internalId: ++$scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]});
 	}
 
 	$scope.deletePRow = function(index) {
@@ -296,10 +272,10 @@ angular.module('homepageModule')
 	}
 
 	$scope.setSelected = function(pSet, index) {
-		if(pSet == null){
+		if(pSet == null) {
 			pSet = {};
 			pSet.counterOfSet = 0;
-			pSet.mainLifts = [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
+			pSet.mainLifts = [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
 		}
 
 		$scope.customPrescription.mainLiftSets[index] = pSet;
@@ -520,14 +496,14 @@ angular.module('homepageModule')
     $scope.initializeCustomSet = function() {
     	$scope.customSet = {};
 		$scope.counterOfSet = 0;
-		$scope.customSet.mainLifts = [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
+		$scope.customSet.mainLifts = [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
     }
 
     $scope.initializeCustomPrescription = function() {
     	$scope.customPrescription = {};
 		$scope.counterOfPSet = 0;
-		$scope.customPrescription.mainLiftSets = [{id: $scope.counterOfPSet,
-			mainLifts: [{id: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]}];
+		$scope.customPrescription.mainLiftSets = [{internalId: $scope.counterOfPSet,
+			mainLifts: [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]}];
     }
 	
   });

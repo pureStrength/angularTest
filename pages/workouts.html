@@ -24,7 +24,7 @@
         <br>
         <form role="form">
             <div class="form-inline">
-                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts" style="margin-right: 10px;">
+                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px;">
                     <option value="">Select a Lift</option>
                 </select>
                 <input type="text" class="form-control" placeholder="Set Name" ng-model="customSet.name" required/><br>
@@ -32,8 +32,8 @@
             <br>
             <table class="table">
                 <thead>
-                    <th>Repetitions</th>
-                    <th>% One Rep Max</th>
+                    <th class="col-xs-3">Repetitions</th>
+                    <th class="col-xs-3">% One Rep Max</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -54,7 +54,10 @@
     <div ng-show="creatingPrescription" class="left-aligned col-xs-12 col-lg-12">
         <br>
         <form role="form">
-            <input type="text" class="form-control col-xs-6" placeholder="Prescription Name" ng-model="customPrescription.name" required/><br>
+            <div class="col-xs-4" style="padding-left: 0;">
+                <input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name" required/>
+            </div>
+            <br><br>
 
             <table class="table">
                  <thead>
@@ -79,8 +82,8 @@
                             <br>
                             <table class="table" style="background-color: transparent;">
                                 <thead>
-                                    <th>Repetitions</th>
-                                    <th>% One Rep Max</th>
+                                    <th class="col-xs-3">Repetitions</th>
+                                    <th class="col-xs-3">% One Rep Max</th>
                                     <th></th>
                                 </thead>
                                 <tbody>
