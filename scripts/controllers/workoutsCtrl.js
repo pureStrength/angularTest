@@ -144,12 +144,12 @@ angular.module('homepageModule')
 		}
 
 		else{
-			promise = workoutService.createSet($scope.user.id, set);
-			textString = 'Creation';
-
 			$.each(set.mainLifts, function() {
 			delete this.id;
 			});
+			
+			promise = workoutService.createSet($scope.user.id, set);
+			textString = 'Creation';
 		}
 
 
@@ -237,12 +237,13 @@ angular.module('homepageModule')
 		}
 
 		else{
-			promise = workoutService.createPrescription($scope.user.id, prescription);
-			textString = 'Creation';
 
 			$.each(prescription.mainLiftSets, function() {
 				delete this.id;
 			}); 
+
+			promise = workoutService.createPrescription($scope.user.id, prescription);
+			textString = 'Creation';
 		}
 
 	
