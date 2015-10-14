@@ -30,6 +30,24 @@ angular.module('userConnectionService', [])
 		return defer.promise;
 	}
 
+	// Web service to find all athlete connections for a user
+	userConnectionService.findAthletes = function(userId) {
+		var defer = $q.defer();
+		
+		$http.get(userConnectionEndPoint + '/existingConnectionsByUser/' + userId + '?user_type=ATHLETE')
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
+
 	// Web service to find all pending connections for a user
 	userConnectionService.findPending = function(userId) {
 		var defer = $q.defer();

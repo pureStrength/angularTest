@@ -17,6 +17,8 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			console.log("No user logged in");
 			return;
 		}
+
+		$scope.$broadcast('usingAthletesTab');
 		
 		var promise = userService.get(user.id);
 		promise.then(function(res) {
@@ -41,6 +43,13 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
 		// Get the notifications for the user
 		$scope.notifications = 0;
+
+		setTimeout($scope.clickedAthletesTab, 300);
+
+	}
+
+	$scope.clickedAthletesTab = function() {
+		$scope.$broadcast('usingAthletesTab');
 	}
 
 	$scope.clickedConnectionsTab = function() {
