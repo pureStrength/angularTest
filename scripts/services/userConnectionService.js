@@ -34,7 +34,7 @@ angular.module('userConnectionService', [])
 	userConnectionService.findAthletes = function(userId) {
 		var defer = $q.defer();
 		
-		$http.get(userConnectionEndPoint + '/existingConnectionsByUser/' + userId + '?user_type=ATHLETE')
+		$http.get(userConnectionEndPoint + '/existingConnectionsByUser/' + userId + '?user_type=Athlete')
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
