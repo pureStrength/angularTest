@@ -38,9 +38,9 @@ angular.module('loginModule', ['userService'])
 			store.set('user', res);
 			
 			// Continue to user homepage
-			if(res.userType == "ATHLETE") {
+			if(res.userType.toUpperCase() == 'ATHLETE') {
 				location.href = "athleteHomepage"	
-			} else if(res.userType == "COACH") {
+			} else if(res.userType.toUpperCase() == 'COACH') {
 				location.href = "trainerHomepage"
 			}
 

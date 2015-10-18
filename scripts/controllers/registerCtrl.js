@@ -10,7 +10,7 @@ angular.module('registerModule', ['userService', 'angularModalService'])
   .controller('registerCtrl', function ($scope, userService, ModalService) {
 	  
 	$scope.registerLoad = function() {
-		$scope.userType = "ATHLETE";	
+		$scope.userType = "Athlete";	
 	}
 
   	$scope.register = function(user, userType) {
