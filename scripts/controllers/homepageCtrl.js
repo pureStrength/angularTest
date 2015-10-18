@@ -44,8 +44,11 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		// Get the notifications for the user
 		$scope.notifications = 0;
 
-		setTimeout($scope.clickedAthletesTab, 300);
-
+		// Load the athlete's tab after a short pause
+		if(user.userType == 'Coach') {
+			setTimeout($scope.clickedAthletesTab, 750);
+		}
+		
 	}
 
 	$scope.clickedAthletesTab = function() {

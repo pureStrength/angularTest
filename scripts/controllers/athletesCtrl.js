@@ -9,16 +9,12 @@
 angular.module('homepageModule')
   .controller('athletesCtrl', function ($scope, userService, userConnectionService, ModalService) {
 
-
-
 	$scope.$on('usingAthletesTab', function(event, args) {
 		$scope.loadAthletes();
 	});
 
-	
-
 	// Perform the connection action when the selection button is clicked
-	$scope.connectionAction = function(connection, action) {
+	$scope.athleteAction = function(connection, action) {
 		console.log("Connection Action: " + action);
 		console.log("Connection user id: " + connection.user.id);
 
@@ -76,7 +72,7 @@ angular.module('homepageModule')
 		})
 	}
 
-	$scope.showConnectionModal = function(actionTaken) {
+	$scope.showAthletesModal = function(actionTaken) {
 
         ModalService.showModal({
             templateUrl: 'modal.html',
@@ -86,15 +82,15 @@ angular.module('homepageModule')
 			// Display correct message
 			$scope.modalHeader = actionTaken;
             
-            modal.element.append($("#successConnectionModal"));
-            $("#successConnectionModal").modal({
+            modal.element.append($("#athletesModal"));
+            $("#athletesModal").modal({
 			    backdrop: 'static',
 			    keyboard: false 
 			});
         });
     }
 
-	$scope.closeConnectionModal = function() {
+	$scope.closeAthletesModal = function() {
         // Refresh the tables
         $scope.loadAllConnections();
         $scope.lastSearch = "";
