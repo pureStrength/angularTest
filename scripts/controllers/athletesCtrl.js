@@ -13,6 +13,20 @@ angular.module('homepageModule')
 		$scope.loadAthletes();
 	});
 
+	
+	$scope.viewProfile = function(connection){
+		console.log("Connection user name: " + connection.user.firstName);
+		console.log("Navigating to the user's profile");
+	} 
+
+	$scope.viewPrescription = function(connection){
+		
+	} 
+
+	$scope.prescribeWorkout= function(connection){
+		
+	} 
+
 	// Perform the connection action when the selection button is clicked
 	$scope.athleteAction = function(connection, action) {
 		console.log("Connection Action: " + action);

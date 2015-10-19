@@ -17,8 +17,6 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			console.log("No user logged in");
 			return;
 		}
-
-		$scope.$broadcast('usingAthletesTab');
 		
 		var promise = userService.get(user.id);
 		promise.then(function(res) {
@@ -48,6 +46,12 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		if(user.userType == 'Coach') {
 			setTimeout($scope.clickedAthletesTab, 750);
 		}
+		
+		$scope.eventSources = [];
+	}
+
+	$scope.viewProfile = function(connection){
+
 		
 	}
 
