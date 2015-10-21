@@ -14,7 +14,7 @@ angular.module('homepageModule')
 	});
 
 	$scope.cancelPrescribing = function(){
-		prescribing = false;
+		$scope.prescribing = false;
 	}
 
 	
@@ -28,6 +28,8 @@ angular.module('homepageModule')
 	} 
 
 	$scope.prescribeWorkout= function(connection){
+
+		$scope.prescribing = true;
 		
 	} 
 

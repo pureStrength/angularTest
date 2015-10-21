@@ -1,6 +1,6 @@
 <div ng-controller="athletesCtrl">
 
-	<div>
+	<div ng-hide="prescribing">
 		<h2 class="left-aligned">Athletes</h2>
 		<table class="table table-connect">
 			<tbody>
@@ -26,6 +26,11 @@
 			    </tr>
 			</tbody>
 		</table>
+	</div>
+
+	<div ng-show="prescribing"> 
+	</br>
+		<div ng-include="'pages/calendar.html'"></div>
 	</div>
 
 </div>
