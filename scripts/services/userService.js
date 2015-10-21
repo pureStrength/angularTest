@@ -49,6 +49,23 @@ angular.module('userService', [])
 		
 		return defer.promise;
 	}
+
+	userService.update = function(user) {
+		var defer = $q.defer();
+		
+		$http.post(userEndPoint + '/' + user.id, user)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
 	
 	userService.get = function(userId) {
 		var defer = $q.defer();
