@@ -6,7 +6,7 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'angularModalService'])
+angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'ui.rCalendar', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, userService) {
 
 	$scope.loadHomepage = function() {
