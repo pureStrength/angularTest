@@ -113,65 +113,75 @@
 
      
     <div ng-hide="creating">
-        <h2 class="left-aligned">Lifts</h2>
-        <table class="table table-connect">
-            <tbody>
-              <tr ng-repeat="lift in lifts">
-                <td>{{lift.name}}</td>
-                <td>{{lift.description}}</td>
-                <td class="last-row">            
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu dropdown-menu-right dropdownbox">
-                            <li><a ng-click="editLift(lift)">Edit</a></li>
-                            <li><a ng-click="deleteLift(lift)">Delete</a></li>
-                        </ul>
-                    </div>
-                </td>
-              </tr>
-            </tbody>
-        </table>
+        </br>
+        <h2 class="left-aligned"><a data-toggle="collapse" data-parent="#accordion" href="#lifts">Lifts</a></h2>
+        <div id="lifts" class="collapse">
+            <table class="table table-connect">
+                <tbody>
+                  <tr ng-repeat="lift in lifts">
+                    <td>{{lift.name}}</td>
+                    <td>{{lift.description}}</td>
+                    <td class="last-row">            
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                                <li><a ng-click="editLift(lift)">Edit</a></li>
+                                <li><a ng-click="deleteLift(lift)">Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+        </br>
 
-        <h2 class="left-aligned">Sets</h2>
-        <table class="table table-connect">
-            <tbody>
-              <tr ng-repeat="set in sets">
-                <td>{{set.name}}</td>
-                <td>{{set.description}}</td>
-                <td class="last-row">            
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu dropdown-menu-right dropdownbox">
-                            <li><a ng-click="editSet(set)">Edit</a></li>
-                            <li><a ng-click="deleteSet(set)">Delete</a></li>
-                        </ul>
-                    </div>
-                </td>
-              </tr>
-            </tbody>
-        </table>
+        <h2 class="left-aligned"><a data-toggle="collapse" data-parent="#accordion" href="#sets">Sets</a></h2>
+        <div id="sets" class="collapse">
+            <table class="table table-connect">
+                <tbody>
+                  <tr ng-repeat="set in sets">
+                    <td>{{set.name}}</td>
+                    <td>{{set.description}}</td>
+                    <td class="last-row">            
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                                <li><a ng-click="editSet(set)">Edit</a></li>
+                                <li><a ng-click="deleteSet(set)">Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+        </br>
 
-        <h2 class="left-aligned">Prescriptions</h2>
-        <table class="table table-connect">
-            <tbody>
-              <tr ng-repeat="prescription in prescriptions">
-                <td>{{prescription.name}}</td>
-                <td>{{prescription.description}}</td>
-                <td class="last-row">            
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu dropdown-menu-right dropdownbox">
-                            <li><a ng-click="editPrescription(prescription)">Edit</a></li>
-                            <li><a ng-click="deletePrescription(prescription)">Delete</a></li>
-                        </ul>
-                    </div>
-                </td>
-              </tr>
-            </tbody>
-        </table>
+        <h2 class="left-aligned"><a data-toggle="collapse" data-parent="#accordion" href="#prescriptions">Prescriptions</a></h2>
+        <div id="prescriptions" class="collapse">
+            <table class="table table-connect">
+                <tbody>
+                  <tr ng-repeat="prescription in prescriptions">
+                    <td>{{prescription.name}}</td>
+                    <td>{{prescription.description}}</td>
+                    <td class="last-row">            
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right dropdownbox">
+                                <li><a ng-click="editPrescription(prescription)">Edit</a></li>
+                                <li><a ng-click="deletePrescription(prescription)">Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+        </br>
     </div>
 
     <!-- Success worout modal (pop-up) -->
