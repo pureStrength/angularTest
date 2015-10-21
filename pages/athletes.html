@@ -1,31 +1,38 @@
 <div ng-controller="athletesCtrl">
 
-	<div>
+	<div ng-hide="prescribing">
 		<h2 class="left-aligned">Athletes</h2>
-		<table class="table table-connect">
-			<tbody>
-			    <tr ng-repeat="connection in existingConnections">
-					<td class="col-sm-1"> 
-						<img src="images/profile_pics/default.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
-					</td>
-					<td>{{connection.user.firstName}} {{connection.user.lastName}}
-					<br>{{connection.user.userType}}
-					<br>{{connection.user.email}}
-					<br>{{connection.user.organization}}</td>
-					<td class="last-row">            
-						<div class="dropdown">
-							<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
-							<span class="caret"></span></button>
-							<ul class="dropdown-menu dropdown-menu-right dropdownbox">
-								<li><a ng-click="viewProfile(connection)">View Profile</a></li>
-								<li><a ng-click="viewPrescription(connection)">View Prescriptions</a></li>
-								<li><a ng-click="prescribeWorkout(connection)">Prescribe Workout</a></li>
-							</ul>
-						</div>
-					</td>
-			    </tr>
-			</tbody>
-		</table>
+		<div ng>
+			<table class="table table-connect">
+				<tbody>
+				    <tr ng-repeat="connection in existingConnections">
+						<td class="col-sm-1"> 
+							<img src="images/profile_pics/default.jpg" alt="Profile Pic" style="width: 100px; height: 100px;">
+						</td>
+						<td>{{connection.user.firstName}} {{connection.user.lastName}}
+						<br>{{connection.user.userType}}
+						<br>{{connection.user.email}}
+						<br>{{connection.user.organization}}</td>
+						<td class="last-row">            
+							<div class="dropdown">
+								<button class="btn btn-primary dropdown-toggle btn-connect" type="button" data-toggle="dropdown">Options
+								<span class="caret"></span></button>
+								<ul class="dropdown-menu dropdown-menu-right dropdownbox">
+									<li><a ng-click="viewProfile(connection)">View Profile</a></li>
+									<li><a ng-click="viewPrescription(connection)">View Prescriptions</a></li>
+									<li><a ng-click="prescribeWorkout(connection)">Prescribe Workout</a></li>
+								</ul>
+							</div>
+						</td>
+				    </tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div ng-show="prescribing"> 
+	</br>
+		<div ng-include="'pages/calendar.html'"></div>
 	</div>
 
 </div>
