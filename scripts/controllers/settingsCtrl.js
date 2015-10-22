@@ -9,7 +9,7 @@
 angular.module('homepageModule')
   .controller('settingsCtrl', function ($scope, userService, ModalService) {
 
-  	$scope.loadSettings = function() {
+  	$scope.loadSettingsTab = function() {
   		$scope.settingsUser = store.get('user');
   		console.log("Copied user settings");
   	}
