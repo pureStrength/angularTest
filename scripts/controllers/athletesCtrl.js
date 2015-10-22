@@ -13,6 +13,10 @@ angular.module('homepageModule')
 		$scope.loadAthletes();
 	});
 
+	$scope.cancelPrescribing = function(){
+		$scope.prescribing = false;
+	}
+
 	
 	$scope.viewProfile = function(connection){
 		console.log("Connection user name: " + connection.user.firstName);
@@ -24,6 +28,8 @@ angular.module('homepageModule')
 	} 
 
 	$scope.prescribeWorkout= function(connection){
+
+		$scope.prescribing = true;
 		
 	} 
 
