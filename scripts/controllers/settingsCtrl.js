@@ -96,6 +96,7 @@ angular.module('homepageModule')
 			console.log("Auth successful");
 			$scope.passwordError = "";
 
+			authUser.password = user.newPassword;
 			var promise = userService.update(authUser);
 			promise.then(function(res) {
 				console.log("Update successful");
@@ -118,7 +119,10 @@ angular.module('homepageModule')
   	}
 
   	$scope.closePasswordModal = function() {
-		// Nothing to do
+		$('#passwordModal').modal('hide');
+		$scope.settingsUser.oldPassword = '';
+		$scope.settingsUser.newPassword = '';
+		$scope.settingsUser.repeatPassword = '';
     };
 	
 	$scope.showSettingsModal = function() {
