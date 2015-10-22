@@ -1,4 +1,101 @@
-<div ng-controller="settingsCtrl">
+<div ng-controller="settingsCtrl" ng-init="loadSettingsTab()">
 	<h2>Settings</h2>
+
+	<form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="control-label col-sm-2">First Name:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="settingsUser.firstName" required/><br>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Last Name:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="settingsUser.lastName" required/><br>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Email:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="settingsUser.email" required/><br>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Organization:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" placeholder="(optional)" ng-model="settingsUser.organization"/><br>
+            </div>
+        </div>
+        <button class="btn btn-primary" ng-click="showPasswordModal()">Update Password</button>
+        <input type="submit" class="btn btn-primary" ng-click="update(settingsUser)" value="Save"/><br><br>
+        <div ng-show="error.length" class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" ng-click="error = null">&times;</button>
+            {{error}}
+        </div>
+    </form> 
+
+    <!-- Success modal (pop-up) -->
+    <script type="text/ng-template" id="settingsModal.html"></script>
+    <div class="modal fade" id="settingsModal" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">{{modalHeader}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" ng-click="closeSettingsModal()" data-dismiss="modal">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password modal (pop-up) -->
+    <script type="text/ng-template" id="passwordModal.html"></script>
+    <div class="modal fade" id="passwordModal" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">{{modalHeader}}</h3>
+                        </div>
+                        <br>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Old Password:</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" ng-model="settingsUser.oldPassword" required/><br>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">New Password:</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" ng-model="settingsUser.newPassword" required/><br>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Repeat Password:</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" ng-model="settingsUser.repeatPassword" required/><br>
+                                </div>
+                            </div>
+                        </form>
+                        <div ng-show="passwordError.length" class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" ng-click="passwordError = null">&times;</button>
+                            {{passwordError}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" ng-click="closePasswordModal()" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" ng-click="submitPasswordModal(settingsUser)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
