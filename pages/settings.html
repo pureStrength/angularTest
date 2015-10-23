@@ -1,4 +1,4 @@
-<div ng-controller="settingsCtrl" ng-init="loadSettingsTab()">
+<div ng-controller="settingsCtrl">
 	<h2>Settings</h2>
 
 	<form class="form-horizontal" role="form">
@@ -26,13 +26,65 @@
                 <input type="text" class="form-control" placeholder="(optional)" ng-model="settingsUser.organization"/><br>
             </div>
         </div>
-        <button class="btn btn-primary" ng-click="showPasswordModal()">Update Password</button>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Unit Type:</label>
+            <div class="col-sm-6 left-aligned">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default" ng-click="setUnitType('Imperial')" id="unitTypeImperial">
+                        <input type="radio">Imperial
+                    </label>
+                    <label class="btn btn-default" ng-click="setUnitType('Metric')" id="unitTypeMetric">
+                        <input type="radio">Metric
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Password Form:</label>
+            <div class="col-sm-6 left-aligned">
+                <button class="btn btn-default" ng-click="showPasswordModal()">Update Password</button>
+            </div>
+        </div>
+        <br>
+        
+        <input type="button" class="btn btn-primary" ng-click="resetSettings()" value="Reset"/>
         <input type="submit" class="btn btn-primary" ng-click="update(settingsUser)" value="Save"/><br><br>
         <div ng-show="error.length" class="alert alert-danger alert-dismissable">
             <button type="button" class="close" ng-click="error = null">&times;</button>
             {{error}}
         </div>
     </form> 
+
+    <div ng-show="user.userType == 'Athlete'">
+        <h2>Athlete Profile</h2>
+
+        <div class="col-xs-12">
+            <form role="form">
+                <table class="table">
+                    <thead>
+                        <th class="col-xs-3">Lift Name</th>
+                        <th class="col-xs-3">One Rep Max</th>
+                        <th class="col-xs-3">Last Updated</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="oneRepMax in athleteProfile.oneRepMaxCharts track by $index">
+                            <td><input type="text"   class="form-control" ng-model="oneRepMax.liftName" required/></td>
+                            <td><input type="number" class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.value" value="0" min="0" required/></td>
+                            <td><input type="text"   class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.date" /></td>
+                            <td><input type="button" class="btn btn-danger" ng-click="deleteOneRepMaxRow($index)" value="Delete"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="left-aligned">
+                    <input type="button" class="btn btn-success" value="Add Row" ng-click="addOneRepMaxRow()">
+                </div>
+             </form> 
+             <input type="button" class="btn btn-primary" ng-click="resetAthleteProfile()" value="Reset"/>
+             <input type="submit" class="btn btn-primary" ng-click="updateOneRepMaxes(athleteProfile)" value="Save"/>
+         </div>
+    </div>
 
     <!-- Success modal (pop-up) -->
     <script type="text/ng-template" id="settingsModal.html"></script>

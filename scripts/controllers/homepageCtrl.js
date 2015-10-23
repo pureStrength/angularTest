@@ -6,7 +6,7 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'ui.rCalendar', 'angularModalService'])
+angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, userService) {
 
 	$scope.loadHomepage = function() {
@@ -15,6 +15,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		
 		if(user == null) {
 			console.log("No user logged in");
+			$scope.logout();
 			return;
 		}
 		
@@ -23,6 +24,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			if(res != null) {
 				// Log success
 				console.log("Updated stored user");
+				console.log(res);
 				store.set('user', res);
 				$scope.user = res;
 
@@ -50,7 +52,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		$scope.eventSources = [];
 	}
 
-	$scope.viewProfile = function(connection){
+	$scope.viewProfile = function(connection) {
 
 		
 	}
@@ -65,6 +67,10 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
 	$scope.clickedWorkoutsTab = function() {
 		$scope.$broadcast('usingWorkoutsTab');
+	}
+
+	$scope.clickedSettingsTab = function() {
+		$scope.$broadcast('usingSettingsTab');
 	}
 
 	$scope.logout = function() {

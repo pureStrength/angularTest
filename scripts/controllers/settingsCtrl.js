@@ -7,12 +7,19 @@
  * # settingsCtrl
  */
 angular.module('homepageModule')
-  .controller('settingsCtrl', function ($scope, userService, ModalService) {
+  .controller('settingsCtrl', function ($scope, userService, athleteService, ModalService) {
 
-  	$scope.loadSettingsTab = function() {
-  		$scope.settingsUser = store.get('user');
-  		console.log("Copied user settings");
-  	}
+  	$scope.$on('usingSettingsTab', function(event, args) {
+
+  		// Make a copy of the logged in user so we can independently edit variables
+		$scope.resetSettings();
+
+  		// Load athlete profile
+  		if($scope.user.userType == 'Athlete') {
+  			$scope.loadAthleteProfile($scope.user.id);
+  			$scope.counterOfOneRepMax = 0;
+  		}
+	});
 
   	$scope.update = function(user) {
 		
@@ -56,6 +63,76 @@ angular.module('homepageModule')
 			$scope.error = "Error updating user";
 		})
   	}
+
+  	$scope.setUnitType = function(unitType) {
+  		$scope.settingsUser.preferenceUnitType = unitType;
+  	}
+
+  	$scope.initializeUnitType = function(unitType) {
+
+  		var imperial = document.getElementById("unitTypeImperial");
+  		var metric = document.getElementById("unitTypeMetric");
+
+  		if(unitType == 'Imperial') {
+  			metric.className = metric.className.replace('active', '');
+			imperial.className = imperial.className + " active";
+			
+		} else {
+			imperial.className = imperial.className.replace('active', '');
+			metric.className = metric.className + " active";
+		}
+
+  	}
+
+  	$scope.resetSettings = function() {
+  		$scope.settingsUser = {};
+  		angular.copy($scope.user, $scope.settingsUser);
+
+  		// Initialize the unit type and radio button
+  		$scope.initializeUnitType($scope.settingsUser.preferenceUnitType);
+  	}
+
+  	$scope.loadAthleteProfile = function(athleteId) {
+
+		var promise = athleteService.get(athleteId);
+		promise.then(function(res) {
+			if(res != null) {
+				// Log success
+				console.log("Loaded athlete profile");
+				console.log(res);
+
+				$scope.athleteProfile = res;
+			} else {
+				// Log error
+				console.log("Error loading Athlete Profile");
+				$scope.error = "Error loading Athlete Profile";	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error loading Athlete Profile");
+			console.log("Response: " + error);
+			$scope.error = "Error loading Athlete Profile";
+		})  			
+
+  	}
+
+  	  $scope.resetAthleteProfile = function() {
+  		$scope.loadAthleteProfile($scope.user.id);
+  	}
+
+  	$scope.addOneRepMaxRow = function() {
+		$scope.athleteProfile.oneRepMaxCharts.push({
+			internalId: ++$scope.counterOfOneRepMax, 
+			liftName: null, 
+			mostRecentOneRepMax: {value: 0, date: null},
+			oneRepMaxes: []
+		});
+  	}
+
+  	$scope.deleteOneRepMaxRow = function(index) {
+		$scope.athleteProfile.oneRepMaxCharts.splice(index, 1);
+	}
 
   	$scope.showPasswordModal = function() {
 

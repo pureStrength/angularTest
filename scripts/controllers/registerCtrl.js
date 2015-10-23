@@ -10,7 +10,12 @@ angular.module('registerModule', ['userService', 'angularModalService'])
   .controller('registerCtrl', function ($scope, userService, ModalService) {
 	  
 	$scope.registerLoad = function() {
-		$scope.userType = "Athlete";	
+		$scope.user = {};
+		$scope.setUserType('Athlete');
+	}
+
+	$scope.setUserType = function(userType) {
+		$scope.user.userType = userType;
 	}
 
   	$scope.register = function(user, userType) {
@@ -38,14 +43,11 @@ angular.module('registerModule', ['userService', 'angularModalService'])
 		}
 		
 		// User type radio button
-		if(!userType || !userType.length) {
+		if(!user.userType || !user.userType.length) {
 			console.log("Missing userType");
 			$scope.error = "Please select a user type";
 			return;
 		}
-		
-		// Set the user type
-		user.userType = userType;
 
 		var promise = userService.register(user);
 		promise.then(function(res) {
