@@ -49,7 +49,7 @@ angular.module('loginModule', ['userService'])
 			console.log("Error logging in user");
 			console.log("Response: " + error);
 
-			if(error == '204') {
+			if(error == 204) {
 				$scope.error = "Username or password is incorrect";
 			} else {
 				$scope.error = "Error connecting to server, please try again";
