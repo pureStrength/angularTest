@@ -7,8 +7,23 @@
  * # athletesCtrl
  */
 angular.module('homepageModule')
-  .controller('calendarCtrl', function ($scope, userService, userConnectionService, ModalService){
+  .controller('calendarCtrl', function ($scope, userService, userConnectionService, ModalService) {
 
 
+  		$scope.initializeEvents = function() {
+
+  			// The events array
+  			$scope.eventSource = [];
+
+  			// Add an event to the array
+  			var today = new Date();
+			$scope.eventSource.push({
+				title: 'Workout',
+				startTime: today,
+				endTime: today,
+				allDay: true
+			})
+
+  		}
 
   });
