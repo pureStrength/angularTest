@@ -15,7 +15,12 @@ angular.module('userService', [])
 	userService.register = function(user) {
 		var defer = $q.defer();
 		
-		$http.post(userEndPoint + '/register?require_verification=' + requireVerification, user)
+		// Hash the user
+		var hashedUser = {};
+		angular.copy(user, hashedUser);
+		hashedUser = userService.hashUser(hashedUser);
+
+		$http.post(userEndPoint + '/register?require_verification=' + requireVerification, hashedUser)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
@@ -31,11 +36,16 @@ angular.module('userService', [])
 
 	userService.authenticate = function(user) {
 		var defer = $q.defer();
+
+		// Hash the user
+		var hashedUser = {};
+		angular.copy(user, hashedUser);
+		hashedUser = userService.hashUser(hashedUser);
 		
 		$http.get(userEndPoint + '/authenticate', {
 			params: {
-				"email": user.email, 
-				"password": user.password
+				"email": hashedUser.email, 
+				"password": hashedUser.password
 			}
 		}).success(function(res, status) {
 			if(status == 200) {
@@ -52,8 +62,13 @@ angular.module('userService', [])
 
 	userService.update = function(user) {
 		var defer = $q.defer();
+
+		// Hash the user
+		var hashedUser = {};
+		angular.copy(user, hashedUser);
+		hashedUser = userService.hashUser(hashedUser);
 		
-		$http.post(userEndPoint + '/' + user.id, user)
+		$http.post(userEndPoint + '/' + hashedUser.id, hashedUser)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
@@ -82,6 +97,23 @@ angular.module('userService', [])
 		})
 		
 		return defer.promise;
+	}
+
+	userService.hashUser = function(user) {
+
+		if(user == undefined || user == null) {
+			console.log("user is null");
+		} else if(user.password != undefined) {
+			user.password = userService.hash(user.password);
+		} else {
+			console.log("user password is null");
+		}
+
+		return user;
+	}
+
+	userService.hash = function(string) {
+		return CryptoJS.SHA256(string);
 	}
 	
 	return userService;
