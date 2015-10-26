@@ -13,10 +13,6 @@ angular.module('homepageModule')
 		$scope.loadAthletes();
 	});
 
-	$scope.cancelPrescribing = function(){
-		$scope.prescribing = false;
-	}
-
 	
 	$scope.viewProfile = function(connection){
 		console.log("Connection user name: " + connection.user.firstName);
@@ -24,14 +20,16 @@ angular.module('homepageModule')
 	} 
 
 	$scope.viewPrescription = function(connection){
-		
-	} 
-
-	$scope.prescribeWorkout= function(connection){
 
 		$scope.prescribing = true;
-		
-	} 
+
+		$scope.connectedAthlete = connection.user;
+	}
+
+
+	$scope.$on('cancelCalendar', function(){ $scope.prescribing = false;});
+
+
 
 	// Perform the connection action when the selection button is clicked
 	$scope.athleteAction = function(connection, action) {

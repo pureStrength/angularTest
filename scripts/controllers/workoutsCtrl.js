@@ -7,7 +7,7 @@
  * # workoutsCtrl
  */
 angular.module('homepageModule')
-  .controller('workoutsCtrl', function ($scope, workoutService, ModalService) {
+  .controller('workoutsCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
 
 	$scope.loadWorkoutsTab = function() {
@@ -503,5 +503,6 @@ angular.module('homepageModule')
 		$scope.customPrescription.mainLiftSets = [{internalId: $scope.counterOfPSet,
 			mainLifts: [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]}];
     }
+
 	
   });
