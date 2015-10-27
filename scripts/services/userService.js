@@ -113,7 +113,7 @@ angular.module('userService', [])
 	}
 
 	userService.hash = function(string) {
-		return CryptoJS.SHA256(string);
+		return CryptoJS.SHA256(string).toString();
 	}
 	
 	return userService;
