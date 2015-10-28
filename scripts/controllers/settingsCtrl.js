@@ -162,6 +162,7 @@ angular.module('homepageModule')
 
 				// Add the MostRecentOneRepMax to the list of OneRepMaxes
 				if(maxExists == false) {
+					oneRepMaxChart.mostRecentOneRepMax.id = null;
 					oneRepMaxChart.mostRecentOneRepMax.date = moment().format("MM-DD-YYYY");
 					oneRepMaxChart.oneRepMaxes.push(oneRepMaxChart.mostRecentOneRepMax);
 					console.log("Adding new OneRepMax");
