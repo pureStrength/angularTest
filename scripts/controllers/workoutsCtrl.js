@@ -9,7 +9,6 @@
 angular.module('homepageModule')
   .controller('workoutsCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
-
 	$scope.loadWorkoutsTab = function() {
 		// Initialize custom set creation object
 		$scope.initializeCustomSet();
@@ -19,6 +18,10 @@ angular.module('homepageModule')
 	$scope.$on('usingWorkoutsTab', function(event, args) {
 		$scope.loadWorkouts();
 	});
+
+  	$scope.$on('initializeCustomPrescription', function(event, args) {
+  		$scope.initializeCustomPrescription();
+  	});
 
 	$scope.createWorkout = function(type) {
 		$scope.creating = true;
@@ -279,6 +282,15 @@ angular.module('homepageModule')
 		$scope.customPrescription.mainLiftSets[index] = pSet;
 	}
 
+	$scope.prescriptionSelected = function(cPres) {
+        if(cPres == null) {
+        	$scope.initializeCustomSet();
+          	$scope.initializeCustomPrescription();
+        } else {
+          	$scope.customPrescription = cPres;
+        }
+    }
+
 	$scope.loadWorkouts = function() {
 		$scope.loadLifts();
 		$scope.loadSets();
@@ -459,7 +471,6 @@ angular.module('homepageModule')
 		})
 	}
 
-
 	$scope.showCreationModal = function(header, success) {
 
         ModalService.showModal({
@@ -503,6 +514,5 @@ angular.module('homepageModule')
 		$scope.customPrescription.mainLiftSets = [{internalId: $scope.counterOfPSet,
 			mainLifts: [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]}];
     }
-
 	
   });
