@@ -72,7 +72,7 @@
                         <tr ng-repeat="oneRepMax in athleteProfile.oneRepMaxCharts track by $index">
                             <td><input type="text"   class="form-control" ng-model="oneRepMax.liftName" required/></td>
                             <td><input type="number" class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.value" value="0" min="0" required/></td>
-                            <td><input type="text"   class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.date" /></td>
+                            <td><input type="text" class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.date" disabled/></td>
                             <td><input type="button" class="btn btn-danger" ng-click="deleteOneRepMaxRow($index)" value="Delete"/></td>
                         </tr>
                     </tbody>
@@ -82,7 +82,7 @@
                 </div>
              </form> 
              <input type="button" class="btn btn-primary" ng-click="resetAthleteProfile()" value="Reset"/>
-             <input type="submit" class="btn btn-primary" ng-click="updateOneRepMaxes(athleteProfile)" value="Save"/>
+             <input type="submit" class="btn btn-primary" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
          </div>
     </div>
 

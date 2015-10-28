@@ -19,6 +19,9 @@ angular.module('homepageModule')
   			$scope.loadAthleteProfile($scope.user.id);
   			$scope.counterOfOneRepMax = 0;
   		}
+
+  		// Initialize the ORM calendar
+  		$scope.ormCalendar = {opened: true};
 	});
 
   	$scope.update = function(user) {
@@ -117,7 +120,7 @@ angular.module('homepageModule')
 
   	}
 
-  	  $scope.resetAthleteProfile = function() {
+  	$scope.resetAthleteProfile = function() {
   		$scope.loadAthleteProfile($scope.user.id);
   	}
 
@@ -132,6 +135,70 @@ angular.module('homepageModule')
 
   	$scope.deleteOneRepMaxRow = function(index) {
 		$scope.athleteProfile.oneRepMaxCharts.splice(index, 1);
+	}
+
+	$scope.updateAthleteProfile = function(athleteId, athleteProfile) {
+
+		if(athleteProfile == undefined || athleteProfile == null) {
+			console.log("Received null AthleteProfile");
+			return;
+		}
+
+		// Loop the one rep maximums to check if any changes were made
+		angular.forEach(athleteProfile.oneRepMaxCharts, function(oneRepMaxChart) {
+
+			if(oneRepMaxChart.mostRecentOneRepMax != undefined) {
+
+				var maxExists = false;
+				if(oneRepMaxChart.oneRepMaxes != null) {
+					angular.forEach(oneRepMaxChart.oneRepMaxes, function(chart) {
+
+						if(angular.equals(oneRepMaxChart.mostRecentOneRepMax, chart)) {
+							maxExists = true;
+							return;
+						}
+					});
+				}
+
+				// Add the MostRecentOneRepMax to the list of OneRepMaxes
+				if(maxExists == false) {
+					oneRepMaxChart.mostRecentOneRepMax.date = moment().format("MM-DD-YYYY");
+					oneRepMaxChart.oneRepMaxes.push(oneRepMaxChart.mostRecentOneRepMax);
+					console.log("Adding new OneRepMax");
+					console.log(oneRepMaxChart.mostRecentOneRepMax);
+				}
+			} else {
+				console.log("MostRecentOneRepMax is undefined");
+				console.log(oneRepMaxChart);
+			}
+
+		});
+
+		var promise = athleteService.update(athleteId, athleteProfile);
+		promise.then(function(res) {
+			if(res != null && res == 'true') {
+				// Log success
+				console.log("Updated athlete profile");
+
+				$scope.showSettingsModal();
+			} else {
+				// Log error
+				console.log("Error updating Athlete Profile");
+				$scope.error = "Error updating Athlete Profile";	
+			}
+		
+		}, function(error) {
+			// Log error
+			console.log("Error updating Athlete Profile");
+			console.log("Response: " + error);
+			$scope.error = "Error updating Athlete Profile";
+		})  
+
+	}
+
+	$scope.openORMCalendar = function($event, index) {
+		$scope.ormCalendar.opened = true;
+		console.log("opening calendar");
 	}
 
   	$scope.showPasswordModal = function() {
