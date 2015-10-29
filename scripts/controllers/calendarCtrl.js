@@ -7,7 +7,7 @@
  * # athletesCtrl
  */
 angular.module('homepageModule')
-  .controller('calendarCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
+  .controller('calendarCtrl', function ($scope, userService, userConnectionService, workoutService, calendarService, ModalService) {
 
     
   	$scope.initializeEvents = function() {
