@@ -3,7 +3,7 @@
 /**
  * @ngdoc service
  * @name completeConceptStrength.workoutService
- * @description Service for the user path
+ * @description Service for the all of the workout related paths
  * # workoutService
  */
 angular.module('workoutService', [])
@@ -13,6 +13,7 @@ angular.module('workoutService', [])
 	var liftEndPoint = endPoint + 'mainLiftDefinition';
 	var setEndPoint = endPoint + 'mainLiftSet';
 	var prescriptionEndPoint = endPoint + 'prescriptionDefinition';
+	var prescriptionEventEndPoint = endPoint + 'prescriptionInstance';
 
 	workoutService.createLift = function(userId, lift) {
 		var defer = $q.defer();
@@ -52,6 +53,40 @@ angular.module('workoutService', [])
 		var defer = $q.defer();
 		
 		$http.post(prescriptionEndPoint + '/custom/' + userId, prescription)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
+	workoutService.prescribeWorkout = function(athleteId, coachId, prescription) {
+		var defer = $q.defer();
+		
+		$http.post(prescriptionEventEndPoint + '?athlete_id=' + athleteId + '&coach_id=' + coachId, prescription)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
+	workoutService.postResults = function(prescription) {
+		var defer = $q.defer();
+		
+		$http.post(prescriptionEventEndPoint + '/postResults/' + prescription.id, prescription)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
@@ -116,6 +151,40 @@ angular.module('workoutService', [])
 		return defer.promise;
 	}
 
+	workoutService.getPrescriptionsByAthlete = function(athleteId) {
+		var defer = $q.defer();
+		
+		$http.get(prescriptionEventEndPoint + '/byAthlete/' + athleteId)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
+
+	workoutService.getPrescriptionsByCoach = function(coachId) {
+		var defer = $q.defer();
+		
+		$http.get(prescriptionEventEndPoint + '/byCoach/' + coachId)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
+
 	workoutService.editLift = function(lift) {
 
 		var defer = $q.defer();
@@ -135,44 +204,10 @@ angular.module('workoutService', [])
 		
 	}
 
-	workoutService.removeLift = function(lift) {
-		var defer = $q.defer();
-		
-		$http.delete(liftEndPoint + '/' + lift.id)
-		.success(function(res, status) {
-			if(status == 200) {
-				defer.resolve(res);
-			} else {
-				defer.reject(status);
-			}
-		}).error(function(err, status) {
-			defer.reject(err);
-		})
-		
-		return defer.promise;
-	}
-
 	workoutService.editSet = function(set) {
 		var defer = $q.defer();
 		
 		$http.post(setEndPoint + '/' + set.id, set)
-		.success(function(res, status) {
-			if(status == 200) {
-				defer.resolve(res);
-			} else {
-				defer.reject(status);
-			}
-		}).error(function(err, status) {
-			defer.reject(err);
-		})
-		
-		return defer.promise;
-	}
-
-	workoutService.removeSet = function(set) {
-		var defer = $q.defer();
-		
-		$http.delete(setEndPoint + '/' + set.id)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
@@ -203,10 +238,78 @@ angular.module('workoutService', [])
 		return defer.promise;
 	}
 
+	workoutService.editPrescriptionEvent = function(prescription) {
+		var defer = $q.defer();
+		
+		$http.post(prescriptionEventEndPoint + '/' + prescription.id, prescription)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
+	workoutService.removeLift = function(lift) {
+		var defer = $q.defer();
+		
+		$http.delete(liftEndPoint + '/' + lift.id)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
+	workoutService.removeSet = function(set) {
+		var defer = $q.defer();
+		
+		$http.delete(setEndPoint + '/' + set.id)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
 	workoutService.removePrescription = function(prescription) {
 		var defer = $q.defer();
 		
 		$http.delete(prescriptionEndPoint + '/' + prescription.id)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
+	workoutService.removePrescriptionEvent = function(prescription) {
+		var defer = $q.defer();
+		
+		$http.delete(prescriptionEventEndPoint + '/' + prescription.id)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);

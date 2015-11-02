@@ -7,24 +7,50 @@
  * # athletesCtrl
  */
 angular.module('homepageModule')
-  .controller('calendarCtrl', function ($scope, userService, userConnectionService, workoutService, calendarService, ModalService) {
+  .controller('calendarCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
     
-  	$scope.initializeEvents = function() {
+  	$scope.$on('initializeEvents', function(event, athleteId) { 
 
   	  // The events array
   		$scope.eventSource = [];
 
-  		// Add an event to the array
-  		var today = new Date();
-			$scope.eventSource.push({
-			  title: 'Workout',
-				startTime: today,
-				endTime: today,
-				allDay: true
-			})
+      var promise = workoutService.getPrescriptionsByAthlete(athleteId);
+      promise.then(function(res) {
+        if(res != null) {
+          // Log success
+          console.log("Recieved prescriptions by athlete");
+          console.log(res);
+          
+          // Convert prescriptions into events
+          for(var i = 0; i < res.length; i++) {
+            // Add events to the source
+            var prescription = res[i];
+            var title = 'Workout';
+            $scope.eventSource.push({
+              title: title,
+              startTime: prescription.dateAssigned,
+              endTime: prescription.dateAssigned,
+              allDay: true,
+              prescription: prescription
+            })
+          }
 
-  	}
+          // Broadcast that the event source has been updated
+          $scope.$broadcast('eventSourceChanged', $scope.eventSource);
+
+        } else {
+          // Log error
+          console.log("Error recieving prescriptions by athlete"); 
+        }
+      
+        }, function(error) {
+          // Log error
+          console.log("Error recieving prescriptions by athlete");
+          console.log("Response: " + error);
+      })
+
+  	});
 
     $scope.prescribeWorkout = function(athlete) {
       // Initialize custom set creation object
