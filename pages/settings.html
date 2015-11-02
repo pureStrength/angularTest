@@ -70,7 +70,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="oneRepMax in athleteProfile.oneRepMaxCharts track by $index">
-                            <td><input type="text"   class="form-control" ng-model="oneRepMax.liftName" required/></td>
+                            <td><input type="text"   class="form-control" ng-model="oneRepMax.liftName" required disabled/></td>
                             <td><input type="number" class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.value" value="0" min="0" required/></td>
                             <td><input type="text" class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.date" disabled/></td>
                             <td><input type="button" class="btn btn-danger" ng-click="deleteOneRepMaxRow($index)" value="Delete"/></td>
