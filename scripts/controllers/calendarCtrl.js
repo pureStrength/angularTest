@@ -24,20 +24,14 @@ angular.module('homepageModule')
           
           // Convert prescriptions into events
           for(var i = 0; i < res.length; i++) {
-            // Add events to the source
-            var prescription = res[i];
-            var title = 'Workout';
-            $scope.eventSource.push({
-              title: title,
-              startTime: prescription.dateAssigned,
-              endTime: prescription.dateAssigned,
-              allDay: true,
-              prescription: prescription
-            })
+            res[i].title = 'Workout';
+            res[i].startTime = res[i].dateAssigned;
+            res[i].endTime = res[i].startTime;
+            res[i].allDay = true;
           }
 
-          // Broadcast that the event source has been updated
-          $scope.$broadcast('eventSourceChanged', $scope.eventSource);
+          // Update the event source
+          $scope.eventSource = res;
 
         } else {
           // Log error
