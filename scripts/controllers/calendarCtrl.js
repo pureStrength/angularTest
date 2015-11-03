@@ -58,7 +58,80 @@ angular.module('homepageModule')
       $scope.today();
     }
 
-    $scope.saveNewPrescribe = function() {
+    $scope.saveNewPrescribe = function(prescription) {
+      var promise;
+
+      prescription.dateAssigned = $scope.currentDate;
+
+      var edit = false;
+      var textString = '';
+
+      if(prescription.id != undefined && prescription.id != null) {
+        edit = true;
+      }  
+
+      var validInput = true;
+      
+      if(prescription.mainLiftSets.length == 0) {
+        $scope.showCreationModal("You must add atleast one set", false);
+        validInput = false;
+        return;
+      }
+
+      $.each(prescription.mainLiftSets, function() {
+
+        if(this.mainLiftDefinition == undefined || this.mainLiftDefinition == null) {
+          $scope.showCreationModal("You must select a lift", false);
+          validInput = false;
+          return;
+        }
+   
+
+        if(this.mainLifts == undefined || this.mainLifts.length == 0) {
+          $scope.showCreationModal("You must add atleast one table row", false);
+          validInput = false;
+          return;
+        }
+
+        $.each(this.mainLifts, function() {
+
+          if(this.assignedRepetitions == null ||
+             this.assignedPercentOfOneRepMax == null) {
+            validInput = false;
+            return;
+          }
+        });
+      });
+
+      if(validInput == false) {
+        return;
+      }
+
+      if(edit == true) {
+        promise = workoutService.editPrescriptionEvent(prescription);
+        textString = 'Edit';
+      } else {
+        promise = workoutService.prescribeWorkout($scope.connectedAthlete.id, $scope.user.id, prescription);
+        textString = 'Creation';
+      }
+
+      promise.then(function(res) {
+        if(res != null) {
+          // Log success
+          console.log("Prescribe "+textString+" Prescription");
+          console.log(res);
+
+          $scope.showCreationModal("Prescribe "+textString+" Successful", true);
+        } else {
+          // Log error
+          console.log("Error "+textString+" Prescription"); 
+        }
+      
+      }, function(error) {
+        // Log error
+        console.log("Error "+textString+" Prescription");
+        console.log("Response: " + error);
+      })
 
     }
 
@@ -88,6 +161,37 @@ angular.module('homepageModule')
       today.setHours(0, 0, 0, 0);
       currentCalendarDate.setHours(0, 0, 0, 0);
       return today.getTime() === currentCalendarDate.getTime();
+    };
+
+    $scope.showCreationModal = function(header, success) {
+
+        ModalService.showModal({
+            templateUrl: 'creationModal.html',
+            controller: "homepageCtrl"
+        }).then(function(modal) {
+            
+      // Display correct message
+      $scope.modalHeader = header;
+      $scope.success = success;
+            
+            modal.element.append($("#creationModal"));
+            $("#creationModal").modal({
+          backdrop: 'static',
+          keyboard: false 
+      });
+        });
+    };
+
+    $scope.closeCreationModal = function(wasSuccessful) {
+      if(wasSuccessful) {
+        // Reinitialize custom objects
+        $scope.initializeCustomSet();
+        $scope.initializeCustomPrescription();
+
+        // Refresh the tables
+            $scope.loadWorkouts();
+            $scope.cancelCreate();
+      } 
     };
 
     $scope.initializeCustomPrescription = function() {

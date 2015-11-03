@@ -37,8 +37,8 @@
 	<div ng-show="newPrescribe" ng-controller="workoutsCtrl" ng-init="loadWorkouts()">
 		<div class="col-xs-10 col-xs-offset-1">
 			<div class="btn-group">
-				<button class="btn btn-success" ng-click="cancelNewPrescribe()">Cancel</button>
-			   	<button class="btn btn-danger" ng-click="saveNewPrescribe()">Save</button>
+				<button class="btn btn-danger" ng-click="cancelNewPrescribe()">Cancel</button>
+			   	<button class="btn btn-success" ng-click="saveNewPrescribe(customPrescription)">Save</button>
        		</div>
 		</br> </br>
 
@@ -104,5 +104,24 @@
 	</div>
 
 	</div>
+
+	 <!-- Success worout modal (pop-up) -->
+    <script type="text/ng-template" id="creationModal.html"></script>
+    <div class="modal fade" id="creationModal" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" ng-click="closeCreationModal(success)" data-dismiss="modal">Okay!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
        		
 </div>
