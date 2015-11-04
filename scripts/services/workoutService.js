@@ -66,10 +66,10 @@ angular.module('workoutService', [])
 		return defer.promise;
 	}
 
-	workoutService.prescribeWorkout = function(athleteId, coachId, prescription) {
+	workoutService.prescribeWorkout = function(athleteId, coachId, date, prescription) {
 		var defer = $q.defer();
 		
-		$http.post(prescriptionEventEndPoint + '?athlete_id=' + athleteId + '&coach_id=' + coachId, prescription)
+		$http.post(prescriptionEventEndPoint + '?athlete_id=' + athleteId + '&coach_id=' + coachId + '&date=' + date, prescription)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);

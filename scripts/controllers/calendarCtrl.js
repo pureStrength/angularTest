@@ -60,15 +60,7 @@ angular.module('homepageModule')
 
     $scope.saveNewPrescribe = function(prescription) {
       var promise;
-
-      prescription.dateAssigned = $scope.currentDate;
-
       var edit = false;
-      var textString = '';
-
-      if(prescription.id != undefined && prescription.id != null) {
-        edit = true;
-      }  
 
       var validInput = true;
       
@@ -107,29 +99,22 @@ angular.module('homepageModule')
         return;
       }
 
-      if(edit == true) {
-        promise = workoutService.editPrescriptionEvent(prescription);
-        textString = 'Edit';
-      } else {
-        promise = workoutService.prescribeWorkout($scope.connectedAthlete.id, $scope.user.id, prescription);
-        textString = 'Creation';
-      }
-
+      promise = workoutService.prescribeWorkout($scope.connectedAthlete.id, $scope.user.id, $scope.currentDate.getTime(), prescription);
       promise.then(function(res) {
         if(res != null) {
           // Log success
-          console.log("Prescribe "+textString+" Prescription");
+          console.log("Prescription Successful");
           console.log(res);
 
-          $scope.showCreationModal("Prescribe "+textString+" Successful", true);
+          $scope.showCreationModal("Prescription Creation Successful", true);
         } else {
           // Log error
-          console.log("Error "+textString+" Prescription"); 
+          console.log("Error creating Prescription"); 
         }
       
       }, function(error) {
         // Log error
-        console.log("Error "+textString+" Prescription");
+        console.log("Error creating Prescription");
         console.log("Response: " + error);
       })
 
@@ -185,12 +170,11 @@ angular.module('homepageModule')
     $scope.closeCreationModal = function(wasSuccessful) {
       if(wasSuccessful) {
         // Reinitialize custom objects
-        $scope.initializeCustomSet();
         $scope.initializeCustomPrescription();
 
         // Refresh the tables
-            $scope.loadWorkouts();
-            $scope.cancelCreate();
+        $scope.loadWorkouts();
+        $scope.cancelCreate();
       } 
     };
 
