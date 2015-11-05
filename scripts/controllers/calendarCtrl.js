@@ -62,7 +62,7 @@ angular.module('homepageModule')
     }
 
     $scope.cancelPrescribing = function() {
-      $scope.$broadcast('cancelCalendar');
+      $scope.$emit('cancelCalendar');
       $scope.today();
     }
 

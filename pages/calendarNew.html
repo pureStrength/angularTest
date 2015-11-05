@@ -36,18 +36,13 @@
 
 	<div ng-show="newPrescribe" ng-controller="workoutsCtrl" ng-init="loadWorkouts()">
 		<div class="jumbotron col-xs-10 col-xs-offset-1">
-			<div class="btn-group">
-				<button class="btn btn-danger" ng-click="cancelNewPrescribe()">Cancel</button>
-			   	<button class="btn btn-success" ng-click="saveNewPrescribe(customPrescription)">Save</button>
-       		</div>
-		</br> </br>
 
 		<div class="left-aligned col-xs-12 col-lg-12">
-	        <br>
 	        <form role="form">
 	            <div class="form-inline" style="padding-left: 0;">
 	            	<select style="margin-right: 10px;" class="selectpicker btn btn-primary dropdown" ng-model="customPrescription" ng-options="cPres as cPres.name for cPres in prescriptions track by cPres.id"  ng-click="prescriptionSelected(customPrescription)"><option value="">Predefined Prescriptions</option>
-	                </select><input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name"/>
+	                </select>
+	                <input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name"/>
 	            </div>
 	            <br><br>
 
@@ -60,7 +55,7 @@
 	                    <tr ng-repeat="pSet in customPrescription.mainLiftSets track by $index">
 	                        <td>
 	                            <div class="form-inline">
-		                            <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)">
+		                            <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" style="margin-right: 10px;">
 		                                <option value="">Predefined Sets</option>
 		                            </select>
 	                                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px;">
