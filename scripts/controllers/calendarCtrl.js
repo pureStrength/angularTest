@@ -9,15 +9,11 @@
 angular.module('homepageModule')
   .controller('calendarCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
-  	$scope.$on('initializeEvents', function(event, athleteId) { 
+    $scope.$on('initializeEvents', function(event, athleteId) { 
       $scope.initializeEvents(athleteId);
     });
 
     $scope.initializeEvents = function(athleteId) { 
-
-      if(athleteId === undefined) {
-        athleteId = store.get('user').id;
-      }
 
   	  // The events array
   		$scope.eventSource = [];
@@ -52,6 +48,17 @@ angular.module('homepageModule')
       })
 
   	}
+
+    $scope.loadPrescriptions = function() {
+
+      var user = $scope.user;
+
+      if(user === undefined) {
+        user = store.get('user');
+      }
+
+      $scope.initializeEvents(user.id);
+    }
 
     $scope.prescribeWorkout = function(athlete) {
       // Initialize custom set creation object
