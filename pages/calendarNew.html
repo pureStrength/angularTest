@@ -29,13 +29,13 @@
 		</br> </br>
 		</div>
 		
-		<div class="col-xs-10 col-xs-offset-1">
+		<div class="jumbotron col-xs-10 col-xs-offset-1">
 		<calendar ng-model="currentDate" calendar-mode="mode" event-source="eventSource" event-selected="onEventSelected(event)"></calendar>
 		</div>
 	</div>
 
 	<div ng-show="newPrescribe" ng-controller="workoutsCtrl" ng-init="loadWorkouts()">
-		<div class="col-xs-10 col-xs-offset-1">
+		<div class="jumbotron col-xs-10 col-xs-offset-1">
 			<div class="btn-group">
 				<button class="btn btn-danger" ng-click="cancelNewPrescribe()">Cancel</button>
 			   	<button class="btn btn-success" ng-click="saveNewPrescribe(customPrescription)">Save</button>
