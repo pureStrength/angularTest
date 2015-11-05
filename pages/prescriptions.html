@@ -1,5 +1,104 @@
-<div ng-controller="prescriptionsCtrl" ng-init="loadPrescriptionsTab()">
-	<h2>Calendar</h2>
-	<input type="button" class="btn btn-primary" ng-click="swapView()" value="{{calendarView}}" />
+<div ng-controller="calendarCtrl" ng-init="initializeEvents(user.id)">
+
+	<div ng-hide="postingResults">
+		<br>
+		<div class="col-xs-10 col-xs-offset-1 form-inline">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-class="{active:mode==='month'}"
+                        ng-click="changeMode('month')">
+                    Month
+                </button>
+                <button type="button" class="btn btn-default" ng-class="{active:mode==='week'}"
+                        ng-click="changeMode('week')">
+                    Week
+                </button>
+                <button type="button" class="btn btn-default" ng-class="{active:mode==='day'}"
+                        ng-click="changeMode('day')">
+                    Day
+                </button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-disabled="isToday()"
+                        ng-click="today()">
+                    Today
+                </button>
+            </div>
+
+	       	<button class="btn btn-success" ng-click="postResults()">Post Results</button>
+		<br></br>
+		</div>
+		
+		<div class="col-xs-10 col-xs-offset-1">
+		<calendar ng-model="currentDate" calendar-mode="mode" event-source="eventSource" event-selected="onEventSelected(event)"></calendar>
+		</div>
+	</div>
+
+	<div ng-show="postingResults" ng-controller="prescriptionsCtrl">
+		<div class="col-xs-10">
+		<br><br>
+
+		<div class="left-aligned col-xs-12 col-lg-12">
+	        <br>
+	        <form role="form">
+	            <table class="table">
+	                 <thead>
+	                    <th>Sets</th>
+	                    <th></th>
+	                </thead>
+	                <tbody>
+	                    <tr ng-repeat="pSet in event.recordedSets track by $index">
+	                        <td>
+	                            <div>
+	                            	<input class="form-control" ng-model="pSet.mainLiftDefinition.name" disabled />
+	                            </div>
+	                            <br>
+	                            <table class="table" style="background-color: transparent;">
+	                                <thead>
+	                                    <th class="col-xs-3">Repetitions</th>
+	                                    <th class="col-xs-3">% One Rep Max</th>
+	                                    <th></th>
+	                                </thead>
+	                                <tbody>
+	                                    <tr ng-repeat="reps in pSet.mainLifts">
+	                                        <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" disabled/></td>
+	                                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" disabled/></td>
+	                                        <td></td>
+	                                    </tr>
+	                                </tbody>
+	                            </table>
+	                            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="pSet.description" disabled/><br>
+	                        </td>
+	                        <td></td>
+	                    </tr>
+	                </tbody>
+	            </table>
+
+	         </form> 
+
+	        <input type="button" class="btn btn-primary" ng-click="cancelPostResults()" value="Cancel"/>
+            <input type="submit" class="btn btn-primary" ng-click="postEvent(event)" value="Save"/>
+	    </div>
+	</div>
+
+	</div>
+
+	 <!-- Success worout modal (pop-up) -->
+    <script type="text/ng-template" id="creationModal.html"></script>
+    <div class="modal fade" id="creationModal" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" ng-click="closeCreationModal(success)" data-dismiss="modal">Okay!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

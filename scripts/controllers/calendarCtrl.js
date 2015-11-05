@@ -9,8 +9,15 @@
 angular.module('homepageModule')
   .controller('calendarCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
-    
   	$scope.$on('initializeEvents', function(event, athleteId) { 
+      $scope.initializeEvents(athleteId);
+    });
+
+    $scope.initializeEvents = function(athleteId) { 
+
+      if(athleteId === undefined) {
+        athleteId = store.get('user').id;
+      }
 
   	  // The events array
   		$scope.eventSource = [];
@@ -44,17 +51,18 @@ angular.module('homepageModule')
           console.log("Response: " + error);
       })
 
-  	});
+  	}
 
     $scope.prescribeWorkout = function(athlete) {
       // Initialize custom set creation object
       $scope.initializeCustomPrescription();
       console.log(athlete.firstName+" is getting a prescription on "+$scope.currentDate);
       $scope.newPrescribe = true;
+      $scope.$broadcast('usingWorkoutsTab');
     }
 
     $scope.cancelPrescribing = function() {
-      $scope.$emit('cancelCalendar');
+      $scope.$broadcast('cancelCalendar');
       $scope.today();
     }
 
@@ -122,9 +130,13 @@ angular.module('homepageModule')
 
     $scope.cancelNewPrescribe = function() {
       $scope.newPrescribe = false;
+      $scope.initializeEvents($scope.connectedAthlete.id);
       $scope.today();   
     }
 
+    $scope.postResults = function() {
+      $scope.postingResults = true;
+    }
 
     $scope.changeMode = function (mode) {
       $scope.mode = mode;
@@ -173,8 +185,7 @@ angular.module('homepageModule')
         $scope.initializeCustomPrescription();
 
         // Refresh the tables
-        $scope.loadWorkouts();
-        $scope.cancelCreate();
+        $scope.cancelNewPrescribe();
       } 
     };
 

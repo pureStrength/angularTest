@@ -9,19 +9,12 @@
 angular.module('homepageModule')
   .controller('prescriptionsCtrl', function ($scope, workoutService) {
 
-
-	$scope.loadPrescriptionsTab = function() {
-		// Initialize the calendar type
-		$scope.calendarView = "Grid View";
+	$scope.cancelPostResults = function() {
+		$scope.postingResults = false;
+		console.log("Cancel posting results");
 	}
 
-	$scope.swapView = function() {
-
-		if($scope.calendarView == "Grid View") {
-			$scope.calendarView = "List View";
-		} else {
-			$scope.calendarView = "Grid View";
-		}
+	$scope.postEvent = function(event) {
 
 	}
 	

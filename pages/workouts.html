@@ -60,20 +60,17 @@
             <br><br>
 
             <table class="table">
-                 <thead>
+                <thead>
                     <th>Sets</th>
-                    <th></th>
                     <th></th>
                 </thead>
                 <tbody>
                     <tr ng-repeat="pSet in customPrescription.mainLiftSets track by $index">
                         <td>
-                            <select class="selectpicker btn btn-primary dropdown" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)">
-                                <option value="">Predefined Sets</option>
-                            </select>
-                        </td>
-                        <td>
                             <div class="form-inline">
+                                <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" style="margin-right: 10px;">
+                                    <option value="">Predefined Sets</option>
+                                </select>
                                 <select class="selectpicker btn btn-primary dropdown col-lg-3" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px;">
                                     <option value="">Select a Lift</option>
                                 </select>
@@ -90,11 +87,11 @@
                                     <tr ng-repeat="reps in pSet.mainLifts">
                                         <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
                                         <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-                                        <td><input type="button" class="btn btn-danger" ng-click="deleteRow($parent.$index, $index)" value="Delete"/></td>
+                                        <td><input type="button" class="btn btn-danger" ng-click="deleteRow($parent.$index, $index)" value="Delete Repetition"/></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <input type="button" class="btn btn-success" value="Add" ng-click="addRow($index)"><br><br>
+                            <input type="button" class="btn btn-success" value="Add Repetition" ng-click="addRow($index)"><br><br>
                             <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="pSet.description"/><br>
                         </td>
                         <td>

@@ -21,6 +21,7 @@ angular.module('homepageModule')
 
   	$scope.$on('initializeCustomPrescription', function(event, args) {
   		$scope.initializeCustomPrescription();
+  		$scope.loadWorkouts();
   	});
 
 	$scope.createWorkout = function(type) {
