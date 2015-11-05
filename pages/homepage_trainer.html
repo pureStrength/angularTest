@@ -69,17 +69,17 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <div class="tab-content" ng-init="clickedAthletesTab()">
-        <div id="athletes" class="tab-pane fade in active col-xs-10 col-xs-offset-1">
+    <div class="tab-content col-xs-10 col-xs-offset-1" ng-init="clickedAthletesTab()">
+        <div id="athletes" class="tab-pane fade in active">
             <div ng-include="'pages/athletes.html'"></div>
         </div>
-        <div id="workouts" class="tab-pane fade col-xs-10 col-xs-offset-1">
+        <div id="workouts" class="tab-pane fade">
             <div ng-include="'pages/workouts.html'"></div>
         </div>
-        <div id="connections" class="tab-pane fade col-xs-10 col-xs-offset-1">
+        <div id="connections" class="tab-pane fade">
             <div ng-include="'pages/connections.html'"></div>
         </div>
-        <div id="settings" class="tab-pane fade col-xs-10 col-xs-offset-1">
+        <div id="settings" class="tab-pane fade">
             <div ng-include="'pages/settings.html'"></div>
         </div>
     </div>
