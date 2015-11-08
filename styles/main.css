@@ -77,7 +77,7 @@ html, body {
 
 @media (max-width: 768px) {
   .btn-responsive {
-    padding:2px 4px;
+    padding:5px 15px;
     font-size:80%;
     line-height: 1;
     border-radius:3px;
@@ -91,3 +91,4 @@ html, body {
     line-height: 1.2;
   }
 }
+
