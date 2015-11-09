@@ -168,10 +168,10 @@ angular.module('workoutService', [])
 		return defer.promise;
 	}
 
-	workoutService.getPrescriptionsByCoach = function(coachId) {
+	workoutService.fillAssignedWeight = function(prescriptionId) {
 		var defer = $q.defer();
 		
-		$http.get(prescriptionEventEndPoint + '/byCoach/' + coachId)
+		$http.get(prescriptionEventEndPoint + '/assignWeight/' + prescriptionId)
 		.success(function(res, status) {
 			if(status == 200) {
 				defer.resolve(res);
