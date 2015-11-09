@@ -71,6 +71,7 @@ angular.module('homepageModule')
     $scope.cancelPrescribing = function() {
       $scope.$emit('cancelCalendar');
       $scope.today();
+      $scope.changeMode('month');
     }
 
     $scope.saveNewPrescribe = function(prescription) {

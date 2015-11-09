@@ -83,11 +83,23 @@
 	                    </tr>
 	                </tbody>
 	            </table>
+	        </form> 
 
-	         </form> 
+	        <!-- Wellness sliders -->
+	        <h3>Wellness Ratings</h3>
+	        <span>Sleep {{selectedPrescription.wellnessSleep}}</span><br>
+	        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessSleep" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Motivation {{selectedPrescription.wellnessMotivation}}</span><br>
+	        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessMotivation" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Nutrition {{selectedPrescription.wellnessNutrition}}</span><br>
+	        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessNutrition" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Soreness {{selectedPrescription.wellnessSoreness}}</span><br>
+	        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessSoreness" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Stress {{selectedPrescription.wellnessStress}}</span><br>
+	        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessStress" attach-handle-values="true" pin-handle="min"></div>
 
 	        <input type="button" class="btn btn-primary" ng-click="cancelPostResults()" value="Cancel"/>
-            <input type="submit" class="btn btn-primary" ng-click="postEvent(selectedPrescription)" value="Save"/>
+            <input type="submit" class="btn btn-primary" ng-click="postEvent(selectedPrescription)" value="Submit"/>
             <br><br>
 	    </div>
 	</div>
