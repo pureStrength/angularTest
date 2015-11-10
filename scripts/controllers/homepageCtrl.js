@@ -9,6 +9,11 @@
 angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, userService) {
 
+  	$('.nav a').on('click', function(){
+	    $('.btn-navbar').click(); //bootstrap 2.x
+	    $('.navbar-toggle').click() //bootstrap 3.x by Richard
+	});
+	
 	$scope.loadHomepage = function() {
 		// Reload the user to update information
 		var user = store.get('user');

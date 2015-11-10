@@ -1,10 +1,14 @@
 <div ng-controller="calendarCtrl">
 
 	<div class="container-fluid" ng-hide="newPrescribe">
-		<div class="form-inline row">
+		<div class="row">
 	            <div class="btn-group">
 	            	<button class="btn btn-danger btn-responsive" ng-click="cancelPrescribing()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
 	            	</button>
+	            	<button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Prescribe 
+	                </button>
+	            </div></br></br>
+	            <div class="btn-group">
 	                <button type="button" class="btn btn-default btn-responsive" ng-class="{active:mode==='month'}"
 	                        ng-click="changeMode('month')">
 	                    Month
@@ -21,21 +25,19 @@
 	                        ng-click="today()">
 	                    Today
 	                </button>
-	                <button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Prescribe
-	                </button>
 	            </div>
 		</br> </br>
 		</div>
 		
-		<div class="row">
-			<div class="jumbotron">
+		<div class="row-fluid">
+			<div class="span12">
 				<calendar ng-model="currentDate" calendar-mode="mode" event-source="eventSource" event-selected="onEventSelected(event)"></calendar>
 			</div>
 		</div>
 	</div>
 
 	<div class="container-fluid" ng-show="newPrescribe" ng-controller="workoutsCtrl" ng-init="loadWorkouts()">
-		<div class="row jumbotron">
+		<div class="row">
 
 		<div class="left-aligned">
 	        <form role="form">
@@ -55,13 +57,15 @@
 	                    <tr ng-repeat="pSet in customPrescription.mainLiftSets track by $index">
 	                        <td>
 	                            <div class="form-inline">
-		                            <select class="selectpicker btn btn-primary dropdown col-lg-3 btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" style="margin-right: 10px;">
-		                                <option value="">Predefined Sets</option>
-		                            </select>
-	                                <select class="selectpicker btn btn-primary dropdown col-lg-3 btn-responsive" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px;">
-	                                    <option value="">Select a Lift</option>
-	                                </select>
-	                                <input type="text" class="form-control" placeholder="Set Name" ng-model="pSet.name"/><br>
+	                            	
+			                            <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" style="margin-right: 10px;">
+			                                <option value="">Predefined Sets</option>
+			                            </select>
+		                                <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px;">
+		                                    <option value="">Select a Lift</option>
+		                                </select>
+	                                	<input type="text" class="form-control" placeholder="Set Name" ng-model="pSet.name"/><br>
+	                                
 	                            </div>
 	                            <br>
 	                            <table class="table" style="background-color: transparent;">
@@ -72,9 +76,11 @@
 	                                </thead>
 	                                <tbody>
 	                                    <tr ng-repeat="reps in pSet.mainLifts">
-	                                        <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
-	                                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-	                                        <td><input type="button" class="btn btn-danger btn-responsive" ng-click="deleteRow($parent.$index, $index)" value="Delete Repetition"/></td>
+	                                    	<div class="span12">
+		                                        <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
+		                                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
+		                                        <td><button class="btn btn-danger btn-responsive" ng-click="deleteRow($parent.$index, $index)"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></td>
+	                                    	</div>
 	                                    </tr>
 	                                </tbody>
 	                            </table>
@@ -82,7 +88,8 @@
 	                            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="pSet.description"/><br>
 	                        </td>
 	                        <td>
-	                            <input type="button" class="btn btn-danger btn-responsive" ng-click="deletePRow($index)" value="Delete Set"/>
+	                        	<button class="btn btn-danger btn-responsive" ng-click="deletePRow($index)"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Set 
+	                			</button>
 	                        </td>
 	                    </tr>
 	                </tbody>
