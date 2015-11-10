@@ -40,6 +40,7 @@ angular.module('homepageModule')
 	}
 
 	$scope.$on('postResults', function() {
+		$scope.postingResults = true;
 
 		// Get the updated info for the prescription
 		var promise = workoutService.fillAssignedWeight($scope.event.id);

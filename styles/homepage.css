@@ -56,3 +56,6 @@
     position: relative;
 }
 
+.form-horizontal .control-label {
+  text-align: left;
+}
