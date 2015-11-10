@@ -27,10 +27,10 @@ angular.module('homepageModule')
           
           // Convert prescriptions into events
           for(var i = 0; i < res.length; i++) {
-            res[i].title = 'Workout';
+            res[i].title = res[i].prescriptionName || 'Workout';
             res[i].startTime = res[i].dateAssigned;
-            res[i].endTime = res[i].startTime;
-            res[i].allDay = true;
+            res[i].endTime = res[i].dateAssigned;
+            res[i].allDay = false;
           }
 
           // Update the event source
@@ -71,6 +71,7 @@ angular.module('homepageModule')
     $scope.cancelPrescribing = function() {
       $scope.$emit('cancelCalendar');
       $scope.today();
+      $scope.changeMode('month');
     }
 
     $scope.saveNewPrescribe = function(prescription) {
@@ -141,49 +142,84 @@ angular.module('homepageModule')
       $scope.today();   
     }
 
+    $scope.$on('cancelPostResults', function() {
+      $scope.postingResults = false;
+    });
+
     $scope.postResults = function() {
-      $scope.postingResults = true;
+      if($scope.event != undefined && $scope.event != null) {
+        $scope.postingResults = true;
+        $scope.$broadcast('postResults');
+      }
     }
 
-    $scope.changeMode = function (mode) {
+    $scope.changeMode = function(mode) {
       $scope.mode = mode;
     };
 
-    $scope.today = function () {
-        $scope.currentDate = new Date();
+    $scope.today = function() {
+      $scope.currentDate = new Date();
     };
 
-    $scope.onEventSelected = function (event) {
+    $scope.onEventSelected = function(event) {
       $scope.event = event;
       console.log("Clicked Event");
     };
 
-    $scope.isToday = function () {
-      var today = new Date(),
-          currentCalendarDate = new Date($scope.currentDate);
+    $scope.onTimeSelected = function(selectedTime) {
+      
+      if($scope.eventSource == undefined || $scope.eventSource == null) {
+        return false;
+      }
 
-      today.setHours(0, 0, 0, 0);
-      currentCalendarDate.setHours(0, 0, 0, 0);
-      return today.getTime() === currentCalendarDate.getTime();
+      var result = false;
+      angular.forEach($scope.eventSource, function(event, index) {
+        if($scope.datesEqual(new Date(event.startTime), selectedTime)) {
+          $scope.event = event;
+          result = true;
+          return;
+        }
+      });
+
+      if(result == false) {
+        $scope.event = null;
+      }
+
+      return result;
     };
+
+    $scope.isToday = function() {
+      return $scope.datesEqual(new Date(), new Date($scope.currentDate));
+    };
+
+    $scope.datesEqual = function(date1, date2) {
+
+      if(date1 == undefined || date2 == undefined || date1 == null || date2 == null) {
+        return false;
+      }
+
+      date1.setHours(0, 0, 0, 0);
+      date2.setHours(0, 0, 0, 0);
+      return date1.getTime() === date2.getTime();
+    }
 
     $scope.showCreationModal = function(header, success) {
 
-        ModalService.showModal({
-            templateUrl: 'creationModal.html',
-            controller: "homepageCtrl"
-        }).then(function(modal) {
+      ModalService.showModal({
+          templateUrl: 'creationModal.html',
+          controller: "homepageCtrl"
+      }).then(function(modal) {
             
       // Display correct message
       $scope.modalHeader = header;
       $scope.success = success;
             
-            modal.element.append($("#creationModal"));
-            $("#creationModal").modal({
+      modal.element.append($("#creationModal"));
+          $("#creationModal").modal({
           backdrop: 'static',
           keyboard: false 
-      });
         });
+      });
     };
 
     $scope.closeCreationModal = function(wasSuccessful) {
