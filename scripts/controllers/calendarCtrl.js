@@ -31,6 +31,7 @@ angular.module('homepageModule')
             res[i].startTime = res[i].dateAssigned;
             res[i].endTime = res[i].dateAssigned;
             res[i].allDay = false;
+            res[i].highlight = res[i].wasPerformed;
           }
 
           // Update the event source
