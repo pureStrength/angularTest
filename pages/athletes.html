@@ -1,7 +1,10 @@
 <div ng-controller="athletesCtrl">
 
 	<div ng-hide="prescribing">
-		<h2 class="left-aligned">Athletes</h2>
+		<h2 class="left-aligned">Athletes</h2></br>
+		<span class="btn btn-default btn-file btn-responsive">
+		   Import File <input type="file">
+		</span></br>
 		<table class="table table-connect">
 			<tbody>
 			    <tr ng-repeat="connection in existingConnections">
