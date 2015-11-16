@@ -71,11 +71,11 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <div class="tab-content col-xs-10 col-xs-offset-1" ng-init="clickedAthletesTab()">
-        <div id="athletes" class="tab-pane fade in active">
+    <div class="tab-content" ng-init="clickedAthletesTab()">
+        <div id="athletes" class="tab-pane fade in active" href="pages/athletes.html">
             <div ng-include="'pages/athletes.html'"></div>
         </div>
-        <div id="workouts" class="tab-pane fade">
+        <div id="workouts" class="tab-pane fade" href="pages/workouts.html">
             <div ng-include="'pages/workouts.html'"></div>
         </div>
         <div id="connections" class="tab-pane fade">
