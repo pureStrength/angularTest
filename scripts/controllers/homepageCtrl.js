@@ -10,7 +10,6 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
   .controller('homepageCtrl', function ($scope, userService) {
 
   	$('.nav a').on('click', function(){
-	    $('.btn-navbar').click(); //bootstrap 2.x
 	    $('.navbar-toggle').click() //bootstrap 3.x by Richard
 	});
 	
@@ -68,6 +67,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
 	$scope.clickedConnectionsTab = function() {
 		$scope.$broadcast('usingConnectionsTab');
+		history.pushState({page: 1}, "title 1", "?page=1");
 	}
 
 	$scope.clickedWorkoutsTab = function() {
