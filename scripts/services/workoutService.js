@@ -83,6 +83,23 @@ angular.module('workoutService', [])
 		return defer.promise;
 	}
 
+	workoutService.importPrescriptions = function(coachId, fileBytes) {
+		var defer = $q.defer();
+		
+		$http.post(prescriptionEventEndPoint + '/import/' + coachId, fileBytes)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
 	workoutService.postResults = function(prescription) {
 		var defer = $q.defer();
 		
