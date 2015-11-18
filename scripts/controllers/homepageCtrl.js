@@ -6,7 +6,7 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'ui-rangeSlider', 'ngFileUpload', 'mgcrea.ngStrap', 'angularModalService'])
+angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'ui-rangeSlider', 'ngFileUpload', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, $location, userService) {
 
   	$scope.defaultTimeout = 750;
