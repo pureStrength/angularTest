@@ -7,7 +7,7 @@
  * # athletesCtrl
  */
 angular.module('homepageModule')
-  .controller('athletesCtrl', function ($scope, userService, userConnectionService, ModalService) {
+  .controller('athletesCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
 	$scope.$on('usingAthletesTab', function(event, args) {
 		$scope.loadAthletes();
@@ -18,7 +18,6 @@ angular.module('homepageModule')
 		$scope.prescribing = false;
 	});
 
-	
 	$scope.viewProfile = function(connection) {
 		console.log("Connection user name: " + connection.user.firstName);
 		console.log("Navigating to the user's profile");
@@ -31,7 +30,43 @@ angular.module('homepageModule')
 		$scope.$broadcast('initializeEvents', $scope.connectedAthlete.id);
 	}
 
-	$scope.showAthletesModal = function(actionTaken) {
+	$scope.selectFile = function(file) {
+ 		var reader = new FileReader();
+
+		reader.onload = function(e) {
+		  	var rawData = reader.result;
+		  	var fileAttachment = {fileBytes: rawData.substring(78, rawData.length)};
+
+		  	$scope.showAthletesModal("Importing...", true);
+
+		  	var promise = workoutService.importPrescriptions($scope.user.id, fileAttachment);
+			promise.then(function(res) {
+				if(res != null) {
+					// Log success
+					console.log("Uploaded prescriptions");
+					console.log(res);
+					
+					$scope.showAthletesModal("Prescriptions Uploaded", false);
+				} else {
+					// Log error
+					console.log("Error uploading prescriptions");	
+					$scope.showAthletesModal("Error Uploading Prescriptions", false);
+				}
+			
+			}, function(error) {
+				// Log error
+				console.log("Error uploading prescriptions");
+				console.log("Response: " + error);
+				$scope.showAthletesModal("Error Uploading Prescriptions", false);
+			})
+		}
+
+		if(file != undefined && file != null) {
+			reader.readAsDataURL(file);
+		}
+	}
+
+	$scope.showAthletesModal = function(actionTaken, inProgress) {
 
         ModalService.showModal({
             templateUrl: 'modal.html',
@@ -40,6 +75,7 @@ angular.module('homepageModule')
             
 			// Display correct message
 			$scope.modalHeader = actionTaken;
+			$scope.inProgress = inProgress;
             
             modal.element.append($("#athletesModal"));
             $("#athletesModal").modal({
@@ -50,10 +86,7 @@ angular.module('homepageModule')
     }
 
 	$scope.closeAthletesModal = function() {
-        // Refresh the tables
-        $scope.loadAllConnections();
-        $scope.lastSearch = "";
-        $scope.searchConnections($scope.searchText);
+
     }
 
 	$scope.loadAthletes = function()  {

@@ -2,9 +2,13 @@
 
 	<div ng-hide="prescribing">
 		<h2 class="left-aligned">Athletes</h2></br>
-		<span class="btn btn-primary btn-file btn-responsive pull-left">
-		   Import File <input type="file">
-		</span></br></br></br>
+
+		<div>
+			<h4 class="left-aligned">Import Prescriptions</h4>
+			<input type="file" class="btn btn-default btn-file btn-responsive" ngf-select="selectFile(file)" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+		</div>
+		<br><br>
+
 		<table class="table table-connect">
 			<tbody>
 			    <tr ng-repeat="connection in existingConnections">
@@ -33,5 +37,30 @@
 	</br>
 		<div ng-include="'pages/calendarNew.html'"></div>
 	</div>
+
+	<!-- Success worout modal (pop-up) -->
+    <script type="text/ng-template" id="modal.html"></script>
+    <div class="modal fade" id="athletesModal" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
+                        </div>
+                        <div class="modal-body" ng-show="inProgress">
+				            <div class="progress">
+							    <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:100%">
+							    </div>
+							</div>
+				        </div>
+                        <div class="modal-footer" ng-hide="inProgress">
+                            <button type="button" class="btn btn-success" ng-click="closeAthletesModal()" data-dismiss="modal">Okay!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
