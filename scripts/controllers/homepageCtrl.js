@@ -6,21 +6,52 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'ui-rangeSlider', 'ngFileUpload', 'angularModalService'])
-  .controller('homepageCtrl', function ($scope, userService) {
+angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'ui-rangeSlider', 'ngFileUpload', 'mgcrea.ngStrap', 'angularModalService'])
+  .controller('homepageCtrl', function ($scope, $location, userService) {
+
+  	$scope.defaultTimeout = 750;
 
   	$('.nav a').on('click', function(){
 	    $('.navbar-toggle').click() //bootstrap 3.x by Richard
 	});
+
+	$scope.isActive = function(route) {
+		var path = '' + $location.path();
+
+		if(path == '' || path == '/') {
+			var url = '' + $location.url;
+			if(url.indexOf('athleteHomepage') >= 0) {
+				path = '/prescriptions';
+			} else {
+				path = '/athletes';
+			}
+		}
+        return route == path;
+    }
 	
 	$scope.loadHomepage = function() {
+		if($scope.reloadStoredUser() == false) {
+			return;
+		}
+
+		// Load the data for the selected tab
+		$scope.loadTab($location.path());
+
+		// Get the notifications for the user
+		$scope.notifications = 0;
+		
+		// Initialize the calendar event sources
+		$scope.eventSources = [];
+	}
+
+	$scope.reloadStoredUser = function() {
 		// Reload the user to update information
 		var user = store.get('user');
 		
 		if(user == null) {
 			console.log("No user logged in");
 			$scope.logout();
-			return;
+			return false;
 		}
 		
 		var promise = userService.get(user.id);
@@ -45,20 +76,31 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			console.log("Response: " + error);
 		})
 
-		// Get the notifications for the user
-		$scope.notifications = 0;
-
-		// Load the athlete's tab after a short pause
-		if(user.userType == 'Coach') {
-			setTimeout($scope.clickedAthletesTab, 750);
-		}
-		
-		$scope.eventSources = [];
+		return true;
 	}
 
-	$scope.viewProfile = function(connection) {
+	$scope.loadTab = function(path) {
+		console.log("Loading tab: " + path)
 
-		
+		// Load the athlete's tab after a short pause
+		if(path == '/prescriptions') {
+			setTimeout($scope.clickedPrescriptionsTab, $scope.defaultTimeout);
+		} else if(path == '/connections') {
+			setTimeout($scope.clickedConnectionsTab, $scope.defaultTimeout);
+		} else if(path == '/settings') {
+			setTimeout($scope.clickedSettingsTab, $scope.defaultTimeout);
+		} else if(path == '/athletes') {
+			setTimeout($scope.clickedAthletesTab, $scope.defaultTimeout);
+		} else if(path == '/workouts') {
+			setTimeout($scope.clickedWorkoutsTab, $scope.defaultTimeout);
+		} else {
+			var url = '' + $location.url;
+			if(url.indexOf('athleteHomepage') >= 0) {
+				setTimeout($scope.clickedPrescriptionsTab, $scope.defaultTimeout);
+			} else {
+				setTimeout($scope.clickedAthletesTab, $scope.defaultTimeout);
+			}
+		}
 	}
 
 	$scope.clickedAthletesTab = function() {
@@ -67,7 +109,16 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
 	$scope.clickedConnectionsTab = function() {
 		$scope.$broadcast('usingConnectionsTab');
-		history.pushState({page: 1}, "title 1", "?page=1");
+	}
+
+	$scope.clickedPrescriptionsTab = function() {
+		var user = $scope.user;
+
+		if(user === undefined) {
+		user = store.get('user');
+		}
+
+		$scope.$broadcast('initializeEvents', user.id);
 	}
 
 	$scope.clickedWorkoutsTab = function() {
@@ -76,6 +127,11 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
 	$scope.clickedSettingsTab = function() {
 		$scope.$broadcast('usingSettingsTab');
+	}
+
+	$scope.viewProfile = function(connection) {
+
+		
 	}
 
 	$scope.logout = function() {

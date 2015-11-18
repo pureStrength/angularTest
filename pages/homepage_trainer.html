@@ -20,6 +20,8 @@
     <script src="bower_components/angular-rangeslider/angular.rangeSlider.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <script src="scripts/other/calendar-tpls.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/services/athleteService.js"></script>
@@ -59,10 +61,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a data-toggle="tab" href="#athletes" ng-click="clickedAthletesTab()">Athletes</a></li>
-                    <li><a data-toggle="tab" href="#workouts" ng-click="clickedWorkoutsTab()">Workouts</a></li>
-                    <li><a data-toggle="tab" href="#connections" ng-click="clickedConnectionsTab()">Connect</a></li>
-                    <li><a data-toggle="tab" href="#settings" ng-click="clickedSettingsTab()">Settings</a></li>
+                    <li ng-class="{active:isActive('/athletes')}"><a data-toggle="tab" href="#athletes" id="athletesTab" ng-click="clickedAthletesTab()">Athletes</a></li>
+                    <li ng-class="{active:isActive('/workouts')}"><a data-toggle="tab" href="#workouts" id="workoutsTab" ng-click="clickedWorkoutsTab()">Workouts</a></li>
+                    <li ng-class="{active:isActive('/connections')}"><a data-toggle="tab" href="#connections" id="connectionsTab" ng-click="clickedConnectionsTab()">Connect</a></li>
+                    <li ng-class="{active:isActive('/settings')}"><a data-toggle="tab" href="#settings" id="settingsTab" ng-click="clickedSettingsTab()">Settings</a></li>
                 </ul>
                 <!-- code for the right side of the navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -74,16 +76,16 @@
     </nav>
 
     <div class="tab-content" ng-init="clickedAthletesTab()">
-        <div id="athletes" class="tab-pane fade in active" href="pages/athletes.html">
+        <div id="athletes" ng-class="{active:isActive('/athletes')}" class="tab-pane" href="pages/athletes.html">
             <div ng-include="'pages/athletes.html'"></div>
         </div>
-        <div id="workouts" class="tab-pane fade" href="pages/workouts.html">
+        <div id="workouts" ng-class="{active:isActive('/workouts')}" class="tab-pane" href="pages/workouts.html">
             <div ng-include="'pages/workouts.html'"></div>
         </div>
-        <div id="connections" class="tab-pane fade">
+        <div id="connections" ng-class="{active:isActive('/connections')}" class="tab-pane">
             <div ng-include="'pages/connections.html'"></div>
         </div>
-        <div id="settings" class="tab-pane fade">
+        <div id="settings" ng-class="{active:isActive('/settings')}" class="tab-pane">
             <div ng-include="'pages/settings.html'"></div>
         </div>
     </div>
