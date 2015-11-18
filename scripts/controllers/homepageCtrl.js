@@ -11,7 +11,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 
   	$scope.defaultTimeout = 750;
 
-  	$('.nav a').on('click', function(){
+  	$('.nav a').on('click', function() {
 	    $('.navbar-toggle').click() //bootstrap 3.x by Richard
 	});
 
