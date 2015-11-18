@@ -2,21 +2,23 @@
 
 	<div ng-hide="prescribing">
 		<h2 class="left-aligned">Athletes</h2></br>
+
 		<div>
 			<h4 class="left-aligned">Import Prescriptions</h4>
 			<input type="file" class="btn btn-default btn-file btn-responsive" ngf-select="selectFile(file)" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 		</div>
 		<br><br>
+
 		<table class="table table-connect">
 			<tbody>
 			    <tr ng-repeat="connection in existingConnections">
-					<td class="col-xs-3"> 
+					<td class="col-xs-2 col-lg-2"> 
 						<img src="images/profile_pics/default.jpg" class="img-responsive img-circle" alt="Profile Pic">
 					</td>
-					<td>{{connection.user.firstName}} {{connection.user.lastName}}
+					<td></br>{{connection.user.firstName}} {{connection.user.lastName}}
 					<br>{{connection.user.email}}
 					<br>{{connection.user.organization}}</td>
-					<td class="last-row">            
+					<td class="last-row col-xs-2">            
 						<div class="dropdown">
 							<button class="btn btn-primary dropdown-toggle btn-responsive" type="button" data-toggle="dropdown">Options
 							<span class="caret"></span></button>
