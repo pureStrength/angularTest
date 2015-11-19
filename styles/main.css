@@ -86,7 +86,7 @@ html, body {
 
 @media (min-width: 769px) {
   .btn-responsive {
-    padding:10px 80px;
+    padding:6px 80px;
     font-size:100%;
     line-height: 1.2;
   }
@@ -103,7 +103,7 @@ html, body {
 
 @media (min-width: 769px) {
   .btn-responsive2 {
-    padding:10px 40px;
+    padding:10px 80px;
     font-size:100%;
     line-height: 1.2;
   }
