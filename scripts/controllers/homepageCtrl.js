@@ -19,13 +19,14 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		var path = '' + $location.path();
 
 		if(path == '' || path == '/') {
-			var url = '' + $location.url;
+			var url = $location.absUrl();
 			if(url.indexOf('athleteHomepage') >= 0) {
 				path = '/prescriptions';
 			} else {
 				path = '/athletes';
 			}
 		}
+
         return route == path;
     }
 	
@@ -94,12 +95,8 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		} else if(path == '/workouts') {
 			setTimeout($scope.clickedWorkoutsTab, $scope.defaultTimeout);
 		} else {
-			var url = '' + $location.url;
-			if(url.indexOf('athleteHomepage') >= 0) {
-				setTimeout($scope.clickedPrescriptionsTab, $scope.defaultTimeout);
-			} else {
-				setTimeout($scope.clickedAthletesTab, $scope.defaultTimeout);
-			}
+			setTimeout($scope.clickedPrescriptionsTab, $scope.defaultTimeout);
+			setTimeout($scope.clickedAthletesTab, $scope.defaultTimeout);
 		}
 	}
 
@@ -115,7 +112,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 		var user = $scope.user;
 
 		if(user === undefined) {
-		user = store.get('user');
+			user = store.get('user');
 		}
 
 		$scope.$broadcast('initializeEvents', user.id);
