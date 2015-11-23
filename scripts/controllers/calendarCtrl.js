@@ -13,6 +13,9 @@ angular.module('homepageModule')
       $scope.initializeEvents(athleteId);
     });
 
+    $scope.newPrescribe = false;
+    $scope.viewPrescription = false;
+
     $scope.initializeEvents = function(athleteId) { 
 
   	  // The events array
@@ -156,6 +159,7 @@ angular.module('homepageModule')
 
     $scope.$on('cancelViewResults', function() {
       $scope.viewPrescription = false;
+      $scope.newPrescribe = false;
     });
 
     $scope.viewResults = function() {
