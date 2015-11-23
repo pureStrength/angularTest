@@ -25,6 +25,8 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			} else {
 				path = '/athletes';
 			}
+		} else if(path =='/lifts' || path == '/sets' || path == '/prescriptions') {
+			path = '/workouts';
 		}
 
         return route == path;
@@ -81,7 +83,6 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 	}
 
 	$scope.loadTab = function(path) {
-		console.log("Loading tab: " + path)
 
 		// Load the athlete's tab after a short pause
 		if(path == '/prescriptions') {
@@ -92,7 +93,8 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			setTimeout($scope.clickedSettingsTab, $scope.defaultTimeout);
 		} else if(path == '/athletes') {
 			setTimeout($scope.clickedAthletesTab, $scope.defaultTimeout);
-		} else if(path == '/workouts') {
+		} else if(path == '/workouts' || path == '/lifts' ||
+				  path == '/sets'     || path == '/prescriptions') {
 			setTimeout($scope.clickedWorkoutsTab, $scope.defaultTimeout);
 		} else {
 			setTimeout($scope.clickedPrescriptionsTab, $scope.defaultTimeout);

@@ -59,7 +59,7 @@
 
 .calendar-event-inner {
     overflow: hidden;
-    background-color: darkblue;
+    background-color: maroon;
     color: white;
     height: 100%;
     width: 100%;
@@ -73,7 +73,7 @@
 }
 
 .monthview-primary-with-event {
-    background-color: darkblue;
+    background-color: maroon;
     color: white;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .monthview-current {
-    background-color: maroon;
+    background-color: darkblue;
 }
 
 .monthview-eventdetail-timecolumn {
