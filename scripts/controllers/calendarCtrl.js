@@ -154,6 +154,17 @@ angular.module('homepageModule')
       }
     }
 
+    $scope.$on('cancelViewResults', function() {
+      $scope.viewPrescription = false;
+    });
+
+    $scope.viewResults = function() {
+      if($scope.event != undefined && $scope.event != null) {
+        $scope.viewPrescription = true;
+        $scope.$broadcast('viewResults');
+      }
+    }
+
     $scope.changeMode = function(mode) {
       $scope.mode = mode;
     };

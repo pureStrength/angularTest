@@ -25,6 +25,7 @@
 	                        ng-click="today()">
 	                    Today
 	                </button>
+	                <button type="button" class="btn btn-primary" ng-click="viewResults()" ng-disabled="event == undefined">View Workout</button>
 	            </div>
 		</br> </br>
 		</div>
@@ -106,6 +107,88 @@
 	</div>
 
 	</div>
+
+	<div ng-show="viewPrescription" ng-controller="prescriptionsCtrl">
+		<div class="col-xs-10">
+		<br><br>
+
+		<div class="left-aligned col-xs-12 col-lg-12">
+	        <br>
+	        <form role="form">
+	            <table class="table">
+	                 <thead>
+	                    <th>Sets</th>
+	                </thead>
+	                <tbody>
+	                    <tr ng-repeat="pSet in selectedPrescription.recordedSets track by $index">
+	                        <td>
+	                        	<div class="form-horizontal">
+		                            <div class="form-group">
+		                            	<label class="control-label col-xs-3 col-md-2">Lift</label>
+		                            	<div class="col-xs-6 col-md-4">
+		                            		<input class="form-control col-xs-3" ng-model="pSet.mainLiftDefinition.name" disabled />
+		                            	</div>
+		                            </div>
+		                            <br>
+		                            <div class="form-group">
+		                            	<label class="control-label col-xs-3 col-md-2">One Rep Max</label>
+		                            	<div class="col-xs-4 col-md-3 col-lg-2">
+		                            		<input class="form-control" ng-model="pSet.ORM" type="number" min="0" />
+		                            	</div>
+		                            </div>
+	                        	</div>
+	                            <table class="table" style="background-color: transparent;">
+                            		<thead>
+                            			<tr>
+		                                    <th colspan="3">Assigned</th>
+		                                    <th colspan="2">Performed</th>
+	                                    </tr>
+	                                    <tr>
+                                			<th>Repetitions</th>
+		                                    <th>% One Rep Max</th>
+		                                    <th>Weight</th>
+		                                    <th>Repetitions</th>
+				                            <th>Weight</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+				                        <tr ng-repeat="reps in pSet.mainLifts">
+	                                        <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.assignedRepetitions" disabled/></td>
+	                                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" disabled/></td>
+	                                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.assignedWeight" disabled/></td>
+	                                        <td><input type="number" class="form-control" value="0" min="0" ng-model="reps.performedRepetitions"/></td>
+	                                        <td><input type="number" class="form-control" value="0" min="0" max="100" ng-model="reps.performedWeight"/></td>
+	                                    </tr>
+	                                </tbody>
+	                            </table>
+	                            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="pSet.description" disabled/><br>
+	                        </td>
+	                        <td></td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </form> 
+
+	        <!-- Wellness sliders -->
+	        <h3>Wellness Ratings</h3>
+	        <span>Sleep {{selectedPrescription.wellnessSleep}}</span><br>
+	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessSleep" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Motivation {{selectedPrescription.wellnessMotivation}}</span><br>
+	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessMotivation" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Nutrition {{selectedPrescription.wellnessNutrition}}</span><br>
+	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessNutrition" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Soreness {{selectedPrescription.wellnessSoreness}}</span><br>
+	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessSoreness" attach-handle-values="true" pin-handle="min"></div>
+	        <span>Stress {{selectedPrescription.wellnessStress}}</span><br>
+	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessStress" attach-handle-values="true" pin-handle="min"></div>
+
+	        <input type="button" class="btn btn-primary" ng-click="cancelPostResults()" value="Cancel"/>
+            <input type="submit" class="btn btn-primary" ng-click="postEvent(selectedPrescription)" value="Submit"/>
+            <br><br>
+	    </div>
+	</div>
+
+	
 
 	 <!-- Success worout modal (pop-up) -->
     <script type="text/ng-template" id="creationModal.html"></script>

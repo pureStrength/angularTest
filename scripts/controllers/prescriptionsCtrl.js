@@ -14,6 +14,11 @@ angular.module('homepageModule')
 		$scope.$emit('cancelPostResults');
 	}
 
+	$scope.cancelViewResults = function() {
+		$scope.viewPrescription = false;
+		$scope.$emit('cancelViewResults');
+	}
+
 	$scope.postEvent = function(selectedPrescription) {
 
 		var promise = workoutService.postResults(selectedPrescription);
@@ -63,6 +68,31 @@ angular.module('homepageModule')
 	        console.log("Response: " + error);
 	    })
 	});
+
+	$scope.$on('viewResults', function() {
+		$scope.viewPrescription = true;
+
+		// Get the updated info for the prescription
+		var promise = workoutService.showAthletePrescription($scope.event.id);
+	    promise.then(function(res) {
+	        if(res != null) {
+	          // Log success
+	          console.log("Returned assigned weight");
+	          console.log(res);
+
+	          $scope.selectedPrescription = res;
+	          $scope.updateORM();
+	        } else {
+	          // Log error
+	          console.log("Error assigning weight"); 
+	        }
+	      
+	      }, function(error) {
+	        // Log error
+	        console.log("Error assigning weight");
+	        console.log("Response: " + error);
+	    })
+	});	
 
 	$scope.updateORM = function() {
 		// Set the ORM values

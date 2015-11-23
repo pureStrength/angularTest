@@ -202,6 +202,23 @@ angular.module('workoutService', [])
 		return defer.promise;
 	}
 
+	workoutService.showAthletePrescription = function(prescriptionId) {
+		var defer = $q.defer();
+		
+		$http.get(prescriptionEventEndPoint + '/' + prescriptionId)
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(status);
+		})
+		
+		return defer.promise;
+	}
+
 	workoutService.editLift = function(lift) {
 
 		var defer = $q.defer();
