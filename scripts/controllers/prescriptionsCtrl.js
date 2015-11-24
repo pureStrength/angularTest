@@ -56,7 +56,7 @@ angular.module('homepageModule')
 	          console.log(res);
 
 	          $scope.selectedPrescription = res;
-	          $scope.updateORM();
+	          $scope.updateORM($scope.user.id);
 	        } else {
 	          // Log error
 	          console.log("Error assigning weight"); 
@@ -81,7 +81,7 @@ angular.module('homepageModule')
 	          console.log(res);
 
 	          $scope.selectedPrescription = res;
-	          $scope.updateORM();
+	          $scope.updateORM($scope.connectedAthlete.id);
 	        } else {
 	          // Log error
 	          console.log("Error assigning weight"); 
@@ -94,9 +94,9 @@ angular.module('homepageModule')
 	    })
 	});	
 
-	$scope.updateORM = function() {
+	$scope.updateORM = function(athleteId) {
 		// Set the ORM values
-		var promise = athleteService.get($scope.user.id);
+		var promise = athleteService.get(athleteId);
 	    promise.then(function(res) {
 	        if(res != null) {
 	          // Log success
