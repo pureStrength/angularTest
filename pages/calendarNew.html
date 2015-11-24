@@ -1,7 +1,7 @@
 <div ng-controller="calendarCtrl">
 
-	<div class="container-fluid" ng-hide="newPrescribe">
-		<div class="row">
+	<div class="container-fluid" ng-hide="newPrescribe || viewPrescription">
+		<div class="row-fluid">
 	            <div class="btn-group">
 	            	<button class="btn btn-danger btn-responsive" ng-click="cancelPrescribing()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
 	            	</button>
@@ -9,18 +9,6 @@
 	                </button>
 	            </div></br></br>
 	            <div class="btn-group">
-	                <button type="button" class="btn btn-default btn-responsive2" ng-class="{active:mode==='month'}"
-	                        ng-click="changeMode('month')">
-	                    Month
-	                </button>
-	                <button type="button" class="btn btn-default btn-responsive2" ng-class="{active:mode==='week'}"
-	                        ng-click="changeMode('week')">
-	                    Week
-	                </button>
-	                <button type="button" class="btn btn-default btn-responsive2" ng-class="{active:mode==='day'}"
-	                        ng-click="changeMode('day')">
-	                    Day
-	                </button>
 	                <button type="button" class="btn btn-default btn-responsive2" ng-disabled="isToday()"
 	                        ng-click="today()">
 	                    Today
@@ -182,10 +170,12 @@
 	        <span>Stress {{selectedPrescription.wellnessStress}}</span><br>
 	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessStress" attach-handle-values="true" pin-handle="min"></div>
 
-	        <input type="button" class="btn btn-primary" ng-click="cancelPostResults()" value="Cancel"/>
-            <input type="submit" class="btn btn-primary" ng-click="postEvent(selectedPrescription)" value="Submit"/>
+	        <input type="button" class="btn btn-primary" ng-click="cancelViewResults()" value="Cancel"/>
+            <input type="submit" class="btn btn-primary" ng-click="edit" value="Submit"/>
             <br><br>
 	    </div>
+	</div>
+
 	</div>
 
 	

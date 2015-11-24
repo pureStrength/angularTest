@@ -8,6 +8,8 @@
  */
 angular.module('homepageModule')
   .controller('prescriptionsCtrl', function ($scope, workoutService, athleteService, ModalService) {
+  	
+  	$scope.viewPrescription = false;
 
 	$scope.cancelPostResults = function() {
 		$scope.postingResults = false;
