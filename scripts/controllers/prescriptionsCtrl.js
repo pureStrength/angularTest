@@ -30,6 +30,7 @@ angular.module('homepageModule')
 	          console.log("Posted results");
 	          console.log(res);
 
+	          $scope.$emit('initializeEvents', selectedPrescription.athlete.id);
 	          $scope.showPrescriptionModal("Posted Results", true);
 	        } else {
 	          // Log error
