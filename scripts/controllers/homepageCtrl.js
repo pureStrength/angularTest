@@ -125,7 +125,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 	}
 
 	$scope.clickedSettingsTab = function() {
-		$scope.$broadcast('usingSettingsTab');
+		$scope.$broadcast('usingSettingsTab', $scope.user);
 	}
 
 	$scope.viewProfile = function(connection) {

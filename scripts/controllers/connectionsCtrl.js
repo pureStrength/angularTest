@@ -20,6 +20,10 @@ angular.module('homepageModule')
 		$scope.loadAllConnections();
 	});
 
+	$scope.cancelViewing = function() {
+		$scope.viewingProfile = false;
+	} 
+
 	$scope.searchConnections = function(searchText) {
 		console.log("In search connections");
 
@@ -77,9 +81,14 @@ angular.module('homepageModule')
 
 		// Navigate to the user's profile if that was the selection
 		if(action == "View Profile") {
+
+			$scope.$broadcast('usingSettingsTab', connection);
+
 			// Navigate to the user's profile
+			$scope.viewingProfile = true;
+
+			console.log("Connection user name: " + connection.user.firstName);
 			console.log("Navigating to the user's profile");
-			return;
 		} 
 
 		// Make the appropriate request depending on which action was selected

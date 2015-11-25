@@ -95,7 +95,7 @@ html, body {
 @media (max-width: 768px) {
   .btn-responsive2 {
     padding:10px 40px;
-    font-size:90%;
+    font-size:100%;
     line-height: 1;
     border-radius:3px;
   }

@@ -1,4 +1,5 @@
 <div ng-controller="connectionsCtrl" ng-init="loadConnectionsTab()">
+<div ng-hide="viewingProfile">
 	<h2 class="left-aligned">Find Connections</h2>
 	<form name="searchForm" role="form">
 		<div class="input-group col-sm-4">
@@ -15,9 +16,6 @@
 		<table class="table table-connect">
 			<tbody>
 			  	<tr ng-repeat="connection in userSearchResults">
-					<td class="col-xs-2 col-lg-1"> 
-						<img src="images/profile_pics/default.jpg" class="img-responsive img-circle" alt="Profile Pic">
-					</td>
 					<td>{{connection.user.firstName}} {{connection.user.lastName}}
 					<br>{{connection.user.userType}}
 					<br>{{connection.user.email}}
@@ -42,9 +40,6 @@
 			<table class="table table-connect">
 				<tbody>
 				    <tr ng-repeat="connection in pendingConnections">
-						<td class="col-xs-2 col-lg-1"> 
-							<img src="images/profile_pics/default.jpg" class="img-responsive img-circle" alt="Profile Pic">
-						</td>
 						<td>{{connection.user.firstName}} {{connection.user.lastName}}
 						<br>{{connection.user.userType}}
 						<br>{{connection.user.email}}
@@ -68,9 +63,6 @@
 			<table class="table table-connect">
 				<tbody>
 				    <tr ng-repeat="connection in existingConnections">
-						<td class="col-xs-2 col-lg-1"> 
-							<img src="images/profile_pics/default.jpg" class="img-responsive img-circle" alt="Profile Pic">
-						</td>
 						<td class="col-xs-1 col-lg-1">{{connection.user.firstName}} {{connection.user.lastName}}
 						<br>{{connection.user.userType}}
 						<br>{{connection.user.email}}
@@ -88,6 +80,16 @@
 				</tbody>
 		    </table>
 		</div>
+	</div>
+</div>
+
+	<div ng-show="viewingProfile"> 
+	</br>
+		<div class="btn-group">
+        	<button class="btn btn-primary btn-responsive2" ng-click="cancelViewing()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+        	</button>
+        </div></br></br>
+		<div ng-include="'pages/settings.html'"></div>
 	</div>
 
 	<!-- Success connection modal (pop-up) -->

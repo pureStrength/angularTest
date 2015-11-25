@@ -9,15 +9,29 @@
 angular.module('homepageModule')
   .controller('settingsCtrl', function ($scope, userService, athleteService, ModalService) {
 
-  	$scope.$on('usingSettingsTab', function(event, args) {
-
+  	$scope.$on('usingSettingsTab', function(event, userUsed) {
+  		if(userUsed.user == undefined){
   		// Make a copy of the logged in user so we can independently edit variables
-		$scope.resetSettings();
+		$scope.resetSettings(userUsed, null);
 
   		// Load athlete profile
-  		if($scope.user.userType == 'Athlete') {
-  			$scope.loadAthleteProfile($scope.user.id);
+  		if(userUsed.userType == 'Athlete') {
+  			$scope.loadAthleteProfile(userUsed.id);
   			$scope.counterOfOneRepMax = 0;
+  		}
+
+  		}
+
+  		else{
+  		// Make a copy of the logged in user so we can independently edit variables
+		$scope.resetSettings(userUsed.user, userUsed.userConnectionStatus);
+
+  		// Load athlete profile
+  		if(userUsed.user.userType == 'Athlete') {
+  			$scope.loadAthleteProfile(userUsed.user.id);
+  			$scope.counterOfOneRepMax = 0;
+  		}
+
   		}
 
   		// Initialize the ORM calendar
@@ -87,9 +101,10 @@ angular.module('homepageModule')
 
   	}
 
-  	$scope.resetSettings = function() {
+  	$scope.resetSettings = function(userUsed, connection) {
   		$scope.settingsUser = {};
-  		angular.copy($scope.user, $scope.settingsUser);
+  		$scope.settingsConnection = connection;
+  		angular.copy(userUsed, $scope.settingsUser);
 
   		// Initialize the unit type and radio button
   		$scope.initializeUnitType($scope.settingsUser.preferenceUnitType);

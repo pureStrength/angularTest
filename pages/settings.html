@@ -56,7 +56,7 @@
         </div>
     </form> 
 
-    <div ng-show="user.userType == 'Athlete'">
+    <div ng-show="settingsUser.userType == 'Athlete' && (settingsConnection == null || settingsConnection.status == 'Connected')">
         <h2>Athlete Profile</h2>
 
         <div class="col-xs-12">

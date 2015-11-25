@@ -1,6 +1,6 @@
 <div ng-controller="athletesCtrl">
 
-	<div ng-hide="prescribing">
+	<div ng-hide="prescribing || viewingProfile">
 		<h2 class="left-aligned">Athletes</h2></br>
 
 		<div>
@@ -12,9 +12,6 @@
 		<table class="table table-connect">
 			<tbody>
 			    <tr ng-repeat="connection in existingConnections">
-					<td class="col-xs-2 col-lg-1"> 
-						<img src="images/profile_pics/default.jpg" class="img-responsive img-circle" alt="Profile Pic">
-					</td>
 					<td>{{connection.user.firstName}} {{connection.user.lastName}}
 					<br>{{connection.user.email}}
 					<br>{{connection.user.organization}}</td>
@@ -36,6 +33,15 @@
 	<div ng-show="prescribing"> 
 	</br>
 		<div ng-include="'pages/calendarNew.html'"></div>
+	</div>
+
+	<div ng-show="viewingProfile"> 
+	</br>
+		<div class="btn-group">
+        	<button class="btn btn-primary btn-responsive2" ng-click="cancelViewing()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+        	</button>
+        </div></br></br>
+		<div ng-include="'pages/settings.html'"></div>
 	</div>
 
 	<!-- Success worout modal (pop-up) -->

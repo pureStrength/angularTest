@@ -9,6 +9,8 @@
 angular.module('homepageModule')
   .controller('athletesCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
+  	$scope.viewingProfile = false;
+
 	$scope.$on('usingAthletesTab', function(event, args) {
 		$scope.loadAthletes();
 	});
@@ -19,8 +21,16 @@ angular.module('homepageModule')
 	});
 
 	$scope.viewProfile = function(connection) {
+		$scope.$broadcast('usingSettingsTab', connection.user);
+		
+		$scope.viewingProfile = true;
+
 		console.log("Connection user name: " + connection.user.firstName);
 		console.log("Navigating to the user's profile");
+	} 
+
+	$scope.cancelViewing = function() {
+		$scope.viewingProfile = false;
 	} 
 
 	$scope.viewPrescription = function(connection) {

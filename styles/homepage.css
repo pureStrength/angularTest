@@ -21,8 +21,16 @@
 	border-radius: 10px !important;
 }
 
-.dropdownbox {
-	width: 200px !important;	
+@media (max-width: 768px) {
+  	.dropdownbox {
+	width: 50px !important;	
+	}
+}
+
+@media (min-width: 769px) {
+  	.dropdownbox {
+	width: 250px !important;	
+	}
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
