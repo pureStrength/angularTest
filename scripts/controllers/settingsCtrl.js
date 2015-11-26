@@ -9,29 +9,25 @@
 angular.module('homepageModule')
   .controller('settingsCtrl', function ($scope, userService, athleteService, ModalService) {
 
+  	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
+
   	$scope.$on('usingSettingsTab', function(event, userUsed) {
-  		if(userUsed.user == undefined){
+
+  		var user = userUsed.user;
+  		var connection = userUsed.userConnectionStatus;
+
+  		if(user == undefined) {
+	  		user = userUsed;
+	  		connection = null;
+  		}
+
   		// Make a copy of the logged in user so we can independently edit variables
-		$scope.resetSettings(userUsed, null);
+		$scope.resetSettings(user, connection);
 
   		// Load athlete profile
-  		if(userUsed.userType == 'Athlete') {
-  			$scope.loadAthleteProfile(userUsed.id);
+  		if(user.userType == 'Athlete') {
+  			$scope.loadAthleteProfile(user.id);
   			$scope.counterOfOneRepMax = 0;
-  		}
-
-  		}
-
-  		else{
-  		// Make a copy of the logged in user so we can independently edit variables
-		$scope.resetSettings(userUsed.user, userUsed.userConnectionStatus);
-
-  		// Load athlete profile
-  		if(userUsed.user.userType == 'Athlete') {
-  			$scope.loadAthleteProfile(userUsed.user.id);
-  			$scope.counterOfOneRepMax = 0;
-  		}
-
   		}
 
   		// Initialize the ORM calendar
@@ -81,33 +77,10 @@ angular.module('homepageModule')
 		})
   	}
 
-  	$scope.setUnitType = function(unitType) {
-  		$scope.settingsUser.preferenceUnitType = unitType;
-  	}
-
-  	$scope.initializeUnitType = function(unitType) {
-
-  		var imperial = document.getElementById("unitTypeImperial");
-  		var metric = document.getElementById("unitTypeMetric");
-
-  		if(unitType == 'Imperial') {
-  			metric.className = metric.className.replace('active', '');
-			imperial.className = imperial.className + " active";
-			
-		} else {
-			imperial.className = imperial.className.replace('active', '');
-			metric.className = metric.className + " active";
-		}
-
-  	}
-
   	$scope.resetSettings = function(userUsed, connection) {
   		$scope.settingsUser = {};
   		$scope.settingsConnection = connection;
   		angular.copy(userUsed, $scope.settingsUser);
-
-  		// Initialize the unit type and radio button
-  		$scope.initializeUnitType($scope.settingsUser.preferenceUnitType);
   	}
 
   	$scope.loadAthleteProfile = function(athleteId) {
@@ -293,7 +266,7 @@ angular.module('homepageModule')
         }).then(function(modal) {
             
 			// Display correct message
-			$scope.modalHeader = "Update successful";
+			$scope.modalHeader = "Update Successful";
             
             modal.element.append($("#settingsModal"));
             $("#settingsModal").modal({

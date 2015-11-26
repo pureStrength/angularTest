@@ -1,7 +1,7 @@
 <div ng-controller="settingsCtrl">
-	<h2>Settings</h2>
+    <h2>Settings</h2>
 
-	<form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form">
         <div class="form-group">
             <label class="control-label col-sm-2">First Name:</label>
             <div class="col-sm-6">
@@ -27,16 +27,22 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2">Unit Type:</label>
+            <label class="control-label col-sm-2">Phone Number:</label>
+            <div class="col-sm-6">
+                <input type="number" min="0" class="form-control" placeholder="(optional)" ng-model="settingsUser.phoneNumber"/><br>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Enable Text Notifications:</label>
             <div class="col-sm-6 left-aligned">
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-default" ng-click="setUnitType('Imperial')" id="unitTypeImperial">
-                        <input type="radio">Imperial
-                    </label>
-                    <label class="btn btn-default" ng-click="setUnitType('Metric')" id="unitTypeMetric">
-                        <input type="radio">Metric
-                    </label>
-                </div>
+                <input type="checkbox" ng-model="settingsUser.enableTextMessages" value=""><br>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Cell Carrier</label>
+            <div class="col-sm-6 left-aligned">
+                <select class="selectpicker btn btn-primary dropdown" ng-model="settingsUser.cellCarrier" ng-options="carrier as carrier for carrier in cellCarriers">
+                </select>
             </div>
         </div>
         <br>
@@ -94,7 +100,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">{{modalHeader}}</h3>
+                            <h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" ng-click="closeSettingsModal()" data-dismiss="modal">Continue</button>
