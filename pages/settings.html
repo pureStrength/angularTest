@@ -1,5 +1,4 @@
 <div ng-controller="settingsCtrl">
-    <h2>Settings</h2>
 
     <form class="form-horizontal" role="form">
         <div class="form-group">
@@ -54,7 +53,7 @@
         </div>
         <br>
         
-        <input type="button" class="btn btn-primary" ng-click="resetSettings()" value="Reset"/>
+        <input type="button" class="btn btn-primary" ng-click="resetSettings(originalUser)" value="Reset"/>
         <input type="submit" class="btn btn-primary" ng-click="update(settingsUser)" value="Save"/><br><br>
         <div ng-show="error.length" class="alert alert-danger alert-dismissable">
             <button type="button" class="close" ng-click="error = null">&times;</button>

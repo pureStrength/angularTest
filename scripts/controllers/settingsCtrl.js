@@ -21,6 +21,8 @@ angular.module('homepageModule')
 	  		connection = null;
   		}
 
+  		$scope.originalUser = user;
+
   		// Make a copy of the logged in user so we can independently edit variables
 		$scope.resetSettings(user, connection);
 
