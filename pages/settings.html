@@ -45,10 +45,12 @@
             </div>
         </div>
         <br>
-        <div class="form-group">
-            <label class="control-label col-sm-2">Password Form:</label>
-            <div class="col-sm-6 left-aligned">
-                <button class="btn btn-default" ng-click="showPasswordModal()">Update Password</button>
+        <div ng-show="user.id == settingsUser.id">
+            <div class="form-group">
+                <label class="control-label col-sm-2">Password Form:</label>
+                <div class="col-sm-6 left-aligned">
+                    <button class="btn btn-default" ng-click="showPasswordModal()">Update Password</button>
+                </div>
             </div>
         </div>
         <br>
@@ -91,26 +93,6 @@
          </div>
     </div>
 
-    <!-- Success modal (pop-up) -->
-    <script type="text/ng-template" id="settingsModal.html"></script>
-    <div class="modal fade" id="settingsModal" role="dialog">
-        <div class="vertical-alignment-helper">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title" style="font-weight: bold;">{{modalHeader}}</h3>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" ng-click="closeSettingsModal()" data-dismiss="modal">Continue</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Password modal (pop-up) -->
     <script type="text/ng-template" id="passwordModal.html"></script>
     <div class="modal fade" id="passwordModal" role="dialog">
         <div class="vertical-alignment-helper">
@@ -147,7 +129,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" ng-click="closePasswordModal()" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" ng-click="submitPasswordModal(settingsUser)">Save</button>
+                            <button type="submit" class="btn btn-primary" ng-click="submitPassword(settingsUser)">Save</button>
                         </div>
                     </div>
                 </div>

@@ -32,8 +32,6 @@ angular.module('homepageModule')
   			$scope.counterOfOneRepMax = 0;
   		}
 
-  		// Initialize the ORM calendar
-  		$scope.ormCalendar = {opened: true};
 	});
 
   	$scope.update = function(user) {
@@ -187,15 +185,10 @@ angular.module('homepageModule')
 
 	}
 
-	$scope.openORMCalendar = function($event, index) {
-		$scope.ormCalendar.opened = true;
-		console.log("opening calendar");
-	}
-
   	$scope.showPasswordModal = function() {
 
         ModalService.showModal({
-            templateUrl: 'passwordModal.html',
+            templateUrl: 'partials/passwordModal.html',
             controller: "homepageCtrl"
         }).then(function(modal) {
             
@@ -209,7 +202,7 @@ angular.module('homepageModule')
         });
   	}
 
-  	$scope.submitPasswordModal = function(user) {
+  	$scope.submitPassword = function(user) {
 
   		if(!user.newPassword || !user.newPassword.length ||
   		   !user.oldPassword || !user.oldPassword.length ||
@@ -263,7 +256,7 @@ angular.module('homepageModule')
 	$scope.showSettingsModal = function() {
 
         ModalService.showModal({
-            templateUrl: 'settingsModal.html',
+            templateUrl: 'partials/settingsModal.html',
             controller: "homepageCtrl"
         }).then(function(modal) {
             
