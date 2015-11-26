@@ -22,34 +22,31 @@
     <link href="styles/main.css" rel="stylesheet" type="text/css">
 	<link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
-<body ng-app="loginModule" ng-controller="loginCtrl">
+<body ng-app="loginModule" ng-controller="loginCtrl" class="bg">
     <div class="container flexible">
         <div class="row col-sm-4 rounded-block">
-            <h1 class="row">Complete Concept Strength Login</h1><br/>
+            <img src="images/logo/logLogo.png" class="img-responsive center center-block" style="margin-top:15px;"><br/>
     
-            <form name="loginForm" role="form">
-				<div class="input-group">
+            <form name="loginForm" role="form" class="form-inline">
+				<div class="input-group" style="margin-bottom:5px;">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<input class="form-control" type="text"  placeholder="Email" name="email" ng-model="user.email" required/>
                 </div>
-				<br>
-				<div class="input-group">
+				<div class="input-group" style="margin-bottom:15px;">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 					<input class="form-control" type="password" placeholder="Password" name="password" ng-model="user.password" required/>
                 </div>
-				<br>
-				<label class="checkbox">
-                    <input type="checkbox" value="remember-me">
-                    Remember me
-                </label><br/>
-                <input type="submit" class="btn btn-primary" ng-click="login(user)" value="Login"/><br/><br/>
+
+                <input type="submit" class="btn btn-primary btn-responsive" ng-click="login(user)" value="Login"/><br/><br/>
                 <div ng-show="error.length" class="alert alert-danger alert-dismissable">
                 	<button type="button" class="close" ng-click="error = null">&times;</button>
                     {{error}}
                 </div>
             </form> 
             
-            <b><a href="register">No Account? Register Now!</a><br/></b>
+            <div style="margin-bottom:15px;">
+                <b><a href="register">No Account? Register Now!</a></b>
+            </div>
         </div>
     </div>
 </body>

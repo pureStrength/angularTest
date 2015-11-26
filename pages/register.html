@@ -23,10 +23,10 @@
 	<link href="styles/main.css" rel="stylesheet" type="text/css">
 	<link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
-<body ng-app="registerModule" ng-controller="registerCtrl" ng-init="registerLoad()">
+<body ng-app="registerModule" ng-controller="registerCtrl" ng-init="registerLoad()" class="bg">
 	<div class="container flexible">
         <div class="row col-sm-4 rounded-block">
-            <h1 class="row">Complete Concept Strength Registration</h1><br/>
+            <img src="images/logo/logLogo.png" class="img-responsive center center-block" style="margin-top:15px;"><br/>
     
             <form name="registerForm" role="form">
 				<input type="text" class="form-control" placeholder="First Name" name="firstName" ng-model="user.firstName" required/><br>
@@ -35,21 +35,23 @@
 				<input type="password" class="form-control" placeholder="Password" name="password" ng-model="user.password" required/><br>
 				<input type="text" class="form-control" placeholder="Organization (optional)" name="organization" ng-model="user.organization"/><br>
 				<div class="btn-group" data-toggle="buttons">
-					<label class="btn btn-default active" ng-click="setUserType('Athlete')">
+					<label class="btn btn-default btn-responsive3 active" ng-click="setUserType('Athlete')">
 						<input type="radio">Athlete
 					</label>
-					<label class="btn btn-default" ng-click="setUserType('Coach')">
+					<label class="btn btn-default btn-responsive3" ng-click="setUserType('Coach')">
 						<input type="radio">Trainer
 					</label>
 				</div><br><br>
-				<input type="submit" class="btn btn-primary" ng-click="register(user)" value="Register"/><br><br>
+				<input type="submit" class="btn btn-primary btn-responsive" ng-click="register(user)" value="Register"/><br><br>
                 <div ng-show="error.length" class="alert alert-danger alert-dismissable">
                 	<button type="button" class="close" ng-click="error = null">&times;</button>
                     {{error}}
                 </div>
 			</form> 
             
-            <b><a href="login">Login page</a><br></b> 
+            <div style="margin-bottom:15px;">
+            	<b><a href="login">Login</a></b>
+            </div>
         </div>
 		
 		<!-- Success modal (pop-up) -->

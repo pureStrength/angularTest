@@ -1,8 +1,6 @@
 <div ng-controller="athletesCtrl">
 
 	<div ng-hide="prescribing || viewingProfile">
-		<h2 class="left-aligned">Athletes</h2></br>
-
 		<div>
 			<h4 class="left-aligned">Import Prescriptions</h4>
 			<input type="file" class="btn btn-default btn-file btn-responsive" ngf-select="selectFile(file)" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
