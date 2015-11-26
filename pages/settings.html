@@ -70,17 +70,29 @@
             <form role="form">
                 <table class="table">
                     <thead>
-                        <th class="col-xs-3">Lift Name</th>
-                        <th class="col-xs-3">One Rep Max</th>
-                        <th class="col-xs-3">Last Updated</th>
-                        <th></th>
+                        <th class="col-xs-3">One Repepition Maximums</th>
                     </thead>
                     <tbody>
                         <tr ng-repeat="oneRepMax in athleteProfile.oneRepMaxCharts track by $index">
-                            <td><input type="text"   class="form-control" ng-model="oneRepMax.liftName" required disabled/></td>
-                            <td><input type="number" class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.value" value="0" min="0" required/></td>
-                            <td><input type="text" class="form-control" ng-model="oneRepMax.mostRecentOneRepMax.date" disabled/></td>
-                            <td><input type="button" class="btn btn-danger" ng-click="deleteOneRepMaxRow($index)" value="Delete"/></td>
+                            <td>
+                            <h3 class="left-aligned"><a data-toggle="collapse" data-parent="#accordion" href="#{{oneRepMax.liftName}}">{{oneRepMax.liftName}}</a></h3>
+                             <div id="{{oneRepMax.liftName}}" class="collapse">
+                                    <table class="table">
+                                        <thead>
+                                            <th class="col-xs-3">One Rep Max</th>
+                                            <th class="col-xs-3">Date Updated</th>
+                                            <th></th>
+                                        </thead>
+                                        <tbody>
+                                          <tr ng-repeat="orm in oneRepMax.oneRepMaxes">
+                                            <td><input type="number" class="form-control" ng-model="orm.value" value="0" min="0" required/></td>
+                                            <td><input type="text" class="form-control" ng-model="orm.date" disabled/></td>
+                                            <td><input type="button" class="btn btn-danger" ng-click="deleteOneRepMaxRow($index)" value="Delete"/></td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

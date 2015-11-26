@@ -9,6 +9,8 @@
 angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'ui-rangeSlider', 'ngFileUpload', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, $location, userService) {
 
+  	$scope.tabs = ['/athletes', '/connections', 'settings', 'prescriptions', 'workouts'];
+
   	$scope.defaultTimeout = 750;
 
   	$('.nav a').on('click', function() {
@@ -25,8 +27,17 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			} else {
 				path = '/athletes';
 			}
-		} else if(path =='/lifts' || path == '/sets' || path == '/prescriptions') {
-			path = '/workouts';
+		} else if($scope.tabs.indexOf(path) >= 0) {
+			// continue
+		} else {
+			var url = '' + $location.absUrl();
+
+			for(var i = 0; i < $scope.tabs.length; i++) {
+				if(url.indexOf($scope.tabs[i]) > 0) {
+					path = $scope.tabs[i];
+					break;
+				}
+			}
 		}
 
         return route == path;
