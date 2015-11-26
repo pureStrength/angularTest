@@ -17,8 +17,9 @@ html, body {
 
 @media (max-width: 768px) {
   .bg{
-      background:url('../images/back1.jpg') no-repeat center top scroll;
+      background:url('../images/back1.jpg') no-repeat center;
       background-size: 50% 50% cover;
+      background-attachment: fixed;
   }
 }
 
