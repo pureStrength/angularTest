@@ -75,8 +75,8 @@
                     <tbody>
                         <tr ng-repeat="oneRepMax in athleteProfile.oneRepMaxCharts track by $index">
                             <td>
-                            <h3 class="left-aligned"><a data-toggle="collapse" data-parent="#accordion" id="s{{oneRepMax.liftName}}" href ng-click="resolveHref(oneRepMax.liftName)">{{oneRepMax.liftName}}</a></h3>
-                             <div id="cs{{oneRepMax.liftName}}" class="collapse">
+                            <h3 class="left-aligned"><a data-toggle="collapse" data-parent="#accordion" href id="a{{oneRepMax.liftName}}" ng-click="resolveHref(oneRepMax.liftName)">{{oneRepMax.liftName}}</a></h3>
+                             <div id="ca{{oneRepMax.liftName}}" class="collapse">
                                     <table class="table">
                                         <thead>
                                             <th class="col-xs-3">One Rep Max</th>

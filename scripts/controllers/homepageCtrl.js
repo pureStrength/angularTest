@@ -40,6 +40,8 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			}
 		}
 
+		$scope.currentTab = path;
+
         return route == path;
     }
 	

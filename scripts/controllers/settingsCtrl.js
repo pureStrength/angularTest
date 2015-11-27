@@ -7,7 +7,7 @@
  * # settingsCtrl
  */
 angular.module('homepageModule')
-  .controller('settingsCtrl', function ($scope, userService, athleteService, ModalService) {
+  .controller('settingsCtrl', function ($scope, $location, userService, athleteService, ModalService) {
 
   	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
 
@@ -75,6 +75,35 @@ angular.module('homepageModule')
 			console.log("Response: " + error);
 			$scope.error = "Error updating user";
 		})
+  	}
+
+  	$scope.resolveHref = function(name) {
+  		var path = '' + $location.path();
+
+  		console.log("Name: " + name);
+
+  		var collapseAppender;
+  		var anchorAppender;
+  		if(path.indexOf('/settings' >= 0)) {
+  			anchorAppender = "s";
+  			collapseAppender = "cs"; 
+  		} else if(path.indexOf('/athletes') >= 0) {
+  			anchorAppender = "a";
+  			collapseAppender = "ca"; 
+  		} else if(path.indexOf('/connections') >= 0) {
+  			anchorAppender = "c";
+  			collapseAppender = "cc"; 
+  		}
+
+  		var collapse = document.getElementById(collapseAppender + name);
+  		var anchor   = document.getElementById(anchorAppender + name);
+  		var hrefName = name.replace(" ", "_");
+  		hrefName = $scope.currentTab + hrefName;
+
+  		if(collapse != null) {
+	  		collapse.id = hrefName;
+	  		anchor.href = "#" + hrefName;
+  		}
   	}
 
   	$scope.resetSettings = function(userUsed, connection) {
