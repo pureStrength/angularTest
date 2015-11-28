@@ -4,53 +4,31 @@
         <div class="form-group">
             <label class="control-label col-sm-2">First Name:</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" ng-model="settingsUser.firstName" required/><br>
+                <input type="text" class="form-control" ng-model="settingsUser.firstName" required disabled/><br>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Last Name:</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" ng-model="settingsUser.lastName" required/><br>
+                <input type="text" class="form-control" ng-model="settingsUser.lastName" required disabled/><br>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Email:</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" ng-model="settingsUser.email" required/><br>
+                <input type="text" class="form-control" ng-model="settingsUser.email" required disabled/><br>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Organization:</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" placeholder="(optional)" ng-model="settingsUser.organization"/><br>
+                <input type="text" class="form-control" placeholder="(optional)" ng-model="settingsUser.organization" disabled/><br>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Phone Number:</label>
             <div class="col-sm-6">
-                <input type="number" min="0" class="form-control" placeholder="(optional)" ng-model="settingsUser.phoneNumber"/><br>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2">Enable Text Notifications:</label>
-            <div class="col-sm-6 left-aligned">
-                <input type="checkbox" ng-model="settingsUser.enableTextMessages" value=""><br>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2">Cell Carrier</label>
-            <div class="col-sm-6 left-aligned">
-                <select class="selectpicker btn btn-primary dropdown" ng-model="settingsUser.cellCarrier" ng-options="carrier as carrier for carrier in cellCarriers">
-                </select>
-            </div>
-        </div>
-        <br>
-        <div ng-show="user.id == settingsUser.id">
-            <div class="form-group">
-                <label class="control-label col-sm-2">Password Form:</label>
-                <div class="col-sm-6 left-aligned">
-                    <button class="btn btn-default" ng-click="showPasswordModal()">Update Password</button>
-                </div>
+                <input type="number" min="0" class="form-control" placeholder="(optional)" ng-model="settingsUser.phoneNumber" disabled/><br>
             </div>
         </div>
         <br>
@@ -151,50 +129,6 @@
              <input type="button" class="btn btn-primary" ng-click="resetAthleteProfile()" value="Reset"/>
              <input type="submit" class="btn btn-primary" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
          </div>
-    </div>
-
-    <script type="text/ng-template" id="passwordModal.html"></script>
-    <div class="modal fade" id="passwordModal" role="dialog">
-        <div class="vertical-alignment-helper">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">{{modalHeader}}</h3>
-                        </div>
-                        <br>
-                        <form class="form-horizontal" style="margin-left: 20px; margin-right: 20px;">
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">Old Password:</label>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control" ng-model="settingsUser.oldPassword" required/><br>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">New Password:</label>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control" ng-model="settingsUser.newPassword" required/><br>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">Repeat Password:</label>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control" ng-model="settingsUser.repeatPassword" required/><br>
-                                </div>
-                            </div>
-                        </form>
-                        <div ng-show="passwordError.length" class="alert alert-danger alert-dismissable">
-                            <button type="button" class="close" ng-click="passwordError = null">&times;</button>
-                            {{passwordError}}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" ng-click="closePasswordModal()" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" ng-click="submitPassword(settingsUser)">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>

@@ -14,7 +14,7 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
   	$scope.defaultTimeout = 750;
 
   	$('.nav a').on('click', function() {
-	    $('.navbar-toggle').click() //bootstrap 3.x by Richard
+	    $('.navbar-toggle').click() 
 	});
 
 	$scope.isActive = function(route) {
@@ -39,8 +39,6 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 				}
 			}
 		}
-
-		$scope.currentTab = path;
 
         return route == path;
     }

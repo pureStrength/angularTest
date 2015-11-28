@@ -77,32 +77,11 @@ angular.module('homepageModule')
 		})
   	}
 
-  	$scope.resolveHref = function(name) {
-  		var path = '' + $location.path();
-
-  		console.log("Name: " + name);
-
-  		var collapseAppender;
-  		var anchorAppender;
-  		if(path.indexOf('/settings' >= 0)) {
-  			anchorAppender = "s";
-  			collapseAppender = "cs"; 
-  		} else if(path.indexOf('/athletes') >= 0) {
-  			anchorAppender = "a";
-  			collapseAppender = "ca"; 
-  		} else if(path.indexOf('/connections') >= 0) {
-  			anchorAppender = "c";
-  			collapseAppender = "cc"; 
-  		}
-
-  		var collapse = document.getElementById(collapseAppender + name);
-  		var anchor   = document.getElementById(anchorAppender + name);
-  		var hrefName = name.replace(" ", "_");
-  		hrefName = $scope.currentTab + hrefName;
-
-  		if(collapse != null) {
-	  		collapse.id = hrefName;
-	  		anchor.href = "#" + hrefName;
+  	$scope.expandChart = function(chart) {
+  		if(chart.expanded == undefined) {
+  			chart.expanded = true;
+  		} else {
+  			chart.expanded = !chart.expanded;
   		}
   	}
 
@@ -122,6 +101,7 @@ angular.module('homepageModule')
 				console.log(res);
 
 				$scope.athleteProfile = res;
+				$scope.formatProfileDates();
 			} else {
 				// Log error
 				console.log("Error loading Athlete Profile");
@@ -137,21 +117,87 @@ angular.module('homepageModule')
 
   	}
 
+  	$scope.formatProfileDates = function() {
+  		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
+  			var chart = $scope.athleteProfile.oneRepMaxCharts[i];
+  			for(var j = 0; j < chart.oneRepMaxes.length; j++) {
+  				var oneRepMax = chart.oneRepMaxes[j];
+  				oneRepMax.date = new Date(oneRepMax.date);
+  			}
+  		}
+
+  		for(var i = 0; i < $scope.athleteProfile.trackEventCharts.length; i++) {
+  			var chart = $scope.athleteProfile.trackEventCharts[i];
+  			for(var j = 0; j < chart.trackEvents.length; j++) {
+  				var trackEvent = chart.trackEvents[j];
+  				trackEvent.date = new Date(trackEvent.date);
+  			}
+  		}
+  	}
+
   	$scope.resetAthleteProfile = function() {
   		$scope.loadAthleteProfile($scope.user.id);
   	}
 
-  	$scope.addOneRepMaxRow = function() {
-		$scope.athleteProfile.oneRepMaxCharts.push({
+  	$scope.addOneRepMaxRow = function(index) {
+		$scope.athleteProfile.oneRepMaxCharts[index].oneRepMaxes.push({
 			internalId: ++$scope.counterOfOneRepMax, 
-			liftName: null, 
-			mostRecentOneRepMax: {value: 0, date: null},
-			oneRepMaxes: []
+			date: new Date(),
+			value: 0
 		});
   	}
 
-  	$scope.deleteOneRepMaxRow = function(index) {
+  	$scope.deleteOneRepMaxRow = function(parentIndex, index) {
+		$scope.athleteProfile.oneRepMaxCharts[parentIndex].oneRepMaxes.splice(index, 1);
+	}
+
+  	$scope.addOneRepMaxChart = function(liftName) {
+
+  		if(liftName != null && liftName.length > 0) {
+
+			$scope.athleteProfile.oneRepMaxCharts.push({
+				liftName: liftName, 
+				oneRepMaxes: [{value: 0, date: new Date()}]
+			});
+
+			$scope.newLift = "";
+		}
+  	}
+
+	$scope.deleteOneRepMaxChart = function(index) {
 		$scope.athleteProfile.oneRepMaxCharts.splice(index, 1);
+	}
+
+	$scope.addTrackEventRow = function(index) {
+		$scope.athleteProfile.trackEventCharts[index].trackEvents.push({
+			internalId: ++$scope.counterOfOneRepMax, 
+			date: new Date(),
+			trackTime: {hours: 0, minutes: 0, seconds: 0}
+		});
+  	}
+
+  	$scope.deleteTrackEventRow = function(parentIndex, index) {
+		$scope.athleteProfile.trackEventCharts[parentIndex].trackEvents.splice(index, 1);
+	}
+
+  	$scope.addTrackEventChart = function(eventName) {
+
+  		if(eventName != null && eventName.length > 0) {
+
+			$scope.athleteProfile.trackEventCharts.push({
+				eventName: eventName, 
+				trackEvents: [{
+					date: new Date(),
+					trackTime: {hours: 0, minutes: 0, seconds: 0}
+				}]
+			});
+
+			$scope.newEvent = "";
+		}
+  	}
+
+	$scope.deleteTrackEventChart = function(index) {
+		$scope.athleteProfile.trackEventCharts.splice(index, 1);
 	}
 
 	$scope.updateAthleteProfile = function(athleteId, athleteProfile) {
@@ -160,37 +206,6 @@ angular.module('homepageModule')
 			console.log("Received null AthleteProfile");
 			return;
 		}
-
-		// Loop the one rep maximums to check if any changes were made
-		angular.forEach(athleteProfile.oneRepMaxCharts, function(oneRepMaxChart) {
-
-			if(oneRepMaxChart.mostRecentOneRepMax != undefined) {
-
-				var maxExists = false;
-				if(oneRepMaxChart.oneRepMaxes != null) {
-					angular.forEach(oneRepMaxChart.oneRepMaxes, function(chart) {
-
-						if(angular.equals(oneRepMaxChart.mostRecentOneRepMax, chart)) {
-							maxExists = true;
-							return;
-						}
-					});
-				}
-
-				// Add the MostRecentOneRepMax to the list of OneRepMaxes
-				if(maxExists == false) {
-					oneRepMaxChart.mostRecentOneRepMax.id = null;
-					oneRepMaxChart.mostRecentOneRepMax.date = moment().format("MM-DD-YYYY");
-					oneRepMaxChart.oneRepMaxes.push(oneRepMaxChart.mostRecentOneRepMax);
-					console.log("Adding new OneRepMax");
-					console.log(oneRepMaxChart.mostRecentOneRepMax);
-				}
-			} else {
-				console.log("MostRecentOneRepMax is undefined");
-				console.log(oneRepMaxChart);
-			}
-
-		});
 
 		var promise = athleteService.update(athleteId, athleteProfile);
 		promise.then(function(res) {
