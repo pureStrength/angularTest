@@ -378,8 +378,10 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                         return 1;
                     } else if (event2.allDay) {
                         return -1;
-                    } else {
+                    } else if(typeof event1.startTime.getTime === "function" && typeof event2.startTime.getTime === "function") {
                         return (event1.startTime.getTime() - event2.startTime.getTime());
+                    } else {
+                        return 0;
                     }
                 }
 

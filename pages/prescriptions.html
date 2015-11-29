@@ -26,7 +26,7 @@
 	        <form role="form">
 	            <table class="table">
 	                 <thead>
-	                    <th>Sets</th>
+	                    <th><h3>Main Sets</h3></th>
 	                </thead>
 	                <tbody>
 	                    <tr ng-repeat="pSet in selectedPrescription.recordedSets track by $index">
@@ -72,11 +72,40 @@
 	                            </table>
 	                            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="pSet.description" disabled/><br>
 	                        </td>
-	                        <td></td>
 	                    </tr>
 	                </tbody>
 	            </table>
+	            <br>
+
+	            <h3>Accessory Sets</h3>
+	            <table class="table">
+	                 <thead>
+	                    <th>Lift</th>
+	                    <th>Category</th>
+	                    <th>Sets</th>
+	                    <th>Repetitions</th>
+	                </thead>
+	                <tbody>
+	                    <tr ng-repeat="accessory in selectedPrescription.accessoryLifts track by $index">
+	                        <td><input type="text"   class="form-control" ng-model="accessory.mainLiftDefinition.name" disabled/></td>
+	                        <td><input type="text"   class="form-control" ng-model="accessory.category" disabled/></td>
+	                        <td><input type="number" class="form-control" ng-model="accessory.assignedSets" disabled/></td>
+	                        <td><input type="text"   class="form-control" ng-model="accessory.assignedRepetitions" disabled/></td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	            <br>
+
+	            <div class="form-horizontal">
+                    <div class="form-group">
+                    	<label class="control-label col-xs-3 col-md-2">Abdominal Focus</label>
+                    	<div class="col-xs-6 col-md-4">
+                    		<input class="form-control col-xs-3" ng-model="selectedPrescription.abdominalFocus" disabled />
+                    	</div>
+                    </div>
+            	</div>
 	        </form> 
+	        <br>
 
 	        <!-- Wellness sliders -->
 	        <h3>Wellness Ratings</h3>
