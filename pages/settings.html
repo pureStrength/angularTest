@@ -63,14 +63,14 @@
         </div>
     </form> 
 
-    <div ng-show="settingsUser.userType == 'Athlete' && (settingsConnection == null || settingsConnection.status == 'Connected')">
+     <div ng-show="settingsUser.userType == 'Athlete' && (settingsConnection == null || settingsConnection.status == 'Connected')">
         <h2>Athlete Profile</h2>
 
-        <div class="col-xs-12">
-            <form role="form">
+        <div>
+            <div class="table-responsive">
                 <table class="table">
                     <thead>
-                        <th class="col-xs-3"><h3>One Repetition Maximums</h3></th>
+                        <th><h3>One Repetition Maximums</h3></th>
                         <th></th>
                     </thead>
                     <tbody>
@@ -78,50 +78,58 @@
                             <td>
                             <h3 class="left-aligned"><a href ng-click="expandChart(oneRepMax)">{{oneRepMax.liftName}}</a></h3>
                              <div ng-if="oneRepMax.expanded">
+                                <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <th class="col-xs-3">One Rep Max</th>
-                                            <th class="col-xs-3">Date Updated</th>
+                                            <th>One-Rep-Max</th>
+                                            <th> Date Updated</th>
                                             <th></th>
                                         </thead>
                                         <tbody>
                                           <tr ng-repeat="orm in oneRepMax.oneRepMaxes">
+
                                             <td><input type="number" class="form-control" ng-model="orm.value" value="0" min="0" required/></td>
                                             <td><input type="date" class="form-control" ng-model="orm.date"/></td>
-                                            <td><input type="button" class="btn btn-danger" ng-click="deleteOneRepMaxRow($parent.$index, $index)" value="Delete"/></td>
+                                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                                           </tr>
                                         </tbody>
                                     </table>
-                                    <input type="button" class="btn btn-success btn-responsive" value="Add Row" ng-click="addOneRepMaxRow($index)">
+                                    <button class="btn btn-success btn-responsive pull-left" ng-click="addOneRepMaxRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </button>
                                 </div>
+                              </div>
                             </td>
-                            <td class="last-row"><input type="button" class="btn btn-danger" ng-click="deleteOneRepMaxChart($index)" value="Delete"/></td>
+                            <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                         </tr>
                     </tbody>
                 </table>
                 <form role="form">
                     <div class="left-aligned form-inline">
-                        <input type="submit" class="btn btn-success" value="Add Lift" ng-click="addOneRepMaxChart(newLift)">
+                        <button class="btn btn-success btn-responsive4" ng-click="addOneRepMaxChart(newLift)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Lift
+                        </button>
                         <input type="text" class="form-control col-xs-3" ng-model="newLift" placeholder="Lift Name" required/>
                     </div>
                 </form>
                 <br><br>
+            </div>
+            <div class="table-responsive"> 
                 <table class="table">
                     <thead>
-                        <th class="col-xs-3"><h3>Athletic Events</h3></th>
+                        <th><h3>Athletic Events</h3></th>
                         <th></th>
                     </thead>
                     <tbody>
                         <tr ng-repeat="eventChart in athleteProfile.trackEventCharts track by $index">
                             <td>
                             <h3 class="left-aligned"><a href ng-click="expandChart(eventChart)">{{eventChart.eventName}}</a></h3>
-                             <div ng-if="eventChart.expanded">
+                            <div ng-if="eventChart.expanded">
+                                <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <th class="col-xs-3">Hours</th>
-                                            <th class="col-xs-3">Minutes</th>
-                                            <th class="col-xs-3">Seconds</th>
-                                            <th class="col-xs-3">Event Date</th>
+                                            <th>Hours</th>
+                                            <th>Minutes</th>
+                                            <th>Seconds</th>
+                                            <th>Event Date</th>
                                             <th></th>
                                         </thead>
                                         <tbody>
@@ -130,26 +138,30 @@
                                             <td><input type="number" class="form-control" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
                                             <td><input type="number" class="form-control" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
                                             <td><input type="date" class="form-control" ng-model="event.date"/></td>
-                                            <td><input type="button" class="btn btn-danger" ng-click="deleteTrackEventRow($parent.$index, $index)" value="Delete"/></td>
+                                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                                           </tr>
                                         </tbody>
                                     </table>
-                                    <input type="button" class="btn btn-success btn-responsive" value="Add Row" ng-click="addTrackEventRow($index)">
+                                    <button class="btn btn-success btn-responsive pull-left" ng-click="addTrackEventRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </button>
                                 </div>
+                            </div>
                             </td>
-                            <td class="last-row"><input type="button" class="btn btn-danger" ng-click="deleteTrackEventChart($index)" value="Delete"/></td>
+                             <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                         </tr>
                     </tbody>
                 </table>
+
                 <form role="form">
                     <div class="left-aligned form-inline">
-                        <input type="submit" class="btn btn-success" value="Add Event" ng-click="addTrackEventChart(newEvent)">
+                        <button class="btn btn-success btn-responsive4" ng-click="addTrackEventChart(newEvent)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Event
+                        </button>
                         <input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/>
                     </div>
                 </form>
-             </form> 
-             <input type="button" class="btn btn-primary" ng-click="resetAthleteProfile()" value="Reset"/>
-             <input type="submit" class="btn btn-primary" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
+            </div>
+             <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
+             <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
          </div>
     </div>
 

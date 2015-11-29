@@ -16,6 +16,13 @@ html, body {
 }
 
 @media (max-width: 768px) {
+  h3{
+      font-size: 1.3em;
+  }
+}
+
+
+@media (max-width: 768px) {
   .bg{
       background:url('../images/back1.jpg') no-repeat center top;
       background-size: 50% 50% cover;
@@ -138,6 +145,23 @@ html, body {
 @media (min-width: 769px) {
   .btn-responsive3 {
     padding:10px 40px;
+    font-size:100%;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-responsive4 {
+    padding:10px 20px;
+    font-size:90%;
+    line-height: 1;
+    border-radius:3px;
+  }
+}
+
+@media (min-width: 769px) {
+  .btn-responsive4 {
+    padding:7px 50px;
     font-size:100%;
     line-height: 1.2;
   }
