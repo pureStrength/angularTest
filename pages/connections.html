@@ -13,6 +13,7 @@
 
 	<div ng-show="showUserSearchResults(searchText)">
 		<h2 class="left-aligned">Search Results</h2>
+		<div class="table-responsive">
 		<table class="table table-connect">
 			<tbody>
 			  	<tr ng-repeat="connection in userSearchResults">
@@ -32,11 +33,13 @@
 			  	</tr>
 			</tbody>
 		</table>
+		</div>
 	</div>
 
 	<div ng-hide="searchText.length">
 		<div ng-show="pendingConnections.length > 0">
 			<h2 class="left-aligned">Pending</h2>
+			<div class="table-responsive">
 			<table class="table table-connect">
 				<tbody>
 				    <tr ng-repeat="connection in pendingConnections">
@@ -56,10 +59,12 @@
 				    </tr>
 				</tbody>
 			</table>
+			</div>
 		</div>
 
 		<div ng-show="existingConnections.length > 0">
 			<h2 class="left-aligned">Existing</h2>
+			<div class="table-responsive">
 			<table class="table table-connect">
 				<tbody>
 				    <tr ng-repeat="connection in existingConnections">
@@ -79,6 +84,7 @@
 				    </tr>
 				</tbody>
 		    </table>
+			</div>
 		</div>
 	</div>
 </div>

@@ -63,10 +63,10 @@
         </div>
     </form> 
 
-     <div ng-show="settingsUser.userType == 'Athlete' && (settingsConnection == null || settingsConnection.status == 'Connected')">
+    <div ng-show="settingsUser.userType == 'Athlete' && (settingsConnection == null || settingsConnection.status == 'Connected')">
         <h2>Athlete Profile</h2>
 
-        <div>
+        
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -88,7 +88,7 @@
                                         <tbody>
                                           <tr ng-repeat="orm in oneRepMax.oneRepMaxes">
 
-                                            <td><input type="number" class="form-control" ng-model="orm.value" value="0" min="0" required/></td>
+                                            <td><input type="number" class="form-control form-control-inline" ng-model="orm.value" value="0" min="0" required/></td>
                                             <td><input type="date" class="form-control" ng-model="orm.date"/></td>
                                             <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                                           </tr>
@@ -134,9 +134,9 @@
                                         </thead>
                                         <tbody>
                                           <tr ng-repeat="event in eventChart.trackEvents">
-                                            <td><input type="number" class="form-control" ng-model="event.trackTime.hours" value="0" min="0" required/></td>
-                                            <td><input type="number" class="form-control" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
-                                            <td><input type="number" class="form-control" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
+                                            <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.hours" value="0" min="0" required/></td>
+                                            <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
+                                            <td><input type="number" class="form-control form-control-inline2" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
                                             <td><input type="date" class="form-control" ng-model="event.date"/></td>
                                             <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                                           </tr>
@@ -163,7 +163,6 @@
              <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
              <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
          </div>
-    </div>
 
     <script type="text/ng-template" id="passwordModal.html"></script>
     <div class="modal fade" id="passwordModal" role="dialog">
