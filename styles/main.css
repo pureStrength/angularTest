@@ -26,7 +26,7 @@ html, body {
 @media (max-width: 768px) {
   .bg{
       background:url('../images/back3.jpg') no-repeat center top;
-      background-size: 50% 50% cover;
+      background-size: 80% 80% cover;
       background-attachment: fixed;
   }
 }
