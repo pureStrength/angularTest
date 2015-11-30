@@ -11,6 +11,7 @@ angular.module('homepageModule')
 
   	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
   	$scope.date = new Date();
+  	$scope.tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
   	$scope.$on('usingSettingsTab', function(event, userUsed) {
 
@@ -143,7 +144,7 @@ angular.module('homepageModule')
   	$scope.addOneRepMaxRow = function(index) {
 		$scope.athleteProfile.oneRepMaxCharts[index].oneRepMaxes.push({
 			internalId: ++$scope.counterOfOneRepMax, 
-			date: new Date(),
+			date: $scope.date,
 			value: 0
 		});
   	}
@@ -158,7 +159,7 @@ angular.module('homepageModule')
 
 			$scope.athleteProfile.oneRepMaxCharts.push({
 				liftName: liftName, 
-				oneRepMaxes: [{value: 0, date: new Date()}]
+				oneRepMaxes: [{value: 0, date: $scope.date}]
 			});
 
 			$scope.newLift = "";
@@ -172,7 +173,7 @@ angular.module('homepageModule')
 	$scope.addTrackEventRow = function(index) {
 		$scope.athleteProfile.trackEventCharts[index].trackEvents.push({
 			internalId: ++$scope.counterOfOneRepMax, 
-			date: new Date(),
+			date: $scope.date,
 			trackTime: {hours: 0, minutes: 0, seconds: 0}
 		});
   	}
@@ -188,7 +189,7 @@ angular.module('homepageModule')
 			$scope.athleteProfile.trackEventCharts.push({
 				eventName: eventName, 
 				trackEvents: [{
-					date: new Date(),
+					date: $scope.date,
 					trackTime: {hours: 0, minutes: 0, seconds: 0}
 				}]
 			});
