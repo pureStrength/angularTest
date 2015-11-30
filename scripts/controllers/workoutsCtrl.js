@@ -24,6 +24,28 @@ angular.module('homepageModule')
   		$scope.loadWorkouts();
   	});
 
+  	$scope.expandPresets = function(presetType) {
+  		if(presetType == 'lifts') {
+  			if($scope.expandLifts == undefined) {
+	  			$scope.expandLifts = true;
+	  		} else {
+	  			$scope.expandLifts = !$scope.expandLifts;
+	  		}
+  		} else if(presetType == 'sets') {
+  			if($scope.expandSets == undefined) {
+	  			$scope.expandSets = true;
+	  		} else {
+	  			$scope.expandSets = !$scope.expandSets;
+	  		}
+  		} else if(presetType == 'prescriptions') {
+  			if($scope.expandPrescriptions == undefined) {
+	  			$scope.expandPrescriptions = true;
+	  		} else {
+	  			$scope.expandPrescriptions = !$scope.expandPrescriptions;
+	  		}
+  		}
+  	}
+
 	$scope.createWorkout = function(type) {
 		$scope.creating = true;
 		$scope.creatingLift = false;
@@ -60,6 +82,10 @@ angular.module('homepageModule')
 
 		var edit = false;
 		var textString = '';
+
+		if(lift == undefined || lift.name == undefined) {
+			return;
+		}
 
 		if(lift.id != undefined && lift.id != null) {
 			edit = true;

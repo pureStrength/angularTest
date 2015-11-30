@@ -2,20 +2,20 @@
 
 	<div class="container-fluid" ng-hide="newPrescribe || viewPrescription">
 		<div class="row-fluid">
-	            <div class="btn-group">
-	            	<button class="btn btn-danger btn-responsive" ng-click="cancelPrescribing()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
-	            	</button>
-	            	<button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Prescribe 
-	                </button>
-	            </div></br></br>
-	            <div class="btn-group">
-	                <button type="button" class="btn btn-default btn-responsive2" ng-disabled="isToday()"
-	                        ng-click="today()">
-	                    Today
-	                </button>
-	                <button type="button" class="btn btn-primary btn-responsive2" ng-click="viewResults()" ng-disabled="event == undefined">View Workout</button>
-	            </div>
-		</br> </br>
+	        <div class="btn-group">
+	        	<button class="btn btn-danger btn-responsive" ng-click="cancelPrescribing()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+	        	</button>
+	        	<button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Prescribe 
+	            </button>
+	        </div><br><br>
+	        <div class="btn-group">
+	            <button type="button" class="btn btn-default btn-responsive2" ng-disabled="isToday()"
+	                    ng-click="today()">
+	                Today
+	            </button>
+	            <button type="button" class="btn btn-primary btn-responsive2" ng-click="viewResults()" ng-disabled="event == undefined">View Workout</button>
+	        </div>
+		<br><br>
 		</div>
 		
 		<div class="row-fluid">

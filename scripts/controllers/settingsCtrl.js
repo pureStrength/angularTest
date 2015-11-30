@@ -10,6 +10,7 @@ angular.module('homepageModule')
   .controller('settingsCtrl', function ($scope, $location, userService, athleteService, ModalService) {
 
   	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
+  	$scope.date = new Date();
 
   	$scope.$on('usingSettingsTab', function(event, userUsed) {
 

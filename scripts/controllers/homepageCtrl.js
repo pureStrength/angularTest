@@ -27,17 +27,6 @@ angular.module('homepageModule', ['userService', 'userConnectionService', 'worko
 			} else {
 				path = '/athletes';
 			}
-		} else if($scope.tabs.indexOf(path) >= 0) {
-			// continue
-		} else {
-			var url = '' + $location.absUrl();
-
-			for(var i = 0; i < $scope.tabs.length; i++) {
-				if(url.indexOf($scope.tabs[i]) > 0) {
-					path = $scope.tabs[i];
-					break;
-				}
-			}
 		}
 
         return route == path;

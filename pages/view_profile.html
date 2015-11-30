@@ -54,7 +54,7 @@
                                           <tr ng-repeat="orm in oneRepMax.oneRepMaxes">
 
                                             <td><input type="number" class="form-control form-control-inline" ng-model="orm.value" value="0" min="0" required/></td>
-                                            <td><input type="date" class="form-control" ng-model="orm.date"/></td>
+                                            <td><input type="date" class="form-control" ng-model="orm.date" max="{{date | date:'yyyy-MM-dd'}}"/></td>
                                             <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                                           </tr>
                                         </tbody>
@@ -102,7 +102,7 @@
                                             <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.hours" value="0" min="0" required/></td>
                                             <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
                                             <td><input type="number" class="form-control form-control-inline2" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
-                                            <td><input type="date" class="form-control" ng-model="event.date"/></td>
+                                            <td><input type="date" class="form-control" ng-model="event.date" max="{{date | date:'yyyy-MM-dd'}}"/></td>
                                             <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                                           </tr>
                                         </tbody>
@@ -126,7 +126,7 @@
                 </form>
             </div>
              <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
-             <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
+             <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(settingsUser.id, athleteProfile)" value="Save"/>
          </div>
 
 </div>
