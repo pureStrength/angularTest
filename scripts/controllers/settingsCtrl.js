@@ -12,6 +12,20 @@ angular.module('homepageModule')
   	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
   	$scope.date = new Date();
 
+
+    ///////////////////////////////////////////////////GRAPH SCRIPT HERE///////////////////////////////////////////////////
+
+   	$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+	$scope.series = [];
+	$scope.data = [];
+	$scope.onClick = function (points, evt) {
+	    console.log(points, evt);
+	};
+
+
+
+    ///////////////////////////////////////////////////GRAPH SCRIPT END///////////////////////////////////////////////////
+
   	$scope.$on('usingSettingsTab', function(event, userUsed) {
 
   		var user = userUsed.user;
@@ -86,6 +100,15 @@ angular.module('homepageModule')
   		}
   	}
 
+
+  	$scope.expandORM = function() {
+  		if($scope.expandedORM == undefined) {
+  			$scope.expandedORM = false;
+  		} else {
+  			$scope.expandedORM = !$scope.expandedORM;
+  		}
+  	}
+
   	$scope.resetSettings = function(userUsed, connection) {
   		$scope.settingsUser = {};
   		$scope.settingsConnection = connection;
@@ -121,9 +144,16 @@ angular.module('homepageModule')
   	$scope.formatProfileDates = function() {
   		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
   			var chart = $scope.athleteProfile.oneRepMaxCharts[i];
+
+  			$scope.series.push(chart.liftName);
+
+  			$scope.data[i] = [];
+
   			for(var j = 0; j < chart.oneRepMaxes.length; j++) {
   				var oneRepMax = chart.oneRepMaxes[j];
   				oneRepMax.date = new Date(oneRepMax.date);
+
+  				$scope.data[i].push(oneRepMax.value);
   			}
   		}
 
@@ -319,5 +349,6 @@ angular.module('homepageModule')
 	$scope.closeSettingsModal = function() {
 		// Nothing to do
     };
+
 	
   });

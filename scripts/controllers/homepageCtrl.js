@@ -6,7 +6,7 @@
  * @description Controller of the homepage
  * # homepageCtrl
  */
-angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'ui-rangeSlider', 'ngFileUpload', 'angularModalService'])
+angular.module('homepageModule', ['userService', 'userConnectionService', 'workoutService', 'athleteService', 'ui.rCalendar', 'ui-rangeSlider', 'ngFileUpload', 'chart.js', 'angularModalService'])
   .controller('homepageCtrl', function ($scope, $location, userService) {
 
   	$scope.tabs = ['/athletes', '/connections', 'settings', 'prescriptions', 'workouts'];

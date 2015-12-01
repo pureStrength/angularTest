@@ -124,9 +124,18 @@
                         <input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/>
                     </div>
                 </form>
+            </div></br>
+            <!-- Graph HTML -->
+            <div class="col-md-6">
+            <canvas id="line" class="chart chart-line" chart-data="data"
+              chart-labels="labels" chart-legend="true" chart-series="series"
+              chart-click="onClick">
+            </canvas> 
             </div>
-             <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
-             <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(settingsUser.id, athleteProfile)" value="Save"/>
+            <!-- end Graph HTML -->
+            </br>
+            <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
+            <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(settingsUser.id, athleteProfile)" value="Save"/>
          </div>
 
 </div>

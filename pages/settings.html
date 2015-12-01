@@ -159,9 +159,16 @@
                         <input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/>
                     </div>
                 </form>
-            </div>
-             <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
-             <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
+            </div></br>
+            <!-- Graph HTML -->
+            <canvas id="line" class="chart chart-line" chart-data="data"
+              chart-labels="labels" chart-legend="true" chart-series="series"
+              chart-click="onClick" >
+            </canvas> 
+            <!-- end Graph HTML -->
+            </br>
+            <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
+            <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
          </div>
 
     <script type="text/ng-template" id="passwordModal.html"></script>
