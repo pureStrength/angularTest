@@ -15,14 +15,22 @@ angular.module('homepageModule')
 
 
     ///////////////////////////////////////////////////GRAPH SCRIPT HERE///////////////////////////////////////////////////
+    var ormCnt = 1;
+    var eventCnt = 1;
 
-   	$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+   	$scope.labels = [];
 	$scope.series = [];
 	$scope.data = [];
+
+	$scope.labels2 = [];
+	$scope.series2 = [];
+	$scope.data2 = [];
+
 	$scope.onClick = function (points, evt) {
 	    console.log(points, evt);
 	};
 
+	Chart.defaults.Line.datasetFill = false;
 
 
     ///////////////////////////////////////////////////GRAPH SCRIPT END///////////////////////////////////////////////////
@@ -101,12 +109,21 @@ angular.module('homepageModule')
   		}
   	}
 
-
+  	$scope.expandedORM = false;
   	$scope.expandORM = function() {
   		if($scope.expandedORM == undefined) {
-  			$scope.expandedORM = false;
+  			$scope.expandedORM = true;
   		} else {
   			$scope.expandedORM = !$scope.expandedORM;
+  		}
+  	}
+
+  	$scope.expandedEvent = false;
+  	$scope.expandEvent = function() {
+  		if($scope.expandedEvent == undefined) {
+  			$scope.expandedEvent = true;
+  		} else {
+  			$scope.expandedEvent = !$scope.expandedEvent;
   		}
   	}
 
@@ -127,6 +144,7 @@ angular.module('homepageModule')
 
 				$scope.athleteProfile = res;
 				$scope.formatProfileDates();
+				$scope.loadChart();
 			} else {
 				// Log error
 				console.log("Error loading Athlete Profile");
@@ -145,16 +163,9 @@ angular.module('homepageModule')
   	$scope.formatProfileDates = function() {
   		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
   			var chart = $scope.athleteProfile.oneRepMaxCharts[i];
-
-  			$scope.series.push(chart.liftName);
-
-  			$scope.data[i] = [];
-
   			for(var j = 0; j < chart.oneRepMaxes.length; j++) {
   				var oneRepMax = chart.oneRepMaxes[j];
   				oneRepMax.date = new Date(oneRepMax.date);
-
-  				$scope.data[i].push(oneRepMax.value);
   			}
   		}
 
@@ -163,6 +174,45 @@ angular.module('homepageModule')
   			for(var j = 0; j < chart.trackEvents.length; j++) {
   				var trackEvent = chart.trackEvents[j];
   				trackEvent.date = new Date(trackEvent.date);
+  			}
+  		}
+  	}
+
+  	$scope.loadChart = function() {
+  		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
+  			var chart = $scope.athleteProfile.oneRepMaxCharts[i];
+
+  			$scope.series.push(chart.liftName);
+
+  			$scope.data[i] = [];
+
+  			for(var j = chart.oneRepMaxes.length-1; j >= 0; j--) {
+  				var oneRepMax = chart.oneRepMaxes[j];
+  				oneRepMax.date = new Date(oneRepMax.date);
+
+  				if(i == 0)
+  					$scope.labels.push(ormCnt++);
+
+  				$scope.data[i].push(oneRepMax.value);
+  			}
+  		}
+
+
+  		for(var i = 0; i < $scope.athleteProfile.trackEventCharts.length; i++) {
+  			var chart = $scope.athleteProfile.trackEventCharts[i];
+
+  			$scope.series2.push(chart.eventName);
+
+  			$scope.data2[i] = [];
+
+  			for(var j = chart.trackEvents.length-1; j >= 0; j--) {
+  				var trackEvent = chart.trackEvents[j];
+  				trackEvent.date = new Date(trackEvent.date);
+
+  				if(i == 0)
+  					$scope.labels2.push(eventCnt++);
+
+  				$scope.data2[i].push(trackEvent.trackTime.hours*60*60+trackEvent.trackTime.minutes*60+trackEvent.trackTime.seconds);
   			}
   		}
   	}

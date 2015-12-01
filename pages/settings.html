@@ -67,10 +67,13 @@
         <h2>Athlete Profile</h2>
 
         
-            <div class="table-responsive">
+        <button ng-click="expandORM()" class="btn btn-primary btn-responsive pull-left"><h3 class="pull-left">One Rep Maximums  </h3> 
+        <span ng-if="!expandedORM" class="glyphicon glyphicon-download" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span><span ng-if="expandedORM" class="glyphicon glyphicon-upload" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span>
+        </button></br></br></br></br>
+            <div class="table-responsive" ng-if="expandedORM">
                 <table class="table">
                     <thead>
-                        <th><h3>One Repetition Maximums</h3></th>
+                        <th><h3>Lift Names</h3></th>
                         <th></th>
                     </thead>
                     <tbody>
@@ -112,10 +115,14 @@
                 </form>
                 <br><br>
             </div>
-            <div class="table-responsive"> 
+
+            <button ng-click="expandEvent()" class="btn btn-primary btn-responsive pull-left"><h3 class="pull-left">Athletic Events  </h3> 
+            <span ng-if="!expandedEvent" class="glyphicon glyphicon-download" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span><span ng-if="expandedEvent" class="glyphicon glyphicon-upload" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span>
+            </button></br></br></br></br>
+            <div class="table-responsive" ng-if="expandedEvent"> 
                 <table class="table">
                     <thead>
-                        <th><h3>Athletic Events</h3></th>
+                        <th><h3>Event Names</h3></th>
                         <th></th>
                     </thead>
                     <tbody>
@@ -160,15 +167,25 @@
                     </div>
                 </form>
             </div></br>
-            <!-- Graph HTML -->
+            <!-- Graph ORM HTML -->
+            <div class="col-md-6">
             <canvas id="line" class="chart chart-line" chart-data="data"
               chart-labels="labels" chart-legend="true" chart-series="series"
-              chart-click="onClick" >
+              chart-click="onClick">
             </canvas> 
+            </div>
+            <!-- end Graph HTML -->
+            <!-- Graph TIME HTML -->
+            <div class="col-md-6">
+            <canvas id="line2" class="chart chart-line" chart-data="data2"
+              chart-labels="labels2" chart-legend="true" chart-series="series2"
+              chart-click="onClick">
+            </canvas> 
+            </div>
             <!-- end Graph HTML -->
             </br>
             <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
-            <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(user.id, athleteProfile)" value="Save"/>
+            <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(settingsUser.id, athleteProfile)" value="Save"/>
          </div>
 
     <script type="text/ng-template" id="passwordModal.html"></script>
