@@ -12,6 +12,7 @@ angular.module('homepageModule')
   	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
   	$scope.date = new Date();
   	$scope.tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+  	$scope.months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
 
     ///////////////////////////////////////////////////GRAPH SCRIPT HERE///////////////////////////////////////////////////
@@ -27,11 +28,15 @@ angular.module('homepageModule')
 	$scope.data2 = [];
 
 	$scope.onClick = function (points, evt) {
-	    console.log(points, evt);
+	    //console.log(points, evt);
+	    var activePoints = Chart.getPointsAtEvent(evt);
+	    for(var i = 0; i < activePoints.length; i++) {
+	    	console.log("Active point: " + activePoints[i]);
+	    }
 	};
 
 	Chart.defaults.Line.datasetFill = false;
-
+	Chart.defaults.Line.bezierCurve = false;
 
     ///////////////////////////////////////////////////GRAPH SCRIPT END///////////////////////////////////////////////////
 
@@ -127,6 +132,17 @@ angular.module('homepageModule')
   		}
   	}
 
+  	$scope.expandGraphORM = true;
+  	$scope.expandGraphEvents = true;
+  	$scope.expandGraph = function(graphName) {
+
+  		if(graphName == 'ORM') {
+  			$scope.expandGraphORM = !$scope.expandGraphORM;
+  		} else if(graphName == 'AthleticEvents') {
+  			$scope.expandGraphEvents = !$scope.expandGraphEvents;
+  		}
+  	}
+
   	$scope.resetSettings = function(userUsed, connection) {
   		$scope.settingsUser = {};
   		$scope.settingsConnection = connection;
@@ -190,8 +206,9 @@ angular.module('homepageModule')
   				var oneRepMax = chart.oneRepMaxes[j];
   				oneRepMax.date = new Date(oneRepMax.date);
 
-  				if(i == 0)
-  					$scope.labels.push(ormCnt++);
+  				if(i == 0) {
+  					$scope.labels.push($scope.months[oneRepMax.date.getMonth()]);
+  				}
 
   				$scope.data[i].push(oneRepMax.value);
   			}
@@ -209,8 +226,9 @@ angular.module('homepageModule')
   				var trackEvent = chart.trackEvents[j];
   				trackEvent.date = new Date(trackEvent.date);
 
-  				if(i == 0)
-  					$scope.labels2.push(eventCnt++);
+  				if(i == 0) {
+  					$scope.labels2.push($scope.months[trackEvent.date.getMonth()]);
+  				}
 
   				$scope.data2[i].push(trackEvent.trackTime.hours*60*60+trackEvent.trackTime.minutes*60+trackEvent.trackTime.seconds);
   			}

@@ -34,7 +34,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2">Enable Text Notifications:</label>
             <div class="col-sm-6 left-aligned">
-                <input type="checkbox" ng-model="settingsUser.enableTextMessages" value=""><br>
+                <input type="checkbox" ng-model="settingsUser.enableTextMessages" value=""/><br>
             </div>
         </div>
         <div class="form-group">
@@ -66,127 +66,155 @@
     <div ng-show="settingsUser.userType == 'Athlete' && (settingsConnection == null || settingsConnection.status == 'Connected')">
         <h2>Athlete Profile</h2>
 
-        
-        <button ng-click="expandORM()" class="btn btn-primary btn-responsive pull-left"><h3 class="pull-left">One Rep Maximums  </h3> 
-        <span ng-if="!expandedORM" class="glyphicon glyphicon-download" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span><span ng-if="expandedORM" class="glyphicon glyphicon-upload" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span>
-        </button></br></br></br></br>
-            <div class="table-responsive" ng-if="expandedORM">
-                <table class="table">
-                    <thead>
-                        <th><h3>Lift Names</h3></th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="oneRepMax in athleteProfile.oneRepMaxCharts track by $index">
-                            <td>
-                            <h3 class="left-aligned"><a href ng-click="expandChart(oneRepMax)">{{oneRepMax.liftName}}</a></h3>
-                             <div ng-if="oneRepMax.expanded">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <th>One-Rep-Max</th>
-                                            <th> Date Updated</th>
-                                            <th></th>
-                                        </thead>
-                                        <tbody>
-                                          <tr ng-repeat="orm in oneRepMax.oneRepMaxes">
+        <br><br>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <th>
+                        <h4><a href ng-click="expandORM()">One Rep Max Table 
+                            <span ng-if="!expandedORM" class="glyphicon glyphicon-download"></span>
+                            <span ng-if="expandedORM" class="glyphicon glyphicon-upload"></span>
+                        </a></h4>
+                    </th>
+                    <th></th>
+                </thead>
+                <tbody ng-show="expandedORM">
+                    <tr ng-repeat="oneRepMax in athleteProfile.oneRepMaxCharts track by $index">
+                        <td>
+                        <h4 class="left-aligned"><a href ng-click="expandChart(oneRepMax)">{{oneRepMax.liftName}}</a></h4>
+                         <div ng-if="oneRepMax.expanded">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <th>One-Rep-Max</th>
+                                        <th> Date Updated</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                      <tr ng-repeat="orm in oneRepMax.oneRepMaxes">
 
-                                            <td><input type="number" class="form-control form-control-inline" ng-model="orm.value" value="0" min="0" required/></td>
-                                            <td><input type="date" class="form-control" ng-model="orm.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
-                                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-                                          </tr>
-                                        </tbody>
-                                    </table>
-                                    <button class="btn btn-success btn-responsive pull-left" ng-click="addOneRepMaxRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <form role="form">
-                    <div class="left-aligned form-inline">
-                        <button class="btn btn-success btn-responsive4" ng-click="addOneRepMaxChart(newLift)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Lift
-                        </button>
-                        <input type="text" class="form-control col-xs-3" ng-model="newLift" placeholder="Lift Name" required/>
-                    </div>
-                </form>
-                <br><br>
-            </div>
-
-            <button ng-click="expandEvent()" class="btn btn-primary btn-responsive pull-left"><h3 class="pull-left">Athletic Events  </h3> 
-            <span ng-if="!expandedEvent" class="glyphicon glyphicon-download" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span><span ng-if="expandedEvent" class="glyphicon glyphicon-upload" aria-hidden="true" style="font-size: 25px; margin-left: 10px; margin-top: 20px;"></span>
-            </button></br></br></br></br>
-            <div class="table-responsive" ng-if="expandedEvent"> 
-                <table class="table">
-                    <thead>
-                        <th><h3>Event Names</h3></th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="eventChart in athleteProfile.trackEventCharts track by $index">
-                            <td>
-                            <h3 class="left-aligned"><a href ng-click="expandChart(eventChart)">{{eventChart.eventName}}</a></h3>
-                            <div ng-if="eventChart.expanded">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <th>Hours</th>
-                                            <th>Minutes</th>
-                                            <th>Seconds</th>
-                                            <th>Event Date</th>
-                                            <th></th>
-                                        </thead>
-                                        <tbody>
-                                          <tr ng-repeat="event in eventChart.trackEvents">
-                                            <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.hours" value="0" min="0" required/></td>
-                                            <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
-                                            <td><input type="number" class="form-control form-control-inline2" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
-                                            <td><input type="date" class="form-control" ng-model="event.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
-                                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-                                          </tr>
-                                        </tbody>
-                                    </table>
-                                    <button class="btn btn-success btn-responsive pull-left" ng-click="addTrackEventRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    </button>
-                                </div>
+                                        <td><input type="number" class="form-control form-control-inline" ng-model="orm.value" value="0" min="0" required/></td>
+                                        <td><input type="date" class="form-control" ng-model="orm.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
+                                        <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-success btn-responsive pull-left" ng-click="addOneRepMaxRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
                             </div>
-                            </td>
-                             <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                          </div>
+                        </td>
+                        <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <form role="form">
-                    <div class="left-aligned form-inline">
-                        <button class="btn btn-success btn-responsive4" ng-click="addTrackEventChart(newEvent)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Event
-                        </button>
-                        <input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/>
-                    </div>
-                </form>
-            </div></br>
-            <!-- Graph ORM HTML -->
-            <div class="col-md-6">
-            <canvas id="line" class="chart chart-line" chart-data="data"
-              chart-labels="labels" chart-legend="true" chart-series="series"
-              chart-click="onClick">
-            </canvas> 
+            <form role="form" ng-show="expandedORM">
+                <div class="left-aligned form-inline">
+                    <button class="btn btn-success btn-responsive4" ng-click="addOneRepMaxChart(newLift)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Lift
+                    </button>
+                    <input type="text" class="form-control col-xs-3" ng-model="newLift" placeholder="Lift Name" required/>
+                </div>
+                <br>
+            </form>
+        </div>
+
+        <div class="table-responsive"> 
+            <table class="table">
+                <thead>
+                    <th>
+                        <h4><a href ng-click="expandEvent()">Athletic Events Table 
+                            <span ng-if="!expandedEvent" class="glyphicon glyphicon-download"></span>
+                            <span ng-if="expandedEvent" class="glyphicon glyphicon-upload"></span>
+                        </a></h4>
+                    </th>
+                    <th></th>
+                </thead>
+                <tbody ng-show="expandedEvent">
+                    <tr ng-repeat="eventChart in athleteProfile.trackEventCharts track by $index">
+                        <td>
+                        <h4 class="left-aligned"><a href ng-click="expandChart(eventChart)">{{eventChart.eventName}}</a></h4>
+                        <div ng-if="eventChart.expanded">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <th>Hours</th>
+                                        <th>Minutes</th>
+                                        <th>Seconds</th>
+                                        <th>Event Date</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                      <tr ng-repeat="event in eventChart.trackEvents">
+                                        <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.hours" value="0" min="0" required/></td>
+                                        <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
+                                        <td><input type="number" class="form-control form-control-inline2" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
+                                        <td><input type="date" class="form-control" ng-model="event.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
+                                        <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-success btn-responsive pull-left" ng-click="addTrackEventRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                        </td>
+                         <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form role="form" ng-show="expandedEvent">
+                <div class="left-aligned form-inline">
+                    <button class="btn btn-success btn-responsive4" ng-click="addTrackEventChart(newEvent)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Event
+                    </button>
+                    <input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/>
+                </div>
+                <br>
+            </form>
+        </div>
+        <br>
+
+        <!-- Graph ORM HTML -->
+        <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><a href ng-click="expandGraph('ORM')">One Rep Max Graph  
+                    <span ng-if="!expandGraphORM" class="glyphicon glyphicon-download"></span>
+                    <span ng-if="expandGraphORM" class="glyphicon glyphicon-upload"></span>
+                </a></h4>
             </div>
-            <!-- end Graph HTML -->
-            <!-- Graph TIME HTML -->
-            <div class="col-md-6">
-            <canvas id="line2" class="chart chart-line" chart-data="data2"
-              chart-labels="labels2" chart-legend="true" chart-series="series2"
-              chart-click="onClick">
-            </canvas> 
+            <div class="panel-body" ng-show="expandGraphORM">
+                <canvas id="line" class="chart chart-line" chart-data="data"
+                  chart-labels="labels" chart-legend="true" chart-series="series"
+                  chart-click="onClick">
+                </canvas> 
             </div>
-            <!-- end Graph HTML -->
-            </br>
-            <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
-            <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(settingsUser.id, athleteProfile)" value="Save"/>
-         </div>
+        </div>
+        </div>
+        <!-- end Graph HTML -->
+        <!-- Graph TIME HTML -->
+        <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><a href ng-click="expandGraph('AthleticEvents')">Athletic Events Graph   
+                    <span ng-if="!expandGraphEvents" class="glyphicon glyphicon-download"></span>
+                    <span ng-if="expandGraphEvents" class="glyphicon glyphicon-upload"></span>
+                </a></h4>
+            </div>
+            <div class="panel-body" ng-show="expandGraphEvents">
+                <canvas id="line2" class="chart chart-line" chart-data="data2"
+                  chart-labels="labels2" chart-legend="true" chart-series="series2"
+                  chart-click="onClick">
+                </canvas> 
+            </div>
+        </div>
+        </div>
+        <!-- end Graph HTML -->
+        <br>
+        <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
+        <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(settingsUser.id, athleteProfile)" value="Save"/>
+     </div>
 
     <script type="text/ng-template" id="passwordModal.html"></script>
     <div class="modal fade" id="passwordModal" role="dialog">
