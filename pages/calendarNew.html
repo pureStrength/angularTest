@@ -3,7 +3,7 @@
 	<div class="container-fluid" ng-hide="newPrescribe || viewPrescription">
 		<div class="row-fluid">
 	        <div class="btn-group">
-	        	<button class="btn btn-danger btn-responsive" ng-click="cancelPrescribing()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+	        	<button class="btn btn-primary btn-responsive" ng-click="cancelPrescribing()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
 	        	</button>
 	        	<button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Prescribe 
 	            </button>
@@ -27,6 +27,8 @@
 
 	<div class="container-fluid" ng-show="newPrescribe" ng-controller="workoutsCtrl" ng-init="loadWorkouts()">
 		<div class="row">
+			<button class="btn btn-primary btn-responsive" ng-click="cancelPrescribingView()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+	        </button><br><br>
 
 		<div class="left-aligned">
 	        <form role="form">
@@ -91,9 +93,10 @@
 	            <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customPrescription.description"/><br><br>
 	         </form> 
 	        </div>
-
+	        <div style="text-align: center;">
 	        <input type="button" class="btn btn-primary btn-responsive" ng-click="cancelNewPrescribe()" value="Cancel"/>
             <input type="submit" class="btn btn-primary btn-responsive" ng-click="saveNewPrescribe(customPrescription)" value="Save"/>
+        	</div>
 	    </div>
 	</div>
 
