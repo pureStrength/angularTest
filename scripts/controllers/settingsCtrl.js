@@ -9,33 +9,33 @@
 angular.module('homepageModule')
   .controller('settingsCtrl', function ($scope, $location, userService, athleteService, ModalService) {
 
-  	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
-  	$scope.date = new Date();
-  	$scope.tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-  	$scope.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    $scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
+    $scope.date = new Date();
+    $scope.tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    $scope.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
     ///////////////////////////////////////////////////GRAPH SCRIPT HERE///////////////////////////////////////////////////
     var ormCnt = 1;
     var eventCnt = 1;
 
-   	$scope.labels = [];
-	$scope.series = [];
-	$scope.data = [];
+    $scope.labels = [];
+    $scope.series = [];
+    $scope.data = [];
 
-	$scope.labels2 = [];
-	$scope.series2 = [];
-	$scope.data2 = [];
+    $scope.labels2 = [];
+    $scope.series2 = [];
+    $scope.data2 = [];
 
-	$scope.onClick = function (points, evt) {
-	    //console.log(points, evt);
-	    var activePoints = Chart.getPointsAtEvent(evt);
-	    for(var i = 0; i < activePoints.length; i++) {
-	    	console.log("Active point: " + activePoints[i]);
-	    }
-	};
+    $scope.onClick = function (points, evt) {
+      //console.log(points, evt);
+      var activePoints = Chart.getPointsAtEvent(evt);
+      for(var i = 0; i < activePoints.length; i++) {
+        console.log("Active point: " + activePoints[i]);
+      }
+    };
 
-	Chart.defaults.Line.datasetFill = false;
-	Chart.defaults.Line.bezierCurve = false;
+    Chart.defaults.Line.datasetFill = false;
+    Chart.defaults.Line.bezierCurve = false;
 
     ///////////////////////////////////////////////////GRAPH SCRIPT END///////////////////////////////////////////////////
 
@@ -45,14 +45,14 @@ angular.module('homepageModule')
   		var connection = userUsed.userConnectionStatus;
 
   		if(user == undefined) {
-	  		user = userUsed;
-	  		connection = null;
+    		user = userUsed;
+    		connection = null;
   		}
 
-  		$scope.originalUser = user;
+		  $scope.originalUser = user;
 
   		// Make a copy of the logged in user so we can independently edit variables
-		$scope.resetSettings(user, connection);
+		  $scope.resetSettings(user, connection);
 
   		// Load athlete profile
   		if(user.userType == 'Athlete') {
@@ -60,50 +60,74 @@ angular.module('homepageModule')
   			$scope.counterOfOneRepMax = 0;
   		}
 
-	});
+      var path = '' + $location.path();
+
+      if(path == '/settings') {
+        $scope.modalName = 'settingsModal';
+      } else {
+        $scope.modalName = 'viewProfileModal';
+      }
+      
+
+    });
 
   	$scope.update = function(user) {
 		
-		// Check parameters
-		if(!user) {
-			console.log("Undefined User");
-			$scope.error = "Please fill out the required fields";
-			return;
-		}
+  		// Check parameters
+  		if(!user) {
+  			console.log("Undefined User");
+  			$scope.error = "Please fill out the required fields";
+  			return;
+  		}
 
-		if(!user.firstName || !user.firstName.length || 
-		   !user.lastName  || !user.lastName.length  || 
-		   !user.email     || !user.email.length)    {
-			console.log("Missing field");
-			console.log(user);
-			$scope.error = "Please fill out the required fields";
-			return;	
-		}
+  		if(!user.firstName || !user.firstName.length || 
+  		   !user.lastName  || !user.lastName.length  || 
+  		   !user.email     || !user.email.length)    {
+  			console.log("Missing field");
+  			console.log(user);
+  			$scope.error = "Please fill out the required fields";
+  			return;	
+  		}
 
-		var promise = userService.update(user);
-		promise.then(function(res) {
-			if(res == "true") {
-				// Log success
-				console.log("Update successful");
-				$scope.error = "";
+  		var promise = userService.update(user);
+  		promise.then(function(res) {
+  			if(res == "true") {
+  				// Log success
+  				console.log("Update successful");
+  				$scope.error = "";
 
-				// Display the success modal
-				$scope.user = user;
-				store.set('user', user);
-				$scope.showSettingsModal();
-			} else {
-				// Log error
-				console.log("Error updating user");
-				$scope.error = "Error updating user";	
-			}
-		
-		}, function(error) {
-			// Log error
-			console.log("Error updating user");
-			console.log("Response: " + error);
-			$scope.error = "Error updating user";
-		})
+  				// Display the success modal
+  				$scope.user = user;
+  				store.set('user', user);
+  				$scope.showSettingsModal();
+  			} else {
+  				// Log error
+  				console.log("Error updating user");
+  				$scope.error = "Error updating user";	
+  			}
+  		
+  		}, function(error) {
+  			// Log error
+  			console.log("Error updating user");
+  			console.log("Response: " + error);
+  			$scope.error = "Error updating user";
+  		})
   	}
+
+    $scope.initializeTextMessages = function(value) {
+
+      var disabled = document.getElementById("disableText");
+      var enabled = document.getElementById("enableText");
+
+      if(value == true) {
+        disabled.className = disabled.className.replace('active', '');
+        enabled.className = enabled.className + " active";
+      } else {
+        enabled.className = enabled.className.replace('active', '');
+        disabled.className = disabled.className + " active";
+      }
+
+    }
 
   	$scope.expandChart = function(chart) {
   		if(chart.expanded == undefined) {
@@ -146,32 +170,45 @@ angular.module('homepageModule')
   		$scope.settingsUser = {};
   		$scope.settingsConnection = connection;
   		angular.copy(userUsed, $scope.settingsUser);
+
+      // Initialize the preferences and radio button
+      $scope.initializeTextMessages($scope.settingsUser.enableTextMessages);
   	}
 
   	$scope.loadAthleteProfile = function(athleteId) {
 
-		var promise = athleteService.get(athleteId);
-		promise.then(function(res) {
-			if(res != null) {
-				// Log success
-				console.log("Loaded athlete profile");
-				console.log(res);
+  		var promise = athleteService.get(athleteId);
+  		promise.then(function(res) {
+  			if(res != null) {
+  				// Log success
+  				console.log("Loaded athlete profile");
+  				console.log(res);
 
-				$scope.athleteProfile = res;
-				$scope.formatProfileDates();
-				$scope.loadChart();
-			} else {
-				// Log error
-				console.log("Error loading Athlete Profile");
-				$scope.error = "Error loading Athlete Profile";	
-			}
-		
-		}, function(error) {
-			// Log error
-			console.log("Error loading Athlete Profile");
-			console.log("Response: " + error);
-			$scope.error = "Error loading Athlete Profile";
-		})  			
+  				$scope.athleteProfile = res;
+  				$scope.formatProfileDates();
+
+          // Intitialize the charts
+          $scope.labels = [];
+          $scope.series = [];
+          $scope.data = [];
+
+          $scope.labels2 = [];
+          $scope.series2 = [];
+          $scope.data2 = [];
+          
+  				$scope.loadChart();
+  			} else {
+  				// Log error
+  				console.log("Error loading Athlete Profile");
+  				$scope.error = "Error loading Athlete Profile";	
+  			}
+  		
+  		}, function(error) {
+  			// Log error
+  			console.log("Error loading Athlete Profile");
+  			console.log("Response: " + error);
+  			$scope.error = "Error loading Athlete Profile";
+  		})  			
 
   	}
 
@@ -293,12 +330,12 @@ angular.module('homepageModule')
   		var thisMonth = $scope.date.getMonth();
 
   		var dateIndex = 0;
-		if(date.getYear() != thisYear) {
-			dateIndex = ((thisYear - date.getYear()) * -12) + 1;
-		} 
+  		if(date.getYear() != thisYear) {
+  			dateIndex = ((thisYear - date.getYear()) * -12) + 1;
+  		} 
 
-		dateIndex = dateIndex + labelArray.length - (thisMonth - date.getMonth());
-		return dateIndex;
+  		dateIndex = dateIndex + labelArray.length - (thisMonth - date.getMonth());
+  		return dateIndex;
   	}
 
   	$scope.createLabels = function(labelArray, earliestDate) {
@@ -314,9 +351,9 @@ angular.module('homepageModule')
   		// Push earlier years
 	  	while(earliestYear + yearCounter < thisYear) {
 
-			while(monthCounter <= 11) {
-				labelArray.push($scope.months[monthCounter++]);
-			}
+  			while(monthCounter <= 11) {
+  				labelArray.push($scope.months[monthCounter++]);
+  			}
 
   			monthCounter = 0;
   			yearCounter++;
@@ -324,8 +361,8 @@ angular.module('homepageModule')
 
   		// Push this year
 	  	while(monthCounter < thisMonth) {
-			labelArray.push($scope.months[monthCounter++]);
-		}
+  			labelArray.push($scope.months[monthCounter++]);
+  		}
   	}
 
   	$scope.resetAthleteProfile = function() {
@@ -333,110 +370,110 @@ angular.module('homepageModule')
   	}
 
   	$scope.addOneRepMaxRow = function(index) {
-		$scope.athleteProfile.oneRepMaxCharts[index].oneRepMaxes.push({
-			internalId: ++$scope.counterOfOneRepMax, 
-			date: $scope.date,
-			value: 0
-		});
+		  $scope.athleteProfile.oneRepMaxCharts[index].oneRepMaxes.push({
+  			internalId: ++$scope.counterOfOneRepMax, 
+  			date: $scope.date,
+  			value: 0
+		  });
   	}
 
   	$scope.deleteOneRepMaxRow = function(parentIndex, index) {
-		$scope.athleteProfile.oneRepMaxCharts[parentIndex].oneRepMaxes.splice(index, 1);
-	}
+  		$scope.athleteProfile.oneRepMaxCharts[parentIndex].oneRepMaxes.splice(index, 1);
+  	}
 
   	$scope.addOneRepMaxChart = function(liftName) {
 
   		if(liftName != null && liftName.length > 0) {
 
-			$scope.athleteProfile.oneRepMaxCharts.push({
-				liftName: liftName, 
-				oneRepMaxes: [{value: 0, date: $scope.date}]
-			});
+  			$scope.athleteProfile.oneRepMaxCharts.push({
+  				liftName: liftName, 
+  				oneRepMaxes: [{value: 0, date: $scope.date}]
+  			});
 
-			$scope.newLift = "";
-		}
+  			$scope.newLift = "";
+  		}
   	}
 
-	$scope.deleteOneRepMaxChart = function(index) {
-		$scope.athleteProfile.oneRepMaxCharts.splice(index, 1);
-	}
-
-	$scope.addTrackEventRow = function(index) {
-		$scope.athleteProfile.trackEventCharts[index].trackEvents.push({
-			internalId: ++$scope.counterOfOneRepMax, 
-			date: $scope.date,
-			trackTime: {hours: 0, minutes: 0, seconds: 0}
-		});
+  	$scope.deleteOneRepMaxChart = function(index) {
+  		$scope.athleteProfile.oneRepMaxCharts.splice(index, 1);
   	}
+
+  	$scope.addTrackEventRow = function(index) {
+  		$scope.athleteProfile.trackEventCharts[index].trackEvents.push({
+  			internalId: ++$scope.counterOfOneRepMax, 
+  			date: $scope.date,
+  			trackTime: {hours: 0, minutes: 0, seconds: 0}
+  		});
+    }
 
   	$scope.deleteTrackEventRow = function(parentIndex, index) {
-		$scope.athleteProfile.trackEventCharts[parentIndex].trackEvents.splice(index, 1);
-	}
+  		$scope.athleteProfile.trackEventCharts[parentIndex].trackEvents.splice(index, 1);
+  	}
 
   	$scope.addTrackEventChart = function(eventName) {
 
   		if(eventName != null && eventName.length > 0) {
 
-			$scope.athleteProfile.trackEventCharts.push({
-				eventName: eventName, 
-				trackEvents: [{
-					date: $scope.date,
-					trackTime: {hours: 0, minutes: 0, seconds: 0}
-				}]
-			});
+  			$scope.athleteProfile.trackEventCharts.push({
+  				eventName: eventName, 
+  				trackEvents: [{
+  					date: $scope.date,
+  					trackTime: {hours: 0, minutes: 0, seconds: 0}
+  				}]
+  			});
 
-			$scope.newEvent = "";
-		}
+  			$scope.newEvent = "";
+  		}
   	}
 
-	$scope.deleteTrackEventChart = function(index) {
-		$scope.athleteProfile.trackEventCharts.splice(index, 1);
-	}
+  	$scope.deleteTrackEventChart = function(index) {
+  		$scope.athleteProfile.trackEventCharts.splice(index, 1);
+  	}
 
-	$scope.updateAthleteProfile = function(athleteId, athleteProfile) {
+  	$scope.updateAthleteProfile = function(athleteId, athleteProfile) {
 
-		if(athleteProfile == undefined || athleteProfile == null) {
-			console.log("Received null AthleteProfile");
-			return;
-		}
+  		if(athleteProfile == undefined || athleteProfile == null) {
+  			console.log("Received null AthleteProfile");
+  			return;
+  		}
 
-		var promise = athleteService.update(athleteId, athleteProfile);
-		promise.then(function(res) {
-			if(res != null && res == 'true') {
-				// Log success
-				console.log("Updated athlete profile");
+  		var promise = athleteService.update(athleteId, athleteProfile);
+  		promise.then(function(res) {
+  			if(res != null && res == 'true') {
+  				// Log success
+  				console.log("Updated athlete profile");
 
-				$scope.showSettingsModal();
-			} else {
-				// Log error
-				console.log("Error updating Athlete Profile");
-				$scope.error = "Error updating Athlete Profile";	
-			}
-		
-		}, function(error) {
-			// Log error
-			console.log("Error updating Athlete Profile");
-			console.log("Response: " + error);
-			$scope.error = "Error updating Athlete Profile";
-		})  
+  				$scope.showSettingsModal();
+  			} else {
+  				// Log error
+  				console.log("Error updating Athlete Profile");
+  				$scope.error = "Error updating Athlete Profile";	
+  			}
+  		
+  		}, function(error) {
+  			// Log error
+  			console.log("Error updating Athlete Profile");
+  			console.log("Response: " + error);
+  			$scope.error = "Error updating Athlete Profile";
+  		})  
 
-	}
+  	}
 
   	$scope.showPasswordModal = function() {
 
-        ModalService.showModal({
-            templateUrl: 'partials/passwordModal.html',
-            controller: "homepageCtrl"
-        }).then(function(modal) {
+      ModalService.showModal({
+          templateUrl: 'passwordModal.html',
+          controller: "homepageCtrl"
+      }).then(function(modal) {
             
-			// Display correct message
-			$scope.modalHeader = "Update password";
-            modal.element.append($("#passwordModal"));
-            $("#passwordModal").modal({
-			    backdrop: 'static',
-			    keyboard: false 
-			});
-        });
+  			// Display correct message
+  			$scope.modalHeader = "Update password";
+        modal.element.append($("#passwordModal"));
+        $("#passwordModal").modal({
+  			    backdrop: 'static',
+  			    keyboard: false 
+			  });
+      });
   	}
 
   	$scope.submitPassword = function(user) {
@@ -453,64 +490,60 @@ angular.module('homepageModule')
   			return;
   		}
 
-		// Check if the old password is correct
-		var authUser = $scope.user;
-		authUser.password = user.oldPassword;
-		var promise = userService.authenticate(authUser);
-		promise.then(function(res) {
+  		// Check if the old password is correct
+  		var authUser = $scope.user;
+  		authUser.password = user.oldPassword;
+  		var promise = userService.authenticate(authUser);
+  		promise.then(function(res) {
 			console.log("Auth successful");
 			$scope.passwordError = "";
 
 			authUser.password = user.newPassword;
 			var promise = userService.update(authUser);
 			promise.then(function(res) {
-				console.log("Update successful");
-				$scope.passwordError = "";
+  			console.log("Update successful");
+  			$scope.passwordError = "";
 
-				store.set('user', user);
-				$scope.user = authUser;
+  			store.set('user', user);
+  			$scope.user = authUser;
 
-				$scope.closePasswordModal();
-				$scope.showSettingsModal();
-			}, function(error) {
-				// Log error
-				$scope.passwordError = "Error updating password";
-			})
+  			$scope.closePasswordModal();
+  			$scope.showSettingsModal();
+  			}, function(error) {
+  				// Log error
+  				$scope.passwordError = "Error updating password";
+  			})
 
-		}, function(error) {
-			// Log error
-			$scope.passwordError = "Old password is incorrect";
-		})
+  		}, function(error) {
+  			// Log error
+  			$scope.passwordError = "Old password is incorrect";
+  		})
   	}
 
   	$scope.closePasswordModal = function() {
-		$('#passwordModal').modal('hide');
-		$scope.settingsUser.oldPassword = '';
-		$scope.settingsUser.newPassword = '';
-		$scope.settingsUser.repeatPassword = '';
+  		$('#passwordModal').modal('hide');
+  		$scope.settingsUser.oldPassword = '';
+  		$scope.settingsUser.newPassword = '';
+  		$scope.settingsUser.repeatPassword = '';
     };
 	
-	$scope.showSettingsModal = function() {
+	  $scope.showSettingsModal = function() {
 
-        ModalService.showModal({
-            templateUrl: 'partials/settingsModal.html',
-            controller: "homepageCtrl"
-        }).then(function(modal) {
+      ModalService.showModal({
+          templateUrl: $scope.modalName + '.html',
+          controller: "homepageCtrl"
+      }).then(function(modal) {
             
-			// Display correct message
-			$scope.modalHeader = "Update Successful";
-            
-            modal.element.append($("#settingsModal"));
-            $("#settingsModal").modal({
+  			// Display correct message
+  			$scope.modalHeader = "Update Successful";
+        modal.element.append($("#" + $scope.modalName));
+        $("#" + $scope.modalName).modal({
 			    backdrop: 'static',
 			    keyboard: false 
-			});
-        });
+			  });
+      });
     };
 
-	$scope.closeSettingsModal = function() {
-		// Nothing to do
-    };
-
+	$scope.closeSettingsModal = function() {};
 	
-  });
+});

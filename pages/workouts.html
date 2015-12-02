@@ -16,7 +16,7 @@
             <table class="table table-connect">
                 <tbody>
                   <tr ng-repeat="lift in lifts">
-                    <td>{{lift.name}}</td>
+                    <td><a href ng-click="editLift(lift)">{{lift.name}}</a></td>
                     <td>{{lift.description}}</td>
                     <td class="last-row">            
                         <div class="dropdown">
@@ -38,7 +38,7 @@
             <table class="table table-connect">
                 <tbody>
                   <tr ng-repeat="set in sets">
-                    <td>{{set.name}}</td>
+                    <td><a href ng-click="editSet(set)">{{set.name}}</a></td>
                     <td>{{set.description}}</td>
                     <td class="last-row">            
                         <div class="dropdown">
@@ -60,7 +60,7 @@
             <table class="table table-connect">
                 <tbody>
                   <tr ng-repeat="prescription in prescriptions">
-                    <td>{{prescription.name}}</td>
+                    <td><a href ng-click="editPrescription(prescription)">{{prescription.name}}</a></td>
                     <td>{{prescription.description}}</td>
                     <td class="last-row">            
                         <div class="dropdown">
