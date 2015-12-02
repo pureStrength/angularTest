@@ -12,8 +12,7 @@ angular.module('homepageModule')
   	$scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
   	$scope.date = new Date();
   	$scope.tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-  	$scope.months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
+  	$scope.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
     ///////////////////////////////////////////////////GRAPH SCRIPT HERE///////////////////////////////////////////////////
     var ormCnt = 1;
@@ -195,25 +194,63 @@ angular.module('homepageModule')
   	}
 
   	$scope.loadChart = function() {
+
+  		// Find the earliest dates
+  		var earliestORMDate = new Date();
+  		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
+  			var ormChart = $scope.athleteProfile.oneRepMaxCharts[i];
+  			var dateCheck = ormChart.oneRepMaxes[ormChart.oneRepMaxes.length - 1].date;
+  			if(dateCheck.getTime() < earliestORMDate.getTime()) {
+  				earliestORMDate = dateCheck;
+  			}
+  		}
+  		var earliestEventDate = new Date();
+  		for(var i = 0; i < $scope.athleteProfile.trackEventCharts.length; i++) {
+  			var eventChart = $scope.athleteProfile.trackEventCharts[i];
+  			var dateCheck = eventChart.trackEvents[eventChart.trackEvents.length - 1].date;
+  			if(dateCheck.getTime() < earliestEventDate.getTime()) {
+  				earliestEventDate = dateCheck;
+  			}
+  		}
+
+  		// Construct the x-axis labels
+  		$scope.createLabels($scope.labels, earliestORMDate);
+  		$scope.createLabels($scope.labels2, earliestEventDate);
+
+  		var thisYear = $scope.date.getYear();
+  		var thisMonth = $scope.date.getMonth();
+
   		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
   			var chart = $scope.athleteProfile.oneRepMaxCharts[i];
 
   			$scope.series.push(chart.liftName);
-
   			$scope.data[i] = [];
 
+  			var lastUpdated = -1;
   			for(var j = chart.oneRepMaxes.length-1; j >= 0; j--) {
   				var oneRepMax = chart.oneRepMaxes[j];
   				oneRepMax.date = new Date(oneRepMax.date);
 
-  				if(i == 0) {
-  					$scope.labels.push($scope.months[oneRepMax.date.getMonth()]);
+  				var dateIndex = $scope.getDateIndex($scope.labels, oneRepMax.date);
+  				$scope.data[i][dateIndex] = oneRepMax.value;
+
+  				if(lastUpdated < (dateIndex - 1)) {
+
+  					var relevantData;
+  					if(lastUpdated >= 0) {
+  						relevantData = $scope.data[i][lastUpdated];
+  					} else {
+  						relevantData = oneRepMax.value;
+  					}
+
+  					for(var x = 0; x < dateIndex; x++) {
+  						$scope.data[i][x] = relevantData;
+  					}
   				}
 
-  				$scope.data[i].push(oneRepMax.value);
+  				lastUpdated = dateIndex;
   			}
   		}
-
 
   		for(var i = 0; i < $scope.athleteProfile.trackEventCharts.length; i++) {
   			var chart = $scope.athleteProfile.trackEventCharts[i];
@@ -222,17 +259,73 @@ angular.module('homepageModule')
 
   			$scope.data2[i] = [];
 
+  			var lastUpdated = -1;
   			for(var j = chart.trackEvents.length-1; j >= 0; j--) {
   				var trackEvent = chart.trackEvents[j];
   				trackEvent.date = new Date(trackEvent.date);
 
-  				if(i == 0) {
-  					$scope.labels2.push($scope.months[trackEvent.date.getMonth()]);
+  				var dateIndex = $scope.getDateIndex($scope.labels2, trackEvent.date);
+  				var trackTime = (trackEvent.trackTime.hours*3600+trackEvent.trackTime.minutes*60+trackEvent.trackTime.seconds);
+  				$scope.data2[i][dateIndex] = trackTime;
+
+  				if(lastUpdated < (dateIndex - 1)) {
+
+  					var relevantData;
+  					if(lastUpdated >= 0) {
+  						relevantData = $scope.data2[i][lastUpdated];
+  					} else {
+  						relevantData = trackTime;
+  					}
+
+  					for(var x = 0; x < dateIndex; x++) {
+  						$scope.data2[i][x] = relevantData;
+  					}
   				}
 
-  				$scope.data2[i].push(trackEvent.trackTime.hours*60*60+trackEvent.trackTime.minutes*60+trackEvent.trackTime.seconds);
+  				lastUpdated = dateIndex;
   			}
   		}
+  	}
+
+  	$scope.getDateIndex = function(labelArray, date) {
+
+  		var thisYear = $scope.date.getYear();
+  		var thisMonth = $scope.date.getMonth();
+
+  		var dateIndex = 0;
+		if(date.getYear() != thisYear) {
+			dateIndex = ((thisYear - date.getYear()) * -12) + 1;
+		} 
+
+		dateIndex = dateIndex + labelArray.length - (thisMonth - date.getMonth());
+		return dateIndex;
+  	}
+
+  	$scope.createLabels = function(labelArray, earliestDate) {
+
+  		var thisYear = $scope.date.getYear();
+  		var thisMonth = $scope.date.getMonth();
+  		var earliestYear = earliestDate.getYear();
+  		var earliestMonth = earliestDate.getMonth();
+
+  		var yearCounter = 0;
+  		var monthCounter = earliestMonth;
+
+  		// Push earlier years
+	  	while(earliestYear + yearCounter < thisYear) {
+
+			while(monthCounter <= 11) {
+				labelArray.push($scope.months[monthCounter++]);
+			}
+
+  			monthCounter = 0;
+  			yearCounter++;
+	  	}
+
+  		// Push this year
+	  	while(monthCounter < thisMonth) {
+			labelArray.push($scope.months[monthCounter++]);
+		}
   	}
 
   	$scope.resetAthleteProfile = function() {
