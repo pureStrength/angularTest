@@ -10,11 +10,15 @@ angular.module('homepageModule')
   .controller('workoutsCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
   	$scope.abdominalFocuses = ["None", "Strength", "Stability"];
+  	$scope.expandMainSets = true;
+  	$scope.expandAccessory = true;
+  	$scope.expandFocus = true;
 
 	$scope.loadWorkoutsTab = function() {
 		// Initialize custom set creation object
 		$scope.initializeCustomSet();
 		$scope.initializeCustomPrescription();
+		$scope.loadWorkouts();
 	}
 
 	$scope.$on('usingWorkoutsTab', function(event, args) {

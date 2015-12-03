@@ -13,15 +13,7 @@ html, body {
   background-image: -o-linear-gradient(bottom right, rgba(255,255,255), rgba(255,255,255)); /* For Opera 11.1 to 12.0 */
   background-image: -moz-linear-gradient(bottom right, rgba(255,255,255), rgba(255,255,255)); /* For Firefox 3.6 to 15 */
   background-image: linear-gradient(to bottom right, rgba(255,255,255), rgba(255,255,255)); /* Standard syntax (must be last) */
-  /**background-color: #CCCCCC; **/
 }
-
-@media (max-width: 768px) {
-  h3{
-      font-size: 1.3em;
-  }
-}
-
 
 @media (max-width: 768px) {
   .bg{
@@ -66,106 +58,11 @@ html, body {
     text-align: center;
 }
 
-/* xs < 768 */
-@media screen and (max-width: 767px) {
-    body {
-        font-size: 1em;
-    }
-}
-
-/* sm */
-@media screen and (min-width: 768px) {
-    body {
-        font-size: 1em;
-    }
-}
-
-/* md */
-@media screen and (min-width: 992px) {
-    body {
-        font-size: 1.3em;
-    }
-}
-
-/* lg */
-@media screen and (min-width: 1200px) {
-    body {
-        font-size: 1.6em;
-    }
-}
-
-@media (max-width: 768px){
-    .navbar-nav{
-        text-align: left;
-    }
-}
-
-@media (max-width: 768px) {
-  .btn-responsive {
-    padding:10px 20px;
-    font-size:90%;
-    line-height: 1;
-    border-radius:3px;
-  }
-}
-
-@media (min-width: 769px) {
-  .btn-responsive {
-    padding:10px 80px;
-    font-size:100%;
-    line-height: 1.2;
-  }
-}
-
-@media (max-width: 768px) {
-  .btn-responsive2 {
-    padding:10px 40px;
-    font-size:100%;
-    line-height: 1;
-    border-radius:3px;
-  }
-}
-
-@media (min-width: 769px) {
-  .btn-responsive2 {
-    padding:10px 80px;
-    font-size:100%;
-    line-height: 1.2;
-  }
-}
-
-@media (max-width: 768px) {
-  .btn-responsive3 {
-    padding:10px 30px;
-    font-size:100%;
-    line-height: 1;
-    border-radius:3px;
-  }
-}
-
-@media (min-width: 769px) {
-  .btn-responsive3 {
-    padding:10px 40px;
-    font-size:100%;
-    line-height: 1.2;
-  }
-}
-
-@media (max-width: 768px) {
-  .btn-responsive4 {
-    padding:10px 20px;
-    font-size:90%;
-    line-height: 1;
-    border-radius:3px;
-  }
-}
-
-@media (min-width: 769px) {
-  .btn-responsive4 {
-    padding:7px 50px;
-    font-size:100%;
-    line-height: 1.2;
-  }
+.innerTable {
+    border: 0px;
+    border-collapse: collapse;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 
 .btn-file {
@@ -186,24 +83,6 @@ html, body {
    background: white;
    cursor: inherit;
    display: block;
-}
-
-@media (max-width: 768px) {
-  .form-control-inline {
-      min-width: 0;
-      max-width: 70px;
-      width: auto;
-      display: inline;
-  }
-}
-
-@media (max-width: 768px) {
-  .form-control-inline2 {
-      min-width: 0;
-      max-width: 100px;
-      width: auto;
-      display: inline;
-  }
 }
 
 /** Nav bar settup **/
@@ -253,19 +132,6 @@ html, body {
 }
 .navbar-default .navbar-link:hover {
   color: #fbf6f6;
-}
-
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #daf6fd;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #fbf6f6;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #fbf6f6;
-    background-color: #14186B;
-  }
 }
 
 /** END **/

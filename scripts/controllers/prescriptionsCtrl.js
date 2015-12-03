@@ -10,6 +10,10 @@ angular.module('homepageModule')
   .controller('prescriptionsCtrl', function ($scope, workoutService, athleteService, ModalService) {
   	
   	$scope.viewPrescription = false;
+  	$scope.expandMainSets = true;
+  	$scope.expandAccessory = true;
+  	$scope.expandFocus = true;
+  	$scope.expandWellness = true;
 
 	$scope.cancelPostResults = function() {
 		$scope.postingResults = false;

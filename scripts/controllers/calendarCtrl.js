@@ -33,8 +33,15 @@ angular.module('homepageModule')
             res[i].title = res[i].prescriptionName || 'Workout';
             res[i].startTime = res[i].dateAssigned;
             res[i].endTime = res[i].dateAssigned;
-            res[i].allDay = false;
             res[i].highlight = res[i].wasPerformed;
+
+            var dateAssigned = new Date(res[i].dateAssigned);
+
+            if(dateAssigned.getHours() == 0) {
+              res[i].allDay = true;
+            } else {
+              res[i].allDay = false;
+            }
           }
 
           // Update the event source
@@ -119,7 +126,12 @@ angular.module('homepageModule')
         return;
       }
 
-      promise = workoutService.prescribeWorkout($scope.connectedAthlete.id, $scope.user.id, $scope.currentDate.getTime(), prescription);
+      var dateTime = $scope.currentDate.getTime();
+      var prescriptionDate = new Date(dateTime);
+      prescriptionDate.setHours(12);
+      prescriptionDate.setMinutes(30);
+
+      promise = workoutService.prescribeWorkout($scope.connectedAthlete.id, $scope.user.id, prescriptionDate.getTime(), prescription);
       promise.then(function(res) {
         if(res != null) {
           // Log success

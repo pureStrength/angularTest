@@ -2,11 +2,9 @@
 <div ng-hide="viewingProfile">
 	<h2 class="left-aligned">Find Connections</h2>
 	<form name="searchForm" role="form">
-		<div class="input-group col-sm-4">
+		<div class="input-group col-xs-12 col-md-6 col-lg-4">
 	        <input type="text" class="form-control" placeholder="Search users by name, email or organization" ng-model="searchText">
-	        <div class="input-group-btn">
-	            <button class="btn btn-default" type="submit" ng-click="searchConnections(searchText)"><i class="glyphicon glyphicon-search"></i></button>
-	        </div>
+	        <span class="input-group-addon"><a href><i class="glyphicon glyphicon-search"></i></a></span>
 	    </div>
 	</form>
 	<br>
@@ -92,7 +90,7 @@
 	<div ng-show="viewingProfile"> 
 	<br>
 		<div class="btn-group">
-        	<button class="btn btn-primary btn-responsive2" ng-click="cancelViewing()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+        	<button class="btn btn-primary btn-responsive2" ng-click="cancelViewing()"><span class="glyphicon glyphicon-arrow-left"></span> Back
         	</button>
         </div><br><br>
 		<div ng-include="'pages/view_profile.html'"></div>

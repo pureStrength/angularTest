@@ -116,69 +116,70 @@
                 </tbody>
             </table>
 
-            <form role="form" ng-show="expandedORM">
-                <div class="left-aligned form-inline">
-                    <button class="btn btn-success btn-responsive4" ng-click="addOneRepMaxChart(newLift)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Lift
-                    </button>
-                    <input type="text" class="form-control col-xs-3" ng-model="newLift" placeholder="Lift Name" required/>
-                </div>
-                <br>
-            </form>
+            <div ng-show="expandedORM">
+            <table style="background-color: transparent;">
+                <thead>
+                    <th class="innerTable"><input type="text" class="form-control col-xs-3" ng-model="newLift" placeholder="Lift Name" required/></th>
+                    <th><button class="btn btn-success btn-responsive4" ng-click="addOneRepMaxChart(newLift)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Lift
+                    </button></th>
+                </thead>
+            </table>
+            <br>
+            </div>
         </div>
 
-        <div class="table-responsive"> 
-            <table class="table">
-                <thead>
-                    <th>
-                        <h4><a href ng-click="expandEvent()">Athletic Events Table 
-                            <span ng-if="!expandedEvent" class="glyphicon glyphicon-download"></span>
-                            <span ng-if="expandedEvent" class="glyphicon glyphicon-upload"></span>
-                        </a></h4>
-                    </th>
-                    <th></th>
-                </thead>
-                <tbody ng-show="expandedEvent">
-                    <tr ng-repeat="eventChart in athleteProfile.trackEventCharts track by $index">
-                        <td>
-                        <h4 class="left-aligned"><a href ng-click="expandChart(eventChart)">{{eventChart.eventName}}</a></h4>
-                        <div ng-if="eventChart.expanded">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <th>Hours</th>
-                                        <th>Minutes</th>
-                                        <th>Seconds</th>
-                                        <th>Event Date</th>
-                                        <th></th>
-                                    </thead>
-                                    <tbody>
-                                      <tr ng-repeat="event in eventChart.trackEvents">
-                                        <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.hours" value="0" min="0" required/></td>
-                                        <td><input type="number" class="form-control form-control-inline" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
-                                        <td><input type="number" class="form-control form-control-inline2" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
-                                        <td><input type="date" class="form-control" ng-model="event.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
-                                        <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-                                      </tr>
-                                    </tbody>
-                                </table>
-                                <button class="btn btn-success btn-responsive pull-left" ng-click="addTrackEventRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                </button>
-                            </div>
+        <table class="table">
+            <thead>
+                <th>
+                    <h4><a href ng-click="expandEvent()">Athletic Events Table 
+                        <span ng-if="!expandedEvent" class="glyphicon glyphicon-download"></span>
+                        <span ng-if="expandedEvent" class="glyphicon glyphicon-upload"></span>
+                    </a></h4>
+                </th>
+                <th></th>
+            </thead>
+            <tbody ng-show="expandedEvent">
+                <tr ng-repeat="eventChart in athleteProfile.trackEventCharts track by $index">
+                    <td>
+                    <h4 class="left-aligned"><a href ng-click="expandChart(eventChart)">{{eventChart.eventName}}</a></h4>
+                    <div ng-if="eventChart.expanded">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="row">
+                                    <th class="hidden-xs hidden-sm">Hours</th>
+                                    <th>Minutes</th>
+                                    <th>Seconds</th>
+                                    <th>Event Date</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="event in eventChart.trackEvents">
+                                    <td class="hidden-xs hidden-sm"><input type="number" class="form-control" ng-model="event.trackTime.hours" value="0" min="0" required/></td>
+                                    <td><input type="number" class="form-control" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
+                                    <td><input type="number" class="form-control" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
+                                    <td><input type="date" class="form-control" ng-model="event.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
+                                    <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-success btn-responsive pull-left" ng-click="addTrackEventRow($index)"><span class="glyphicon glyphicon-plus"></span>
+                            </button>
                         </div>
-                        </td>
-                         <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-                    </tr>
-                </tbody>
-            </table>
+                    </div>
+                    </td>
+                     <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                </tr>
+            </tbody>
+        </table>
 
-            <form role="form" ng-show="expandedEvent">
-                <div class="left-aligned form-inline">
-                    <button class="btn btn-success btn-responsive4" ng-click="addTrackEventChart(newEvent)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Event
-                    </button>
-                    <input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/>
-                </div>
-                <br>
-            </form>
+        <div ng-show="expandedEvent">
+        <table style="background-color: transparent;">
+            <thead>
+                <th class="innerTable"><input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/></th>
+                <th><button class="btn btn-success btn-responsive4" ng-click="addTrackEventChart(newEvent)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Event
+                </button></th>
+            </thead>
+        </table>
         </div>
         <br>
 
