@@ -9,6 +9,8 @@
 angular.module('homepageModule')
   .controller('workoutsCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
 
+  	$scope.abdominalFocuses = ["None", "Strength", "Stability"];
+
 	$scope.loadWorkoutsTab = function() {
 		// Initialize custom set creation object
 		$scope.initializeCustomSet();
@@ -105,7 +107,7 @@ angular.module('homepageModule')
 				console.log(textString+" Lift");
 				console.log(res);
 
-				$scope.showCreationModal(textString+" Successful", true);
+				$scope.showWorkoutsModal(textString+" Successful", true);
 			} else {
 				// Log error
 				console.log("Error "+textString+" Lift");	
@@ -132,19 +134,19 @@ angular.module('homepageModule')
 		var validInput = true;
 
 		if(set.mainLiftDefinition == undefined || set.mainLiftDefinition == null) {
-			$scope.showCreationModal("You must select a lift", false);
+			$scope.showWorkoutsModal("You must select a lift", false);
 			validInput = false;
 			return;
 		}
 
 		if(set.name == undefined || set.name == null) {
-			$scope.showCreationModal("You must give a set name", false);
+			$scope.showWorkoutsModal("You must give a set name", false);
 			validInput = false;
 			return;
 		}  
 
 		if(set.mainLifts == undefined || set.mainLifts.length == 0) {
-			$scope.showCreationModal("You must add atleast one table row", false);
+			$scope.showWorkoutsModal("You must add atleast one table row", false);
 			validInput = false;
 			return;
 		}
@@ -176,7 +178,7 @@ angular.module('homepageModule')
 				console.log(textString+" Set");
 				console.log(res);
 
-				$scope.showCreationModal(textString+" Successful", true);
+				$scope.showWorkoutsModal(textString+" Successful", true);
 			} else {
 				// Log error
 				console.log("Error "+textString+" Set");	
@@ -204,13 +206,13 @@ angular.module('homepageModule')
 		var validInput = true;
 		
 		if(prescription.name == null) {
-			$scope.showCreationModal("You must give a prescription name", false);
+			$scope.showWorkoutsModal("You must give a prescription name", false);
 			validInput = false;
 			return;
 		}  
 
 		if(prescription.mainLiftSets.length == 0) {
-			$scope.showCreationModal("You must add atleast one set", false);
+			$scope.showWorkoutsModal("You must add atleast one set", false);
 			validInput = false;
 			return;
 		}
@@ -218,14 +220,14 @@ angular.module('homepageModule')
 		$.each(prescription.mainLiftSets, function() {
 
 			if(this.mainLiftDefinition == undefined || this.mainLiftDefinition == null) {
-				$scope.showCreationModal("You must select a lift", false);
+				$scope.showWorkoutsModal("You must select a lift", false);
 				validInput = false;
 				return;
 			}
  
 
 			if(this.mainLifts == undefined || this.mainLifts.length == 0) {
-				$scope.showCreationModal("You must add atleast one table row", false);
+				$scope.showWorkoutsModal("You must add atleast one table row", false);
 				validInput = false;
 				return;
 			}
@@ -238,6 +240,21 @@ angular.module('homepageModule')
 					return;
 				}
 			});
+		});
+
+		$.each(prescription.accessoryLifts, function() {
+
+			if(this.mainLiftDefinition == undefined || this.mainLiftDefinition == null) {
+				$scope.showWorkoutsModal("You must select a lift", false);
+				validInput = false;
+				return;
+			}
+
+			if(this.assignedSets == null ||
+			   this.assignedRepetitions == null) {
+				validInput = false;
+				return;
+			}
 		});
 
 		if(validInput == false) {
@@ -258,7 +275,7 @@ angular.module('homepageModule')
 				console.log(textString+" Prescription");
 				console.log(res);
 
-				$scope.showCreationModal(textString+" Successful", true);
+				$scope.showWorkoutsModal(textString+" Successful", true);
 			} else {
 				// Log error
 				console.log("Error "+textString+" Prescription");	
@@ -297,6 +314,17 @@ angular.module('homepageModule')
 
 	$scope.deletePRow = function(index) {
 		$scope.customPrescription.mainLiftSets.splice(index, 1);
+	}
+
+	$scope.addAccessoryRow = function() {
+		$scope.customPrescription.accessoryLifts.push({internalId: ++$scope.counterOfASet, 
+			assignedSets: null, 
+			category: null,
+			assignedRepetitions: null});
+	}
+
+	$scope.deleteAccessoryRow = function(index) {
+		$scope.customPrescription.accessoryLifts.splice(index, 1);
 	}
 
 	$scope.setSelected = function(pSet, index) {
@@ -427,7 +455,7 @@ angular.module('homepageModule')
 				console.log("Deleted Lift");
 				console.log(res);
 
-				$scope.showCreationModal("Delete Successful", true);
+				$scope.showWorkoutsModal("Delete Successful", true);
 			} else {
 				// Log error
 				console.log("Error Deleting Lift");	
@@ -456,7 +484,7 @@ angular.module('homepageModule')
 				console.log("Deleted Set");
 				console.log(res);
 
-				$scope.showCreationModal("Delete Successful", true);
+				$scope.showWorkoutsModal("Delete Successful", true);
 			} else {
 				// Log error
 				console.log("Error Deleting Set");	
@@ -485,7 +513,7 @@ angular.module('homepageModule')
 				console.log("Deleted Prescription");
 				console.log(res);
 
-				$scope.showCreationModal("Delete Successful", true);
+				$scope.showWorkoutsModal("Delete Successful", true);
 			} else {
 				// Log error
 				console.log("Error Deleting Prescription");	
@@ -498,10 +526,10 @@ angular.module('homepageModule')
 		})
 	}
 
-	$scope.showCreationModal = function(header, success) {
+	$scope.showWorkoutsModal = function(header, success) {
 
         ModalService.showModal({
-            templateUrl: 'creationModal.html',
+            templateUrl: 'workoutsModal.html',
             controller: "homepageCtrl"
         }).then(function(modal) {
             
@@ -509,15 +537,15 @@ angular.module('homepageModule')
 			$scope.modalHeader = header;
 			$scope.success = success;
             
-            modal.element.append($("#creationModal"));
-            $("#creationModal").modal({
+            modal.element.append($("#workoutsModal"));
+            $("#workoutsModal").modal({
 			    backdrop: 'static',
 			    keyboard: false 
 			});
         });
     };
 
-	$scope.closeCreationModal = function(wasSuccessful) {
+	$scope.closeWorkoutsModal = function(wasSuccessful) {
 		if(wasSuccessful) {
 			// Reinitialize custom objects
 			$scope.initializeCustomSet();
@@ -538,8 +566,17 @@ angular.module('homepageModule')
     $scope.initializeCustomPrescription = function() {
     	$scope.customPrescription = {};
 		$scope.counterOfPSet = 0;
+		$scope.counterOfASet = 0;
 		$scope.customPrescription.mainLiftSets = [{internalId: $scope.counterOfPSet,
-			mainLifts: [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]}];
+			mainLifts: [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}]}
+		];
+		$scope.customPrescription.accessoryLifts = [{internalId: $scope.counterOfASet, 
+			assignedSets: null, 
+			category: null,
+			assignedRepetitions: null}
+		];
+
+		$scope.customPrescription.abdominalFocus = "None";
     }
 	
   });
