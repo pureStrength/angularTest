@@ -78,8 +78,11 @@
         </div>
     </div>
 
-    <div ng-show="creatingLift" class="left-aligned col-xs-12 col-lg-7 row">
-        <br>
+    <div ng-show="creatingLift" class="left-aligned row">
+        <div style="text-align: center;">
+        <button class="btn btn-primary btn-responsive" ng-click="cancelCreate()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+        </button><br><br>
+        </div>
         <form role="form">
             <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="customLift.liftType" style="margin-right: 10px; margin-bottom: 10px;" required>
                     <option value="">Lift Type</option>
@@ -89,13 +92,18 @@
             <input type="text" class="form-control" placeholder="Lift Name" ng-model="customLift.name" required/><br>
             <input type="text" class="form-control" placeholder="Category" ng-model="customLift.category"/><br>
             <textarea type="text" class="form-control" placeholder="Description" ng-model="customLift.description"/><br>
+            <div style="text-align: center;">
             <input type="button" class="btn btn-primary btn-responsive" ng-click="cancelCreate()" value="Cancel"/>
             <input type="submit" class="btn btn-primary btn-responsive" ng-click="createLift(customLift)" value="Save"/><br><br>
+            </div>
          </form> 
     </div>
 
-    <div ng-show="creatingSet">
-        <br>
+    <div ng-show="creatingSet" class="left-aligned row">
+        <div style="text-align: center;">
+        <button class="btn btn-primary btn-responsive" ng-click="cancelCreate()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+        </button><br><br>
+        </div>
         <form role="form">
             <div class="form-inline">
                 <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="customSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px; margin-bottom: 10px;">
@@ -123,14 +131,18 @@
                 <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customSet.description"/>
             </div>
             <br>
-
+            <div style="text-align: center;">
             <input type="button" class="btn btn-primary btn-responsive" ng-click="cancelCreate()" value="Cancel"/>
             <input type="submit" class="btn btn-primary btn-responsive" ng-click="createSet(customSet)" value="Save"/><br><br>
+            </div>
          </form> 
     </div>
 
-    <div ng-show="creatingPrescription">
-        <br>
+    <div ng-show="creatingPrescription" class="left-aligned row">
+        <div style="text-align: center;">
+        <button class="btn btn-primary btn-responsive" ng-click="cancelCreate()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+        </button><br><br>
+        </div>
         <form role="form">
             <div>
                 <input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name" required/>
@@ -183,9 +195,11 @@
             <button style="margin-bottom:15px;" class="btn btn-success btn-responsive pull-left" ng-click="addPSetRow()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Set</button><br><br>
 
             <textarea type="text" class="form-control" placeholder="Description" name="description" ng-model="customPrescription.description"/>
-            <div><br>
+            </div><br>
+            <div style="text-align: center;">
             <input type="button" class="btn btn-primary btn-responsive" ng-click="cancelCreate()" value="Cancel"/>
             <input type="submit" class="btn btn-primary btn-responsive" ng-click="createPrescription(customPrescription)" value="Save"/><br><br>
+            </div>
          </form> 
     </div>
 

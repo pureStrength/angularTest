@@ -5,13 +5,13 @@
 	        <div class="btn-group">
 	        	<button class="btn btn-primary btn-responsive" ng-click="cancelPrescribing()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
 	        	</button>
-	        	<button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Prescribe 
-	            </button>
 	        </div><br><br>
 	        <div class="btn-group">
-	            <button type="button" class="btn btn-default btn-responsive2" ng-disabled="isToday()"
+	            <button type="button" class="btn btn-primary btn-responsive2" ng-disabled="isToday()"
 	                    ng-click="today()">
 	                Today
+	            </button>
+	            <button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Prescribe 
 	            </button>
 	            <button type="button" class="btn btn-primary btn-responsive2" ng-click="viewResults()" ng-disabled="event == undefined">View Workout</button>
 	        </div>
@@ -27,7 +27,7 @@
 
 	<div class="container-fluid" ng-show="newPrescribe" ng-controller="workoutsCtrl" ng-init="loadWorkouts()">
 		<div class="row">
-			<button class="btn btn-primary btn-responsive" ng-click="cancelPrescribingView()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+			<button class="btn btn-primary btn-responsive" ng-click="cancelNewPrescribe()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
 	        </button><br><br>
 
 		<div class="left-aligned">
@@ -102,8 +102,10 @@
 
 	</div>
 
-	<div ng-show="viewPrescription" ng-controller="prescriptionsCtrl">
-		<div>
+	<div class="container-fluid" ng-show="viewPrescription" ng-controller="prescriptionsCtrl">
+		<div class="row">
+			<button class="btn btn-primary btn-responsive" ng-click="cancelViewResults()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+	        </button><br><br>
 
 		<div class="left-aligned">
 	        <br>
@@ -178,9 +180,10 @@
 	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessSoreness" attach-handle-values="true" pin-handle="min"></div>
 	        <span>Stress {{selectedPrescription.wellnessStress}}</span><br>
 	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessStress" attach-handle-values="true" pin-handle="min"></div>
-
+	        <div style="text-align: center;">
 	        <input type="button" class="btn btn-primary" ng-click="cancelViewResults()" value="Cancel"/>
             <input type="submit" class="btn btn-primary" ng-click="edit" value="Submit"/>
+        	</div>
             <br><br>
 	    </div>
 	</div>

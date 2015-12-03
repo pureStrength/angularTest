@@ -4,9 +4,9 @@
 		<br>
 		<div class="form-inline">
             <div class="btn-group">
-                <button type="button" class="btn btn-default btn-responsive" ng-disabled="isToday()"
+                <button type="button" class="btn btn-primary btn-responsive" ng-disabled="isToday()"
                         ng-click="today()">Today</button>
-                <button type="button" class="btn btn-primary btn-responsive" ng-click="postResults()" ng-disabled="event == undefined">Submit Workout</button>
+                <button type="button" class="btn btn-primary btn-responsive" ng-click="postResults()" ng-disabled="event == undefined"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Submit Workout</button>
             </div>
 
 			<br><br>
@@ -19,8 +19,10 @@
 		</div>
 	</div>
 
-	<div ng-show="postingResults" ng-controller="prescriptionsCtrl">
-		<div>
+	<div class="container-fluid" ng-show="postingResults" ng-controller="prescriptionsCtrl">
+		<div class="row">
+			<button class="btn btn-primary btn-responsive" ng-click="cancelPostResults()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+	        </button><br><br>
 
 		<div class="left-aligned">
 	        <br>
@@ -124,10 +126,11 @@
 	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessSoreness" attach-handle-values="true" pin-handle="min"></div>
 	        <span>Stress {{selectedPrescription.wellnessStress}}</span><br>
 	        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessStress" attach-handle-values="true" pin-handle="min"></div>
-
+	        <div style="text-align: center;">
 	        <input type="button" class="btn btn-primary" ng-click="cancelPostResults()" value="Cancel"/>
             <input type="submit" class="btn btn-primary" ng-click="postEvent(selectedPrescription)" value="Submit"/>
             <br><br>
+        	</div>
 	    </div>
 	</div>
 
