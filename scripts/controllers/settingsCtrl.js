@@ -67,7 +67,6 @@ angular.module('homepageModule')
       } else {
         $scope.modalName = 'viewProfileModal';
       }
-      
 
     });
 
@@ -366,7 +365,7 @@ angular.module('homepageModule')
   	}
 
   	$scope.resetAthleteProfile = function() {
-  		$scope.loadAthleteProfile($scope.user.id);
+  		$scope.loadAthleteProfile($scope.settingsUser.id);
   	}
 
   	$scope.addOneRepMaxRow = function(index) {

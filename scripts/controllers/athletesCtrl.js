@@ -13,6 +13,7 @@ angular.module('homepageModule')
 
 	$scope.$on('usingAthletesTab', function(event, args) {
 		$scope.loadAthletes();
+		$scope.viewingProfile = false;
 	});
 
 	$scope.$on('cancelCalendar', function() { 
