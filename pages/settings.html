@@ -93,25 +93,24 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
-                                        <th>One-Rep-Max</th>
+                                        <th class="innerTable">One-Rep-Max</th>
                                         <th> Date Updated</th>
                                         <th></th>
                                     </thead>
                                     <tbody>
                                       <tr ng-repeat="orm in oneRepMax.oneRepMaxes">
-
-                                        <td><input type="number" class="form-control form-control-inline" ng-model="orm.value" value="0" min="0" required/></td>
+                                        <td class="innerTable"><input type="number" class="form-control form-control-inline" ng-model="orm.value" value="0" min="0" required/></td>
                                         <td><input type="date" class="form-control" ng-model="orm.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
-                                        <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                                        <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" ></span></button></td>
                                       </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-success btn-responsive pull-left" ng-click="addOneRepMaxRow($index)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <button class="btn btn-success btn-responsive pull-left" ng-click="addOneRepMaxRow($index)"><span class="glyphicon glyphicon-plus" ></span>
                                 </button>
                             </div>
                           </div>
                         </td>
-                        <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                        <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxChart($index)"><span class="glyphicon glyphicon-remove" ></span></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -120,8 +119,7 @@
             <table style="background-color: transparent;">
                 <thead>
                     <th class="innerTable"><input type="text" class="form-control col-xs-3" ng-model="newLift" placeholder="Lift Name" required/></th>
-                    <th><button class="btn btn-success btn-responsive4" ng-click="addOneRepMaxChart(newLift)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Lift
-                    </button></th>
+                    <th><button class="btn btn-success btn-responsive4" ng-click="addOneRepMaxChart(newLift)"><span class="glyphicon glyphicon-plus" ></span> Lift</button></th>
                 </thead>
             </table>
             <br>
@@ -145,7 +143,7 @@
                     <div ng-if="eventChart.expanded">
                         <div class="table-responsive">
                             <table class="table">
-                                <thead class="row">
+                                <thead>
                                     <th class="hidden-xs hidden-sm">Hours</th>
                                     <th>Minutes</th>
                                     <th>Seconds</th>
@@ -158,7 +156,7 @@
                                     <td><input type="number" class="form-control" ng-model="event.trackTime.minutes" value="0" min="0" required/></td>
                                     <td><input type="number" class="form-control" ng-model="event.trackTime.seconds" value="0" min="0" required/></td>
                                     <td><input type="date" class="form-control" ng-model="event.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
-                                    <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                                    <td><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" ></span></button></td>
                                   </tr>
                                 </tbody>
                             </table>
@@ -167,7 +165,7 @@
                         </div>
                     </div>
                     </td>
-                     <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventChart($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                     <td class="last-row"><button class="btn btn-danger btn-responsive" ng-click="deleteTrackEventChart($index)"><span class="glyphicon glyphicon-remove" ></span></button></td>
                 </tr>
             </tbody>
         </table>
@@ -176,7 +174,7 @@
         <table style="background-color: transparent;">
             <thead>
                 <th class="innerTable"><input type="text" class="form-control col-xs-3" ng-model="newEvent" placeholder="Event Name" required/></th>
-                <th><button class="btn btn-success btn-responsive4" ng-click="addTrackEventChart(newEvent)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Event
+                <th><button class="btn btn-success btn-responsive4" ng-click="addTrackEventChart(newEvent)"><span class="glyphicon glyphicon-plus" ></span> Event
                 </button></th>
             </thead>
         </table>

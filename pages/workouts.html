@@ -89,7 +89,7 @@
 
     <div ng-show="creatingLift" class="left-aligned row">
         <div style="text-align: center;">
-        <button class="btn btn-primary btn-responsive" ng-click="cancelCreate()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+        <button class="btn btn-primary btn-responsive" ng-click="cancelCreate()"><span class="glyphicon glyphicon-arrow-left" ></span> Back
         </button><br><br>
         </div>
         <form role="form">
@@ -144,7 +144,7 @@
                         <tr ng-repeat="reps in customSet.mainLifts track by $index">
                             <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
                             <td><input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteSetRow($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteSetRow($index)"><span class="glyphicon glyphicon-remove" ></span></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -218,7 +218,7 @@
                                         <tr ng-repeat="reps in pSet.mainLifts">
                                             <td class="innerTable"><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
                                             <td><input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-                                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reps</button></td>
+                                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" ></span> Reps</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
