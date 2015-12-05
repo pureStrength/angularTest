@@ -66,20 +66,20 @@
 	                                    <tr>
                                 			<th class="hidden-xs hidden-sm">Repetitions</th>
 		                                    <th>% One Rep Max</th>
-		                                    <th class="hidden-xs hidden-sm">Weight</th>
+		                                    <th class="hidden-xs hidden-sm">Weight(Ibs)</th>
 		                                    <th>Repetitions</th>
-				                            <th>Weight</th>
-				                            <th>Predicted ORM</th>
+				                            <th>Weight(Ibs)</th>
+				                            <th class="hidden-xs hidden-sm">Predicted ORM(Ibs)</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
 				                        <tr ng-repeat="reps in pSet.mainLifts">
 	                                        <td class="hidden-xs hidden-sm"><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" disabled/></td>
-	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" disabled/></td>
-	                                        <td class="hidden-xs hidden-sm"><input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedWeight" disabled/></td>
+	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedPercentOfOneRepMax" disabled/></td>
+	                                        <td class="hidden-xs hidden-sm"><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedWeight" disabled/></td>
 	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedRepetitions"/></td>
 	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedWeight"/></td>
-	                                        <td>
+	                                        <td class="hidden-xs hidden-sm">
                                                 <p ng-init="predictedORM(reps.performedWeight, reps.performedRepetitions)"></p>
                                                 <input class="form-control form-control-inline" ng-value="{{valueORM}}" disabled/>
                                             </td>
