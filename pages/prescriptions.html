@@ -78,7 +78,7 @@
 	                                        <td class="hidden-xs hidden-sm"><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" disabled/></td>
 	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedPercentOfOneRepMax" disabled/></td>
 	                                        <td class="hidden-xs hidden-sm"><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedWeight" disabled/></td>
-	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedRepetitions"/></td>
+	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedRepetitions" ng-change="predictedORM(reps)"/></td>
 	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedWeight" ng-change="changedLBS(reps)"/></td>
 	                                        <td class="hidden-xs hidden-sm">
                                                 <input type="number" class="form-control form-control-inline" ng-model="reps.valueKilo" ng-init="lbsToKilo(reps)" ng-change="changedKilo(reps)"/>
