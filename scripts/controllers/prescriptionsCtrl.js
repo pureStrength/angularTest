@@ -14,6 +14,14 @@ angular.module('homepageModule')
   	$scope.expandAccessory = true;
   	$scope.expandFocus = true;
   	$scope.expandWellness = true;
+  
+  	$scope.predictedORM = function(weightLifted, repsPerformed) {
+
+  		console.log(weightLifted+"  "+repsPerformed);
+
+  		$scope.valueORM = Math.ceil((weightLifted)/(1.013-(0.0267123*(repsPerformed))));
+  		
+  	}
 
 	$scope.cancelPostResults = function() {
 		$scope.postingResults = false;
