@@ -66,10 +66,11 @@
 	                                    <tr>
                                 			<th class="hidden-xs hidden-sm">Repetitions</th>
 		                                    <th>% One Rep Max</th>
-		                                    <th class="hidden-xs hidden-sm">Weight(Ibs)</th>
+		                                    <th class="hidden-xs hidden-sm">Weight</th>
 		                                    <th>Repetitions</th>
-				                            <th>Weight(Ibs)</th>
-				                            <th class="hidden-xs hidden-sm">Predicted ORM(Ibs)</th>
+				                            <th>Weight(Lbs)</th>
+				                            <th class="hidden-xs hidden-sm">Weight(Kg)</th>
+				                            <th class="hidden-xs hidden-sm">Predicted ORM</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -78,10 +79,12 @@
 	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedPercentOfOneRepMax" disabled/></td>
 	                                        <td class="hidden-xs hidden-sm"><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedWeight" disabled/></td>
 	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedRepetitions"/></td>
-	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedWeight"/></td>
+	                                        <td><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.performedWeight" ng-change="changedLBS(reps)"/></td>
 	                                        <td class="hidden-xs hidden-sm">
-                                                <p ng-init="predictedORM(reps.performedWeight, reps.performedRepetitions)"></p>
-                                                <input class="form-control form-control-inline" ng-value="{{valueORM}}" disabled/>
+                                                <input type="number" class="form-control form-control-inline" ng-model="reps.valueKilo" ng-init="lbsToKilo(reps)" ng-change="changedKilo(reps)"/>
+                                            </td>
+	                                        <td class="hidden-xs hidden-sm">
+                                                <input type="number" class="form-control form-control-inline" ng-model="reps.predictedORM" ng-init="predictedORM(reps)" disabled/>
                                             </td>
 	                                    </tr>
 	                                </tbody>
@@ -151,15 +154,15 @@
 	            </div>
 	            <div class="panel-body" ng-show="expandWellness">
 			        <span>Sleep {{selectedPrescription.wellnessSleep}}</span><br>
-			        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessSleep" attach-handle-values="true" pin-handle="min"></div>
+			        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessSleep" attach-handle-values="true" pin-handle="min"></div>
 			        <span>Motivation {{selectedPrescription.wellnessMotivation}}</span><br>
-			        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessMotivation" attach-handle-values="true" pin-handle="min"></div>
+			        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessMotivation" attach-handle-values="true" pin-handle="min"></div>
 			        <span>Nutrition {{selectedPrescription.wellnessNutrition}}</span><br>
-			        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessNutrition" attach-handle-values="true" pin-handle="min"></div>
+			        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessNutrition" attach-handle-values="true" pin-handle="min"></div>
 			        <span>Soreness {{selectedPrescription.wellnessSoreness}}</span><br>
-			        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessSoreness" attach-handle-values="true" pin-handle="min"></div>
+			        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessSoreness" attach-handle-values="true" pin-handle="min"></div>
 			        <span>Stress {{selectedPrescription.wellnessStress}}</span><br>
-			        <div range-slider min="1" max="10" model-max="selectedPrescription.wellnessStress" attach-handle-values="true" pin-handle="min"></div>
+			        <div range-slider min="0" max="10" model-max="selectedPrescription.wellnessStress" attach-handle-values="true" pin-handle="min"></div>
 	        	</div>
 	        	</div>
 

@@ -15,12 +15,26 @@ angular.module('homepageModule')
   	$scope.expandFocus = true;
   	$scope.expandWellness = true;
   
-  	$scope.predictedORM = function(weightLifted, repsPerformed) {
+  	$scope.predictedORM = function(reps) {
+  		reps.predictedORM = Math.round((reps.performedWeight)/(1.013-(0.0267123*(reps.performedRepetitions))));
+  	}
 
-  		console.log(weightLifted+"  "+repsPerformed);
+  	$scope.lbsToKilo = function(reps) {
+  		reps.valueKilo = Math.round(reps.performedWeight / 2.2046);
+  	}
 
-  		$scope.valueORM = Math.ceil((weightLifted)/(1.013-(0.0267123*(repsPerformed))));
-  		
+  	$scope.kiloToLbs = function(reps) {
+  		reps.performedWeight = Math.round(reps.valueKilo * 2.2046);
+  	}
+
+  	$scope.changedLBS = function(reps) {
+  		$scope.lbsToKilo(reps);
+  		$scope.predictedORM(reps);
+  	}
+
+  	$scope.changedKilo = function(reps) {
+  		$scope.kiloToLbs(reps);
+  		$scope.predictedORM(reps);
   	}
 
 	$scope.cancelPostResults = function() {
