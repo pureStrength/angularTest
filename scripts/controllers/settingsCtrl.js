@@ -128,6 +128,14 @@ angular.module('homepageModule')
 
     }
 
+    $scope.lbsToKilo = function(orm) {
+      orm.valueKilo = Math.round(orm.value / 2.2046);
+    }
+
+    $scope.kiloToLbs = function(orm) {
+      orm.value = Math.round(orm.valueKilo * 2.2046);
+    }
+
   	$scope.expandChart = function(chart) {
   		if(chart.expanded == undefined) {
   			chart.expanded = true;
@@ -333,7 +341,7 @@ angular.module('homepageModule')
   			dateIndex = ((thisYear - date.getYear()) * -12) + 1;
   		} 
 
-  		dateIndex = dateIndex + labelArray.length - (thisMonth - date.getMonth());
+  		dateIndex = dateIndex + labelArray.length - (thisMonth - date.getMonth()) - 1;
   		return dateIndex;
   	}
 
@@ -359,7 +367,7 @@ angular.module('homepageModule')
 	  	}
 
   		// Push this year
-	  	while(monthCounter < thisMonth) {
+	  	while(monthCounter <= thisMonth) {
   			labelArray.push($scope.months[monthCounter++]);
   		}
   	}
@@ -529,14 +537,14 @@ angular.module('homepageModule')
 	  $scope.showSettingsModal = function() {
 
       ModalService.showModal({
-          templateUrl: $scope.modalName + '.html',
+          templateUrl: 'partials/settingsModal.html',
           controller: "homepageCtrl"
       }).then(function(modal) {
             
   			// Display correct message
   			$scope.modalHeader = "Update Successful";
-        modal.element.append($("#" + $scope.modalName));
-        $("#" + $scope.modalName).modal({
+        modal.element.append($("#settingsModal"));
+        $("#settingsModal").modal({
 			    backdrop: 'static',
 			    keyboard: false 
 			  });
