@@ -110,7 +110,6 @@ angular.module('homepageModule')
 	          console.log(res);
 
 	          $scope.selectedPrescription = res;
-	          $scope.updateORM($scope.connectedAthlete.id);
 	        } else {
 	          // Log error
 	          console.log("Error assigning weight"); 
@@ -122,46 +121,6 @@ angular.module('homepageModule')
 	        console.log("Response: " + error);
 	    })
 	});	
-
-	$scope.updateORM = function(athleteId) {
-		// Set the ORM values
-		var promise = athleteService.get(athleteId);
-	    promise.then(function(res) {
-	        if(res != null) {
-	          // Log success
-	          console.log("Selected athlete profile");
-	          console.log(res);
-
-	          $scope.athleteProfile = res;
-	          $scope.matchORM();
-	        } else {
-	          // Log error
-	          console.log("Error getting athlete profile"); 
-	        }
-	      
-	      }, function(error) {
-	        // Log error
-	        console.log("Error getting athlete profile");
-	        console.log("Response: " + error);
-	    })
-	}
-
-	$scope.matchORM = function() {
-
-		angular.forEach($scope.selectedPrescription.recordedSets, function(set, index) {
-
-			angular.forEach($scope.athleteProfile.oneRepMaxCharts, function(ORM, index) {
-
-				if(set.mainLiftDefinition.name == ORM.liftName) {
-					set.ORM = ORM.mostRecentOneRepMax.value;
-					return;
-				}
-
-			});
-
-		});
-
-	}
 
     $scope.showPrescriptionModal = function(header, success) {
 

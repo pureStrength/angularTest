@@ -199,12 +199,14 @@
                                 <table>
                                     <thead>
                                         <th>Lift</th>
-                                        <th>One Rep Max</th>
+                                        <th>Initial One Rep Max</th>
+                                        <th>Resulting  One Rep Max</th>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td><input class="form-control col-xs-3" ng-model="pSet.mainLiftDefinition.name" disabled /></td>
-                                            <td><input class="form-control" ng-model="pSet.ORM" type="number" min="0" /></td>
+                                            <td><input class="form-control" ng-model="pSet.initialOneRepMax" type="number" min="0" disabled /></td>
+                                            <td><input class="form-control" ng-model="pSet.resultingOneRepMax" type="number" min="0" disabled /></td>
                                         </tr>
                                     </tbody>
                                 </table>

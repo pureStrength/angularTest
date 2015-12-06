@@ -95,6 +95,7 @@
                                     <thead>
                                         <th class="innerTable">One Rep Max(Lbs)</th>
                                         <th>One Rep Max(Kg)</th>
+                                        <th class="hidden-xs hidden-sm">Predicted</th>
                                         <th>Date Updated</th>
                                         <th></th>
                                     </thead>
@@ -106,8 +107,11 @@
                                         <td>
                                             <input type="number" class="form-control form-control-inline" ng-model="orm.valueKilo" ng-init="lbsToKilo(orm)" value="0" min="0" ng-change="kiloToLbs(orm)"/>
                                         </td>
+                                        <td class="hidden-xs hidden-sm"><input type="text" class="form-control" ng-model="orm.predicted" disabled/></td>
                                         <td><input type="date" class="form-control" ng-model="orm.date" max="{{tomorrow | date:'yyyy-MM-dd'}}"/></td>
-                                        <td><button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" ></span></button></td>
+                                        <td>
+                                            <button class="btn btn-danger btn-responsive" ng-click="deleteOneRepMaxRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </td>
                                       </tr>
                                     </tbody>
                                 </table>
@@ -196,9 +200,8 @@
                 </a></h4>
             </div>
             <div class="panel-body" ng-show="expandGraphORM">
-                <canvas id="line" class="chart chart-line" chart-data="data"
-                  chart-labels="labels" chart-legend="true" chart-series="series"
-                  chart-click="onClick">
+                <canvas id="settingsORMChart" class="chart chart-line" chart-data="data"
+                  chart-labels="labels" chart-legend="true" chart-series="series">
                 </canvas> 
             </div>
         </div>
@@ -212,9 +215,8 @@
                 </a></h4>
             </div>
             <div class="panel-body" ng-show="expandGraphEvents">
-                <canvas id="line2" class="chart chart-line" chart-data="data2"
-                  chart-labels="labels2" chart-legend="true" chart-series="series2"
-                  chart-click="onClick">
+                <canvas id="settingsEventChart" class="chart chart-line" chart-data="data2"
+                  chart-labels="labels2" chart-legend="true" chart-series="series2">
                 </canvas> 
             </div>
         </div>
@@ -223,6 +225,26 @@
         <input type="button" class="btn btn-primary btn-responsive" ng-click="resetAthleteProfile()" value="Reset"/>
         <input type="submit" class="btn btn-primary btn-responsive" ng-click="updateAthleteProfile(settingsUser.id, athleteProfile)" value="Save"/>
      </div>
+
+    <script type="text/ng-template" id="settingsModal.html"></script>
+    <div class="modal fade" id="settingsModal" role="dialog">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" style="font-weight: bold;">Update Successful</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="text-align: center;">
+                            <button type="button" class="btn btn-success" ng-click="closeSettingsModal()" data-dismiss="modal">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     <script type="text/ng-template" id="passwordModal.html"></script>
     <div class="modal fade" id="passwordModal" role="dialog">

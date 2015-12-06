@@ -4,8 +4,8 @@
 		<br>
 		<div class="form-inline">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary btn-responsive" ng-disabled="isToday()"
-                        ng-click="today()">Today</button>
+                <button type="button" class="btn btn-primary btn-responsive" ng-disabled="isToday()" ng-click="today()">Today</button>
+                <button type="button" class="btn btn-primary btn-responsive2" ng-click="postResults()" ng-disabled="event == undefined">View Workout</button>
                 <button type="button" class="btn btn-primary btn-responsive" ng-click="postResults()" ng-disabled="event == undefined"><span class="glyphicon glyphicon-saved" ></span> Submit Workout</button>
             </div>
 
@@ -45,11 +45,13 @@
 		                        	<thead>
 			                        	<th>Lift</th>
 			                        	<th>One Rep Max</th>
+			                        	<th ng-if="selectedPrescription.wasPerformed">Resulting One Rep Max</th>
 		                        	</thead>
 		                        	<tbody>
 		                        		<tr>
 		                        			<td><input class="form-control col-xs-3" ng-model="pSet.mainLiftDefinition.name" disabled /></td>
-		                        			<td><input class="form-control" ng-model="pSet.ORM" type="number" min="0" /></td>
+		                        			<td><input class="form-control" ng-model="pSet.initialOneRepMax" type="number" min="0" disabled /></td>
+		                        			<td ng-if="selectedPrescription.wasPerformed"><input class="form-control" ng-model="pSet.resultingOneRepMax" type="number" min="0" disabled /></td>
 		                        		</tr>
 		                        	</tbody>
 	                        	</table>
