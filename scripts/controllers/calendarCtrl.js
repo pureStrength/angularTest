@@ -30,6 +30,9 @@ angular.module('homepageModule')
           
           // Convert prescriptions into events
           for(var i = 0; i < res.length; i++) {
+            if(res[i].removed == true) {
+              continue;
+            }
             res[i].title = res[i].prescriptionName || 'Workout';
             res[i].startTime = res[i].dateAssigned;
             res[i].endTime = res[i].dateAssigned;
@@ -71,12 +74,23 @@ angular.module('homepageModule')
       $scope.initializeEvents(user.id);
     }
 
-    $scope.prescribeWorkout = function(athlete) {
+    $scope.prescribeWorkout = function() {
       // Initialize custom set creation object
       $scope.initializeCustomPrescription();
-      console.log(athlete.firstName+" is getting a prescription on "+$scope.currentDate);
       $scope.newPrescribe = true;
-      $scope.$broadcast('usingWorkoutsTab');
+      $scope.$broadcast('usingWorkoutsTab', [$scope.customPrescription, $scope.connectedAthlete]);
+    }
+
+    $scope.editWorkout = function() {
+      $scope.eventToPrescription($scope.event);
+      $scope.newPrescribe = true;
+      $scope.$broadcast('usingWorkoutsTab', [$scope.customPrescription, $scope.connectedAthlete]);
+    }
+
+    $scope.eventToPrescription = function(event) {
+      $scope.customPrescription = event;
+      $scope.customPrescription.mainLiftSets = event.recordedSets;
+      $scope.customPrescription.name = event.prescriptionName;
     }
 
     $scope.cancelPrescribing = function() {
@@ -90,12 +104,6 @@ angular.module('homepageModule')
       var edit = false;
 
       var validInput = true;
-      
-      if(prescription.mainLiftSets.length == 0) {
-        $scope.showCreationModal("You must add atleast one set", false);
-        validInput = false;
-        return;
-      }
 
       $.each(prescription.mainLiftSets, function() {
 
@@ -126,29 +134,82 @@ angular.module('homepageModule')
         return;
       }
 
-      var dateTime = $scope.currentDate.getTime();
-      var prescriptionDate = new Date(dateTime);
-      prescriptionDate.setHours(12);
-      prescriptionDate.setMinutes(30);
+      if(prescription.id == undefined || prescription.id == null) {
 
-      promise = workoutService.prescribeWorkout($scope.connectedAthlete.id, $scope.user.id, prescriptionDate.getTime(), prescription);
-      promise.then(function(res) {
-        if(res != null) {
-          // Log success
-          console.log("Prescription Successful");
-          console.log(res);
+        var dateTime = $scope.currentDate.getTime();
+        var prescriptionDate = new Date(dateTime);
+        prescriptionDate.setHours(12);
+        prescriptionDate.setMinutes(30);
 
-          $scope.showCreationModal("Prescription Creation Successful", true);
-        } else {
+        promise = workoutService.prescribeWorkout($scope.connectedAthlete.id, $scope.user.id, prescriptionDate.getTime(), prescription);
+        promise.then(function(res) {
+          if(res != null) {
+            // Log success
+            console.log("Prescription Successful");
+            console.log(res);
+
+            $scope.showCreationModal("Prescription Creation Successful", true);
+          } else {
+            // Log error
+            console.log("Error creating Prescription"); 
+          }
+        
+        }, function(error) {
           // Log error
-          console.log("Error creating Prescription"); 
-        }
-      
-      }, function(error) {
-        // Log error
-        console.log("Error creating Prescription");
-        console.log("Response: " + error);
-      })
+          console.log("Error creating Prescription");
+          console.log("Response: " + error);
+        })
+
+      } else {
+
+        promise = workoutService.editPrescriptionEvent(prescription);
+        promise.then(function(res) {
+          if(res != null) {
+            // Log success
+            console.log("Prescription edit Successful");
+            console.log(res);
+
+            $scope.showCreationModal("Edit Successful", true);
+          } else {
+            // Log error
+            console.log("Error editing Prescription"); 
+          }
+        
+        }, function(error) {
+          // Log error
+          console.log("Error editing Prescription");
+          console.log("Response: " + error);
+        })
+
+      }
+
+    }
+
+    $scope.deletePrescribe = function(prescription) {
+
+      if(prescription == undefined || prescription == null || prescription.id == undefined || prescription.id == null) {
+        console.log("No prescription to delete");
+        return;
+      }
+
+      var promise = workoutService.removePrescriptionEvent(prescription);
+      promise.then(function(res) {
+          if(res != null) {
+            // Log success
+            console.log("Prescription delete Successful");
+            console.log(res);
+
+            $scope.showCreationModal("Delete Successful", true);
+          } else {
+            // Log error
+            console.log("Error deleting Prescription"); 
+          }
+        
+        }, function(error) {
+          // Log error
+          console.log("Error deleting Prescription");
+          console.log("Response: " + error);
+        })
 
     }
 
@@ -191,7 +252,6 @@ angular.module('homepageModule')
 
     $scope.onEventSelected = function(event) {
       $scope.event = event;
-      console.log("Clicked Event");
     };
 
     $scope.onTimeSelected = function(selectedTime) {

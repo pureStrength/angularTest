@@ -17,7 +17,6 @@ angular.module('homepageModule')
 	});
 
 	$scope.$on('cancelCalendar', function() { 
-		console.log("IN HERE2");
 		$scope.prescribing = false;
 	});
 

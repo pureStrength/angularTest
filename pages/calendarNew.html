@@ -8,13 +8,14 @@
 	        </div>
             <br><br>
 	        <div class="btn-group">
-	            <button type="button" class="btn btn-primary btn-responsive2" ng-disabled="isToday()"
+	            <button type="button" class="btn btn-primary" ng-disabled="isToday()"
 	                    ng-click="today()">
 	                Today
 	            </button>
-	            <button class="btn btn-success btn-responsive" ng-click="prescribeWorkout(connectedAthlete)"><span class="glyphicon glyphicon-pencil" ></span> Prescribe 
+	            <button class="btn btn-success btn-responsive" ng-click="prescribeWorkout()"><span class="glyphicon glyphicon-pencil"></span> Prescribe 
 	            </button>
-	            <button type="button" class="btn btn-primary btn-responsive2" ng-click="viewResults()" ng-disabled="event == undefined">View Workout</button>
+                <button type="button" class="btn btn-primary" ng-click="editWorkout()" ng-disabled="event == undefined || event.wasPerformed">Edit Workout</button>
+	            <button type="button" class="btn btn-primary" ng-click="viewResults()" ng-disabled="event == undefined">View Workout</button>
 	        </div>
 		<br><br>
 		</div>
@@ -39,7 +40,7 @@
         	<th>
         		<select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="customPrescription" ng-options="cPres as cPres.name for cPres in prescriptions track by cPres.id"  ng-click="prescriptionSelected(customPrescription)"><option value="">Predefined Prescriptions</option></select>
 	        </th>
-        	<th><input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name" required/></th>
+        	<th><input type="text" class="form-control" placeholder="Prescription Name" ng-model="customPrescription.name"/></th>
         	</thead>
         	</table>
             <br>
@@ -61,28 +62,57 @@
                     <tbody>
                         <tr ng-repeat="pSet in customPrescription.mainLiftSets track by $index">
                             <td>
-                                <div class="form-inline">
-                                    <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" style="margin-right: 10px; margin-bottom: 10px;">
-                                        <option value="">Predefined Sets</option>
-                                    </select>
-                                    <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px; margin-bottom: 10px;">
-                                        <option value="">Select a Lift</option>
-                                    </select>
-                                    <input type="text" class="form-control" style="margin-bottom: 10px;" placeholder="Set Name" ng-model="pSet.name"/><br>
-                                </div>
+                                <table>
+                                    <thead>
+                                        <th class="innerTable">Predefined Sets</th>
+                                        <th>Lift Name</th>
+                                        <th>Current One Rep Max</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="innerTable">
+                                            <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" ng-change="matchORM(pSet, $index)">
+                                                <option value="">Predefined Sets</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" ng-change="matchORM(pSet)">
+                                                <option value="">Select a Lift</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" value="0" min="0" ng-model="pSet.ORM" ng-init="matchORM(pSet)" disabled />
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                                 <br>
                                 <div class="table-responsive">
                                 <table style="background-color: transparent;">
                                     <thead>
                                         <th class="innerTable">Repetitions</th>
                                         <th>% One Rep Max</th>
+                                        <th>Current Weight</th>
+                                        <th>Resulting One Rep Max</th>
                                         <th></th>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="reps in pSet.mainLifts">
-                                            <td class="innerTable"><input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" required/></td>
-                                            <td><input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" required/></td>
-                                            <td><button class="btn btn-danger btn-responsive" ng-click="deleteRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" ></span> Reps</button></td>
+                                            <td class="innerTable">
+                                                <input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" ng-change="predictValues(reps, pSet.ORM)" required/>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" ng-change="predictValues(reps, pSet.ORM)" required/>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" value="0" min="0" ng-model="reps.predictedWeight" ng-init="predictValues(reps, pSet.ORM)" disabled/>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" value="0" min="0" ng-model="reps.predictedORM" disabled/>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-responsive" ng-click="deleteRow($parent.$index, $index)"><span class="glyphicon glyphicon-remove" ></span> Reps</button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -126,13 +156,13 @@
                     <tbody>
                         <tr ng-repeat="accessoryLift in customPrescription.accessoryLifts track by $index">
                             <td>
-                                <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="accessoryLift.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id">
+                                <select class="selectpicker btn btn-primary dropdown" ng-model="accessoryLift.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id">
                                     <option value="">Select a Lift</option>
                                 </select>
                             </td>
-                            <td class="hidden-xs hidden-sm"><input type="text"   class="form-control form-control-inline" ng-model="accessoryLift.category" /></td>
-                            <td><input type="number" class="form-control form-control-inline" ng-model="accessoryLift.assignedSets" required /></td>
-                            <td><input type="text"   class="form-control form-control-inline" ng-model="accessoryLift.assignedRepetitions" required /></td>
+                            <td class="hidden-xs hidden-sm"><input type="text" class="form-control" ng-model="accessoryLift.category" /></td>
+                            <td><input type="number" class="form-control" ng-model="accessoryLift.assignedSets" required /></td>
+                            <td><input type="text"   class="form-control" ng-model="accessoryLift.assignedRepetitions" required /></td>
                             <td><button class="btn btn-danger btn-responsive" ng-click="deleteAccessoryRow($index)"><span class="glyphicon glyphicon-remove"></span></button></td>
                         </tr>
                     </tbody>
@@ -168,8 +198,9 @@
             </div>
             <br>
             <div style="text-align: center;">
-            <input type="button" class="btn btn-primary btn-responsive" ng-click="cancelNewPrescribe()" value="Cancel"/>
-            <input type="submit" class="btn btn-primary btn-responsive" ng-click="saveNewPrescribe(customPrescription)" value="Save"/><br><br>
+            <input type="button" class="btn btn-primary" ng-click="cancelNewPrescribe()" value="Cancel"/>
+            <input type="button" class="btn btn-danger" ng-click="deletePrescribe(customPrescription)" value="Delete"/>
+            <input type="submit" class="btn btn-primary" ng-click="saveNewPrescribe(customPrescription)" value="Save"/><br><br>
             </div>
          </form> 
 	</div>
@@ -323,7 +354,7 @@
 
                 <div style="text-align: center;">
                     <input type="button" class="btn btn-primary" ng-click="cancelViewResults()" value="Cancel"/>
-                    <input type="submit" class="btn btn-primary" ng-click="edit" value="Submit"/>
+                    <input type="submit" class="btn btn-primary" ng-click="postEvent(selectedPrescription)" value="Submit"/>
                 </div>
 
             </form>

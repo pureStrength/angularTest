@@ -7,7 +7,7 @@
  * # workoutsCtrl
  */
 angular.module('homepageModule')
-  .controller('workoutsCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
+  .controller('workoutsCtrl', function ($scope, userService, userConnectionService, workoutService, athleteService, ModalService) {
 
   	$scope.abdominalFocuses = ["None", "Strength", "Stability"];
   	$scope.expandMainSets = true;
@@ -21,14 +21,84 @@ angular.module('homepageModule')
 		$scope.loadWorkouts();
 	}
 
+	$scope.createNewPrescription = function() {
+		$scope.loadWorkoutsTab();
+	}
+
 	$scope.$on('usingWorkoutsTab', function(event, args) {
 		$scope.loadWorkouts();
+		if(args[0] != undefined && args[0] != null) {
+			$scope.customPrescription = args[0];
+			$scope.getAthleteProfile(args[1].id);
+		}
 	});
 
   	$scope.$on('initializeCustomPrescription', function(event, args) {
   		$scope.initializeCustomPrescription();
   		$scope.loadWorkouts();
   	});
+
+  	$scope.getAthleteProfile = function(athleteId) {
+		// Set the ORM values
+		var promise = athleteService.get(athleteId);
+	    promise.then(function(res) {
+	        if(res != null) {
+				// Log success
+				console.log("Selected athlete profile");
+				console.log(res);
+
+				$scope.athleteProfile = res;
+				// Update all ORM
+				angular.forEach($scope.customPrescription.mainLiftSets, function(set, index) {
+					$scope.matchORM(set);
+				});
+	        } else {
+	          // Log error
+	          console.log("Error getting athlete profile"); 
+	        }
+	      
+	      }, function(error) {
+	        // Log error
+	        console.log("Error getting athlete profile");
+	        console.log("Response: " + error);
+	    })
+	}
+
+	$scope.matchORM = function(set, index) {
+		console.log("Matching ORMs");
+
+		if(set != null && set.mainLiftDefinition != null && $scope.athleteProfile != undefined) {
+			angular.forEach($scope.athleteProfile.oneRepMaxCharts, function(ORM, index) {
+
+				if(set.mainLiftDefinition.name == ORM.liftName) {
+					set.ORM = ORM.mostRecentOneRepMax.value;
+
+					angular.forEach(set.mainLifts, function(reps, index) {
+						$scope.predictValues(reps, set.ORM);
+					});
+						
+				}
+
+			});
+
+		} else if(set == null) {
+			$scope.setSelected(null, index);
+		}
+
+	}
+
+	$scope.predictValues = function(reps, ORM) {
+		$scope.predictWeight(reps, ORM);
+		$scope.predictedORM(reps);
+	}
+
+	$scope.predictWeight = function(reps, ORM) {
+		reps.predictedWeight = Math.round((reps.assignedPercentOfOneRepMax / 100) * ORM); 
+	}
+
+	$scope.predictedORM = function(reps) {
+  		reps.predictedORM = Math.round((reps.predictedWeight)/(1.013-(0.0267123*(reps.assignedRepetitions))));
+  	}
 
   	$scope.expandPresets = function(presetType) {
   		if(presetType == 'lifts') {
@@ -321,6 +391,11 @@ angular.module('homepageModule')
 	}
 
 	$scope.addAccessoryRow = function() {
+
+		if($scope.customPrescription.accessoryLifts == undefined) {
+			$scope.customPrescription.accessoryLifts = [];
+		}
+
 		$scope.customPrescription.accessoryLifts.push({internalId: ++$scope.counterOfASet, 
 			assignedSets: null, 
 			category: null,

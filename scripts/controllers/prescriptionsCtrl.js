@@ -102,7 +102,7 @@ angular.module('homepageModule')
 		$scope.viewPrescription = true;
 
 		// Get the updated info for the prescription
-		var promise = workoutService.showAthletePrescription($scope.event.id);
+		var promise = workoutService.fillAssignedWeight($scope.event.id);
 	    promise.then(function(res) {
 	        if(res != null) {
 	          // Log success
