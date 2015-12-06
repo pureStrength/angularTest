@@ -7,7 +7,7 @@
  * # settingsCtrl
  */
 angular.module('homepageModule')
-  .controller('settingsCtrl', function ($scope, $location, userService, athleteService, ModalService) {
+  .controller('settingsCtrl', function ($scope, $location, userService, athleteService, ModalService, ChartJs) {
 
     $scope.cellCarriers = ["N/A", "AT&T", "Metro PCS", "Nextel", "Sprint", "T Mobile", "Verizon"];
     $scope.date = new Date();
@@ -15,8 +15,6 @@ angular.module('homepageModule')
     $scope.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
     ///////////////////////////////////////////////////GRAPH SCRIPT HERE///////////////////////////////////////////////////
-    var ormCnt = 1;
-    var eventCnt = 1;
 
     $scope.labels = [];
     $scope.series = [];
@@ -25,14 +23,6 @@ angular.module('homepageModule')
     $scope.labels2 = [];
     $scope.series2 = [];
     $scope.data2 = [];
-
-    $scope.onClick = function (points, evt) {
-      //console.log(points, evt);
-      var activePoints = Chart.getPointsAtEvent(evt);
-      for(var i = 0; i < activePoints.length; i++) {
-        console.log("Active point: " + activePoints[i]);
-      }
-    };
 
     Chart.defaults.Line.datasetFill = false;
     Chart.defaults.Line.bezierCurve = false;
@@ -59,14 +49,6 @@ angular.module('homepageModule')
   			$scope.loadAthleteProfile(user.id);
   			$scope.counterOfOneRepMax = 0;
   		}
-
-      var path = '' + $location.path();
-
-      if(path == '/settings') {
-        $scope.modalName = 'settingsModal';
-      } else {
-        $scope.modalName = 'viewProfileModal';
-      }
 
     });
 
@@ -204,6 +186,7 @@ angular.module('homepageModule')
           $scope.data2 = [];
           
   				$scope.loadChart();
+
   			} else {
   				// Log error
   				console.log("Error loading Athlete Profile");
@@ -220,21 +203,26 @@ angular.module('homepageModule')
   	}
 
   	$scope.formatProfileDates = function() {
-  		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
-  			var chart = $scope.athleteProfile.oneRepMaxCharts[i];
-  			for(var j = 0; j < chart.oneRepMaxes.length; j++) {
-  				var oneRepMax = chart.oneRepMaxes[j];
-  				oneRepMax.date = new Date(oneRepMax.date);
-  			}
-  		}
 
-  		for(var i = 0; i < $scope.athleteProfile.trackEventCharts.length; i++) {
-  			var chart = $scope.athleteProfile.trackEventCharts[i];
-  			for(var j = 0; j < chart.trackEvents.length; j++) {
-  				var trackEvent = chart.trackEvents[j];
-  				trackEvent.date = new Date(trackEvent.date);
-  			}
-  		}
+      if($scope.athleteProfile.oneRepMaxChart != undefined) {
+        for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
+          var chart = $scope.athleteProfile.oneRepMaxCharts[i];
+          for(var j = 0; j < chart.oneRepMaxes.length; j++) {
+            var oneRepMax = chart.oneRepMaxes[j];
+            oneRepMax.date = new Date(oneRepMax.date);
+          }
+        }
+      }
+
+      if($scope.athleteProfile.trackEventCharts != undefined) {
+    		for(var i = 0; i < $scope.athleteProfile.trackEventCharts.length; i++) {
+    			var chart = $scope.athleteProfile.trackEventCharts[i];
+    			for(var j = 0; j < chart.trackEvents.length; j++) {
+    				var trackEvent = chart.trackEvents[j];
+    				trackEvent.date = new Date(trackEvent.date);
+    			}
+    		}
+      }
   	}
 
   	$scope.loadChart = function() {
@@ -243,18 +231,23 @@ angular.module('homepageModule')
   		var earliestORMDate = new Date();
   		for(var i = 0; i < $scope.athleteProfile.oneRepMaxCharts.length; i++) {
   			var ormChart = $scope.athleteProfile.oneRepMaxCharts[i];
-  			var dateCheck = ormChart.oneRepMaxes[ormChart.oneRepMaxes.length - 1].date;
-  			if(dateCheck.getTime() < earliestORMDate.getTime()) {
-  				earliestORMDate = dateCheck;
-  			}
+        if(ormChart.oneRepMaxes.length > 0) {
+    			var dateCheck = new Date(ormChart.oneRepMaxes[ormChart.oneRepMaxes.length - 1].date);
+    			if(dateCheck.getTime() < earliestORMDate.getTime()) {
+    				earliestORMDate = dateCheck;
+    			}
+        }
   		}
+
   		var earliestEventDate = new Date();
   		for(var i = 0; i < $scope.athleteProfile.trackEventCharts.length; i++) {
   			var eventChart = $scope.athleteProfile.trackEventCharts[i];
-  			var dateCheck = eventChart.trackEvents[eventChart.trackEvents.length - 1].date;
-  			if(dateCheck.getTime() < earliestEventDate.getTime()) {
-  				earliestEventDate = dateCheck;
-  			}
+        if(eventChart.trackEvents.length > 0) {
+    			var dateCheck = new Date(eventChart.trackEvents[eventChart.trackEvents.length - 1].date);
+    			if(dateCheck.getTime() < earliestEventDate.getTime()) {
+    				earliestEventDate = dateCheck;
+    			}
+        }
   		}
 
   		// Construct the x-axis labels
@@ -379,6 +372,7 @@ angular.module('homepageModule')
   	$scope.addOneRepMaxRow = function(index) {
 		  $scope.athleteProfile.oneRepMaxCharts[index].oneRepMaxes.push({
   			internalId: ++$scope.counterOfOneRepMax, 
+        predicted: false,
   			date: $scope.date,
   			value: 0
 		  });
@@ -392,9 +386,13 @@ angular.module('homepageModule')
 
   		if(liftName != null && liftName.length > 0) {
 
+        if($scope.athleteProfile.oneRepMaxCharts == undefined) {
+          $scope.athleteProfile.oneRepMaxCharts = [];
+        }
+
   			$scope.athleteProfile.oneRepMaxCharts.push({
   				liftName: liftName, 
-  				oneRepMaxes: [{value: 0, date: $scope.date}]
+  				oneRepMaxes: [{value: 0, predicted: false, date: $scope.date}]
   			});
 
   			$scope.newLift = "";
@@ -418,6 +416,10 @@ angular.module('homepageModule')
   	}
 
   	$scope.addTrackEventChart = function(eventName) {
+
+        if($scope.athleteProfile.trackEventCharts == undefined) {
+          $scope.athleteProfile.trackEventCharts = [];
+        }
 
   		if(eventName != null && eventName.length > 0) {
 
@@ -536,21 +538,32 @@ angular.module('homepageModule')
 	
 	  $scope.showSettingsModal = function() {
 
+      var path = '' + $location.path();
+      var modalName;
+
+      if(path == '/settings') {
+        modalName = 'settingsModal';
+      } else {
+        modalName = 'profileModal';
+      }
+
       ModalService.showModal({
-          templateUrl: 'partials/settingsModal.html',
+          templateUrl: modalName + '.html',
           controller: "homepageCtrl"
       }).then(function(modal) {
             
   			// Display correct message
   			$scope.modalHeader = "Update Successful";
-        modal.element.append($("#settingsModal"));
-        $("#settingsModal").modal({
+        modal.element.append($("#" + modalName));
+        $("#" + modalName).modal({
 			    backdrop: 'static',
 			    keyboard: false 
 			  });
       });
     };
 
-	$scope.closeSettingsModal = function() {};
+	$scope.closeSettingsModal = function() {
+    $('#settingsModal').modal('hide');
+  };
 	
 });
