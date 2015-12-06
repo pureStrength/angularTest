@@ -71,7 +71,7 @@
                                     <tbody>
                                     <tr>
                                         <td class="innerTable">
-                                            <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" ng-change="matchORM(pSet, $index)">
+                                            <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id" ng-change="setSelected(pSet, $index)">
                                                 <option value="">Predefined Sets</option>
                                             </select>
                                         </td>
@@ -81,7 +81,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" value="0" min="0" ng-model="pSet.ORM" ng-init="matchORM(pSet)" disabled />
+                                            <input type="number" class="form-control" value="0" min="0" ng-model="pSet.ORM" ng-init="matchORM(pSet)" disabled/>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -99,10 +99,10 @@
                                     <tbody>
                                         <tr ng-repeat="reps in pSet.mainLifts">
                                             <td class="innerTable">
-                                                <input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" ng-change="predictValues(reps, pSet.ORM)" required/>
+                                                <input type="number" class="form-control form-control-inline" value="0" min="0" ng-model="reps.assignedRepetitions" ng-change="predictValues(reps, pSet.ORM)"/>
                                             </td>
                                             <td>
-                                                <input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" ng-change="predictValues(reps, pSet.ORM)" required/>
+                                                <input type="number" class="form-control form-control-inline" value="0" min="0" max="100" ng-model="reps.assignedPercentOfOneRepMax" ng-change="predictValues(reps, pSet.ORM)"/>
                                             </td>
                                             <td>
                                                 <input type="number" class="form-control" value="0" min="0" ng-model="reps.predictedWeight" ng-init="predictValues(reps, pSet.ORM)" disabled/>
@@ -200,7 +200,7 @@
             <div style="text-align: center;">
             <input type="button" class="btn btn-primary" ng-click="cancelNewPrescribe()" value="Cancel"/>
             <input type="button" class="btn btn-danger" ng-click="deletePrescribe(customPrescription)" value="Delete"/>
-            <input type="submit" class="btn btn-primary" ng-click="saveNewPrescribe(customPrescription)" value="Save"/><br><br>
+            <input type="submit" class="btn btn-primary" ng-click="sendPrescription(customPrescription)" value="Save"/><br><br>
             </div>
          </form> 
 	</div>

@@ -29,6 +29,23 @@ angular.module('athleteService', [])
 		return defer.promise;
 	}
 
+	athleteService.updateORM = function(athleteId, lift, value) {
+		var defer = $q.defer();
+		
+		$http.post(athleteEndPoint + '/updateORM/' + athleteId + "?lift_name=" + lift + "&value=" + value + "&predicted=false")
+		.success(function(res, status) {
+			if(status == 200) {
+				defer.resolve(res);
+			} else {
+				defer.reject(status);
+			}
+		}).error(function(err, status) {
+			defer.reject(err);
+		})
+		
+		return defer.promise;
+	}
+
 	athleteService.get = function(athleteId) {
 		var defer = $q.defer();
 		

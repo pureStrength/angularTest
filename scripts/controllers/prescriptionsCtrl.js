@@ -85,7 +85,6 @@ angular.module('homepageModule')
 	          console.log(res);
 
 	          $scope.selectedPrescription = res;
-	          $scope.updateORM($scope.user.id);
 	        } else {
 	          // Log error
 	          console.log("Error assigning weight"); 

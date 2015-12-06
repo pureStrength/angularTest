@@ -7,7 +7,7 @@
  * # athletesCtrl
  */
 angular.module('homepageModule')
-  .controller('calendarCtrl', function ($scope, userService, userConnectionService, workoutService, ModalService) {
+  .controller('calendarCtrl', function ($scope, userService, userConnectionService, athleteService, workoutService, ModalService) {
 
     $scope.$on('initializeEvents', function(event, athleteId) { 
       $scope.initializeEvents(athleteId);
@@ -99,11 +99,17 @@ angular.module('homepageModule')
       $scope.changeMode('month');
     }
 
+    $scope.$on('saveNewPrescribe', function(event, prescription) {
+      $scope.saveNewPrescribe(prescription);
+    });
+
     $scope.saveNewPrescribe = function(prescription) {
       var promise;
       var edit = false;
 
       var validInput = true;
+
+      console.log("creating prescription: " + JSON.stringify(prescription, null, 4));
 
       $.each(prescription.mainLiftSets, function() {
 
@@ -161,6 +167,8 @@ angular.module('homepageModule')
         })
 
       } else {
+
+        prescription.recordedSets = prescription.mainLiftSets;
 
         promise = workoutService.editPrescriptionEvent(prescription);
         promise.then(function(res) {
@@ -240,6 +248,39 @@ angular.module('homepageModule')
         $scope.viewPrescription = true;
         $scope.$broadcast('viewResults');
       }
+    }
+
+    $scope.updateORM = function(set) {
+      if(set == null || set.mainLiftDefinition == undefined) {
+        return;
+      }
+
+      var id;
+      if($scope.connectedAthlete == undefined) {
+        id = $scope.user.id;
+      } else {
+        id = $scope.connectedAthlete.id;
+      }
+
+      var promise = athleteService.updateORM(id, set.mainLiftDefinition.name, set.ORM);   
+      promise.then(function(res) {
+        if(res != null) {
+          // Log success
+          console.log("ORM Update complete");
+          console.log(res);
+
+          $scope.showCreationModal("Updated One Rep Max", false);
+          $scope.$broadcast('getAthleteProfile');
+        } else {
+          // Log error
+          console.log("Error updating ORM");  
+        }
+      
+      }, function(error) {
+        // Log error
+        console.log("Error updating ORM");
+        console.log("Response: " + error);
+      })
     }
 
     $scope.changeMode = function(mode) {

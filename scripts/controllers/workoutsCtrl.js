@@ -38,6 +38,10 @@ angular.module('homepageModule')
   		$scope.loadWorkouts();
   	});
 
+  	$scope.$on('getAthleteProfile', function() {
+  		$scope.getAthleteProfile($scope.connectedAthlete.id);
+  	});
+
   	$scope.getAthleteProfile = function(athleteId) {
 		// Set the ORM values
 		var promise = athleteService.get(athleteId);
@@ -65,7 +69,6 @@ angular.module('homepageModule')
 	}
 
 	$scope.matchORM = function(set, index) {
-		console.log("Matching ORMs");
 
 		if(set != null && set.mainLiftDefinition != null && $scope.athleteProfile != undefined) {
 			angular.forEach($scope.athleteProfile.oneRepMaxCharts, function(ORM, index) {
@@ -85,6 +88,7 @@ angular.module('homepageModule')
 			$scope.setSelected(null, index);
 		}
 
+		$scope.$applyAsync();
 	}
 
 	$scope.predictValues = function(reps, ORM) {
@@ -266,6 +270,10 @@ angular.module('homepageModule')
 		
 	}
 
+	$scope.sendPrescription = function(prescription) {
+		$scope.$emit('saveNewPrescribe', prescription);
+	}
+
 	$scope.createPrescription = function(prescription) {
 
 		var promise;
@@ -407,13 +415,19 @@ angular.module('homepageModule')
 	}
 
 	$scope.setSelected = function(pSet, index) {
-		if(pSet == null) {
+		if(pSet == undefined || pSet == null) {
 			pSet = {};
 			pSet.counterOfSet = 0;
 			pSet.mainLifts = [{internalId: $scope.counterOfSet, assignedRepetitions: null, assignedPercentOfOneRepMax: null}];
 		}
 
+		if($scope.customPrescription.mainLiftSets == undefined || $scope.customPrescription.mainLiftSets == null) {
+			$scope.customPrescription.mainLiftSets = [];
+		}
+
 		$scope.customPrescription.mainLiftSets[index] = pSet;
+
+		$scope.matchORM(pSet, index);
 	}
 
 	$scope.prescriptionSelected = function(cPres) {
