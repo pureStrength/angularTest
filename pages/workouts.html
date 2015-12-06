@@ -198,7 +198,7 @@
                         <tr ng-repeat="pSet in customPrescription.mainLiftSets track by $index">
                             <td>
                                 <div class="form-inline">
-                                    <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-click="setSelected(pSet, $index)" style="margin-right: 10px; margin-bottom: 10px;">
+                                    <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet" ng-options="cSet as cSet.name for cSet in sets track by cSet.id"  ng-change="setSelected(pSet, $index)" style="margin-right: 10px; margin-bottom: 10px;">
                                         <option value="">Predefined Sets</option>
                                     </select>
                                     <select class="selectpicker btn btn-primary dropdown btn-responsive" ng-model="pSet.mainLiftDefinition" ng-options="lift as lift.name for lift in lifts track by lift.id" style="margin-right: 10px; margin-bottom: 10px;">

@@ -30,6 +30,7 @@ angular.module('homepageModule')
 		if(args[0] != undefined && args[0] != null) {
 			$scope.customPrescription = args[0];
 			$scope.getAthleteProfile(args[1].id);
+			$scope.editingPrescription = args[2];
 		}
 	});
 
@@ -271,7 +272,7 @@ angular.module('homepageModule')
 	}
 
 	$scope.sendPrescription = function(prescription) {
-		$scope.$emit('saveNewPrescribe', prescription);
+		$scope.$emit('saveNewPrescribe', [prescription, $scope.editingPrescription]);
 	}
 
 	$scope.createPrescription = function(prescription) {

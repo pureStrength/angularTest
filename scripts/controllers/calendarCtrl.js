@@ -78,13 +78,13 @@ angular.module('homepageModule')
       // Initialize custom set creation object
       $scope.initializeCustomPrescription();
       $scope.newPrescribe = true;
-      $scope.$broadcast('usingWorkoutsTab', [$scope.customPrescription, $scope.connectedAthlete]);
+      $scope.$broadcast('usingWorkoutsTab', [$scope.customPrescription, $scope.connectedAthlete, false]);
     }
 
     $scope.editWorkout = function() {
       $scope.eventToPrescription($scope.event);
       $scope.newPrescribe = true;
-      $scope.$broadcast('usingWorkoutsTab', [$scope.customPrescription, $scope.connectedAthlete]);
+      $scope.$broadcast('usingWorkoutsTab', [$scope.customPrescription, $scope.connectedAthlete, true]);
     }
 
     $scope.eventToPrescription = function(event) {
@@ -99,11 +99,11 @@ angular.module('homepageModule')
       $scope.changeMode('month');
     }
 
-    $scope.$on('saveNewPrescribe', function(event, prescription) {
-      $scope.saveNewPrescribe(prescription);
+    $scope.$on('saveNewPrescribe', function(event, args) {
+      $scope.saveNewPrescribe(args[0], args[1]);
     });
 
-    $scope.saveNewPrescribe = function(prescription) {
+    $scope.saveNewPrescribe = function(prescription, editing) {
       var promise;
       var edit = false;
 
@@ -140,7 +140,7 @@ angular.module('homepageModule')
         return;
       }
 
-      if(prescription.id == undefined || prescription.id == null) {
+      if(editing == false) {
 
         var dateTime = $scope.currentDate.getTime();
         var prescriptionDate = new Date(dateTime);
